@@ -1,6 +1,6 @@
 package com.xuegao.wechatservermonolith.utils;
 
-import com.xuegao.wechatservermonolith.enums.HttpCode;
+import com.xuegao.wechatservermonolith.framework.enums.HttpCode;
 
 import java.io.Serializable;
 
