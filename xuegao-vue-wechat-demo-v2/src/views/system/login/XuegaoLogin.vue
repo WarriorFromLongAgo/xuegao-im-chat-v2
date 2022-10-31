@@ -14,7 +14,21 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<!--<script lang="js">-->
+<!--export default {-->
+<!--  name: "XuegaoLogin",-->
+<!--  inheritAttrs: false,-->
+<!--  customOptions: {},-->
+<!--};-->
+<!--</script>-->
+
+<script lang="ts" setup>
+// import { computed } from "vue";
+//
+// let componentName1 = computed(() => {
+//   return "sdadadaaasd2222222222222222222222222";
+// });
+</script>
 
 <style lang="css" scoped>
 .login {
@@ -47,19 +61,19 @@
 }
 
 .account {
-  background-image: url("./account.svg");
+  background-image: url("account.svg");
 }
 
 .account :focus {
-  background-image: url("./account-choice.svg");
+  background-image: url("account-choice.svg");
 }
 
 .password {
-  background-image: url("./password.svg");
+  background-image: url("password.svg");
 }
 
 .password :focus {
-  background-image: url("./password-choice.svg");
+  background-image: url("password-choice.svg");
 }
 
 input {
