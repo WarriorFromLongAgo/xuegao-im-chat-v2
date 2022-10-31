@@ -13,7 +13,9 @@
             type="password"
             placeholder="确认密码"
           />
+          <!--          <router-view :to="{ name: 'imHome' }">-->
           <button class="register-btn" @click="systemRegister">注册</button>
+          <!--          </router-view>-->
           <!--          <div class="register-tips">tips：昵称可以在登录后随便修改</div>-->
         </form>
       </div>
@@ -55,16 +57,23 @@
 import router from "@/router";
 import localAvatar1 from "/public/static/images/avatar1.png";
 import localAvatar2 from "/public/static/images/avatar2.png";
+import { isNavigationFailure, NavigationFailureType } from "vue-router";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;
 
 function systemRegister() {
-  router.push({ name: "systemLogin" });
+  router.push({ name: "imHome", replace: true });
 }
 
 function systemLogin() {
-  router.push({ name: "systemLogin" });
+  router.push({ path: "/im/home" });
+  // .then((failure) => {
+  // if (isNavigationFailure(failure, NavigationFailureType.)) {
+  //   failure.to.path; // '/admin'
+  //   failure.from.path; // '/'
+  // }
+  // });
 }
 </script>
 

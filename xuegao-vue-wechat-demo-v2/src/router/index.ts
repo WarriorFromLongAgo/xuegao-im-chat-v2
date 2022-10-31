@@ -11,6 +11,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/system/login",
     name: "systemLogin",
     component: () => import("@/views/system/login/LoginAndRegister.vue"),
+    meta: {
+      //true 组件需要被缓存
+      keepAlive: true,
+      //用于判断上一个页面是哪个
+      // isBack: false,
+    },
+  },
+  {
+    path: "/im/home",
+    name: "imHome",
+    component: () => import("@/views/im/ImHome.vue"),
   },
 ];
 
