@@ -67,13 +67,26 @@ function systemRegister() {
 }
 
 function systemLogin() {
-  router.push({ path: "/im/home" });
+  let failure = router.push({ path: "/im/home" });
+  console.log("systemLogin = ", JSON.stringify(failure));
   // .then((failure) => {
   // if (isNavigationFailure(failure, NavigationFailureType.)) {
   //   failure.to.path; // '/admin'
   //   failure.from.path; // '/'
   // }
   // });
+  // if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin aborted = ", failure);
+  // }
+  // if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin cancelled = ", failure);
+  // }
+  // if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin duplicated = ", failure);
+  // }
 }
 </script>
 
