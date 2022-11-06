@@ -12,7 +12,9 @@
       {{ showTips }}
     </div>
     <div class="to-url">
-      <button class="to-login" @click="toLoginVue">点击进入雪糕家</button>
+      <button class="to-login" type="button" @click="toLoginVue">
+        点击进入雪糕家
+      </button>
       <!--      <input type="button" class="to-login" value="点击进入雪糕家" />-->
     </div>
     <footer>
@@ -46,8 +48,8 @@ let showTips = computed(() => {
  * 跳转页面
  * */
 function toLoginVue() {
-  // router.push({ path: "/login" });
-  router.push({ name: "systemLogin" });
+  router.push({ path: "/system/login" });
+  // router.push({ name: "systemLogin" });
 }
 </script>
 

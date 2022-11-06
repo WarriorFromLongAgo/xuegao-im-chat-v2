@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 2790053 */
-  src: url('iconfont.woff2?t=1637130830910') format('woff2'),
-       url('iconfont.woff?t=1637130830910') format('woff'),
-       url('iconfont.ttf?t=1637130830910') format('truetype');
+  font-family: "iconfont"; /* Project id 3740920 */
+  src: url('iconfont.woff2?t=1667743921864') format('woff2'),
+       url('iconfont.woff?t=1667743921864') format('woff'),
+       url('iconfont.ttf?t=1667743921864') format('truetype');
 }
 
 .iconfont {
@@ -13,59 +13,51 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-edit:before {
-  content: "\e514";
-}
-
-.icon-warn:before {
-  content: "\e513";
-}
-
-.icon-file:before {
-  content: "\e512";
-}
-
-.icon-img:before {
-  content: "\e510";
-}
-
-.icon-emoji:before {
-  content: "\e511";
-}
-
-.icon-add:before {
-  content: "\e509";
-}
-
-.icon-window-max:before {
-  content: "\e501";
-}
-
-.icon-window-ding:before {
-  content: "\e502";
-}
-
-.icon-window-min:before {
-  content: "\e503";
-}
-
 .icon-close:before {
-  content: "\e504";
+  content: "\e60a";
 }
 
-.icon-account:before {
-  content: "\e505";
+.icon-wechat:before {
+  content: "\e600";
 }
 
-.icon-password:before {
-  content: "\e506";
+.icon-chat:before {
+  content: "\e66a";
 }
 
-.icon-san:before {
-  content: "\e507";
+.icon-fenxiang:before {
+  content: "\e633";
 }
 
-.icon-more:before {
-  content: "\e508";
+.icon-zuixiaohua:before {
+  content: "\e67a";
+}
+
+.icon-pin:before {
+  content: "\e75d";
+}
+
+.icon-pin-fill:before {
+  content: "\e788";
+}
+
+.icon-zuidahua:before {
+  content: "\e651";
+}
+
+.icon-wechat2:before {
+  content: "\e61b";
+}
+
+.icon-shoucang-:before {
+  content: "\e637";
+}
+
+.icon-friends_add:before {
+  content: "\e6b2";
+}
+
+.icon-friend:before {
+  content: "\e62b";
 }
 

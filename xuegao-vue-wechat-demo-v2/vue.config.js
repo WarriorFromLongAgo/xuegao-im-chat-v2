@@ -1,20 +1,8 @@
 const { defineConfig } = require("@vue/cli-service");
 
-let PUBLIC_PATH = "";
-switch (process.env.NODE_ENV) {
-  case "development":
-    PUBLIC_PATH = process.env.PUBLIC_PATH;
-    break;
-  case "production":
-    PUBLIC_PATH = process.env.PUBLIC_PATH;
-    break;
-  default:
-    throw new Error("publicPath === undefined");
-}
-
 module.exports = defineConfig({
   transpileDependencies: true,
-  publicPath: PUBLIC_PATH,
+  // publicPath: PUBLIC_PATH,
   devServer: {
     port: 9000,
     host: "127.0.0.1",

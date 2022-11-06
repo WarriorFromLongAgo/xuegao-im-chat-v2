@@ -1,107 +1,93 @@
 {
-  "id": "2790053",
-  "name": "vuechat",
+  "id": "3740920",
+  "name": "xuegao-im",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "25777244",
-      "name": "edit",
-      "font_class": "edit",
-      "unicode": "e514",
-      "unicode_decimal": 58644
-    },
-    {
-      "icon_id": "25458489",
-      "name": "warn",
-      "font_class": "warn",
-      "unicode": "e513",
-      "unicode_decimal": 58643
-    },
-    {
-      "icon_id": "25182025",
-      "name": "file",
-      "font_class": "file",
-      "unicode": "e512",
-      "unicode_decimal": 58642
-    },
-    {
-      "icon_id": "25080143",
-      "name": "img",
-      "font_class": "img",
-      "unicode": "e510",
-      "unicode_decimal": 58640
-    },
-    {
-      "icon_id": "25080144",
-      "name": "emoji",
-      "font_class": "emoji",
-      "unicode": "e511",
-      "unicode_decimal": 58641
-    },
-    {
-      "icon_id": "24909999",
-      "name": "add",
-      "font_class": "add",
-      "unicode": "e509",
-      "unicode_decimal": 58633
-    },
-    {
-      "icon_id": "24715226",
-      "name": "max",
-      "font_class": "window-max",
-      "unicode": "e501",
-      "unicode_decimal": 58625
-    },
-    {
-      "icon_id": "24715227",
-      "name": "ding",
-      "font_class": "window-ding",
-      "unicode": "e502",
-      "unicode_decimal": 58626
-    },
-    {
-      "icon_id": "24715228",
-      "name": "min",
-      "font_class": "window-min",
-      "unicode": "e503",
-      "unicode_decimal": 58627
-    },
-    {
-      "icon_id": "24710152",
+      "icon_id": "6664144",
       "name": "close",
       "font_class": "close",
-      "unicode": "e504",
-      "unicode_decimal": 58628
+      "unicode": "e60a",
+      "unicode_decimal": 58890
     },
     {
-      "icon_id": "24462922",
-      "name": "account",
-      "font_class": "account",
-      "unicode": "e505",
-      "unicode_decimal": 58629
+      "icon_id": "546707",
+      "name": "WeChat",
+      "font_class": "wechat",
+      "unicode": "e600",
+      "unicode_decimal": 58880
     },
     {
-      "icon_id": "24462928",
-      "name": "password",
-      "font_class": "password",
-      "unicode": "e506",
-      "unicode_decimal": 58630
+      "icon_id": "819813",
+      "name": "chat",
+      "font_class": "chat",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
     },
     {
-      "icon_id": "24106461",
-      "name": "三",
-      "font_class": "san",
-      "unicode": "e507",
-      "unicode_decimal": 58631
+      "icon_id": "848631",
+      "name": "fenxiang",
+      "font_class": "fenxiang",
+      "unicode": "e633",
+      "unicode_decimal": 58931
     },
     {
-      "icon_id": "24106460",
-      "name": "more",
-      "font_class": "more",
-      "unicode": "e508",
-      "unicode_decimal": 58632
+      "icon_id": "1649166",
+      "name": "最小化",
+      "font_class": "zuixiaohua",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "11488096",
+      "name": "pin",
+      "font_class": "pin",
+      "unicode": "e75d",
+      "unicode_decimal": 59229
+    },
+    {
+      "icon_id": "11488298",
+      "name": "pin-fill",
+      "font_class": "pin-fill",
+      "unicode": "e788",
+      "unicode_decimal": 59272
+    },
+    {
+      "icon_id": "11490920",
+      "name": "最大化",
+      "font_class": "zuidahua",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "548108",
+      "name": "wechat2",
+      "font_class": "wechat2",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "8765248",
+      "name": "收藏-1",
+      "font_class": "shoucang-",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "16618574",
+      "name": "friends_add",
+      "font_class": "friends_add",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
+    },
+    {
+      "icon_id": "11349025",
+      "name": "friend",
+      "font_class": "friend",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
     }
   ]
 }

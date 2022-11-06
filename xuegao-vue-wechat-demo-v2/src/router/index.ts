@@ -36,5 +36,4 @@ router.beforeEach((to, from, next) => {
   console.log("next = ", JSON.stringify(next));
   next();
 });
-
 export default router;

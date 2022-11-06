@@ -15,7 +15,7 @@
           />
           <!--          <router-view :to="{ name: 'imHome' }">-->
 
-         <!-- <button class="register-btn" @click.prevent="systemRegister">注册</button>-->
+          <!-- <button class="register-btn" @click.prevent="systemRegister">注册</button>-->
 
           <button type="button" class="register-btn" @click="systemRegister">
             注册
@@ -41,7 +41,7 @@
             <input type="checkbox" /><span>记住我</span>
           </div>
 
-           <!--  <button class="login-btn" @click.prevent="systemLogin">登录</button>-->
+          <!--  <button class="login-btn" @click.prevent="systemLogin">登录</button>-->
 
           <button type="button" class="login-btn" @click="systemLogin">
             登录
@@ -69,16 +69,18 @@
 import router from "@/router";
 import localAvatar1 from "/public/static/images/avatar1.png";
 import localAvatar2 from "/public/static/images/avatar2.png";
-import { isNavigationFailure, NavigationFailureType } from "vue-router";
+import { setToken } from "@/common/token";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;
 
 function systemRegister() {
-  router.push({ name: "imHome", replace: true });
+  setToken("我登陆啦");
+  router.push({ path: "/im/home" });
 }
 
 function systemLogin() {
+  setToken("我登陆啦");
   let failure = router.push({ path: "/im/home" });
   console.log("systemLogin = ", JSON.stringify(failure));
   // .then((failure) => {
