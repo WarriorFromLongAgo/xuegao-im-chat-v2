@@ -14,7 +14,13 @@
             placeholder="确认密码"
           />
           <!--          <router-view :to="{ name: 'imHome' }">-->
-          <button class="register-btn" @click.prevent="systemRegister">注册</button>
+
+         <!-- <button class="register-btn" @click.prevent="systemRegister">注册</button>-->
+
+          <button type="button" class="register-btn" @click="systemRegister">
+            注册
+          </button>
+
           <!--          </router-view>-->
           <!--          <div class="register-tips">tips：昵称可以在登录后随便修改</div>-->
         </form>
@@ -34,7 +40,13 @@
           <div class="remember-me">
             <input type="checkbox" /><span>记住我</span>
           </div>
-          <button class="login-btn" @click.prevent="systemLogin">登录</button>
+
+           <!--  <button class="login-btn" @click.prevent="systemLogin">登录</button>-->
+
+          <button type="button" class="login-btn" @click="systemLogin">
+            登录
+          </button>
+
           <!--        <div class="login-other-operate">-->
           <!--          <a href="#">忘记密码</a> |-->
           <!--          <a href="#">注册新账号</a>-->
@@ -67,13 +79,26 @@ function systemRegister() {
 }
 
 function systemLogin() {
-  router.push({ path: "/im/home" });
+  let failure = router.push({ path: "/im/home" });
+  console.log("systemLogin = ", JSON.stringify(failure));
   // .then((failure) => {
   // if (isNavigationFailure(failure, NavigationFailureType.)) {
   //   failure.to.path; // '/admin'
   //   failure.from.path; // '/'
   // }
   // });
+  // if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin aborted = ", failure);
+  // }
+  // if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin cancelled = ", failure);
+  // }
+  // if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+  //   // 给用户显示一个小通知
+  //   console.log("systemLogin duplicated = ", failure);
+  // }
 }
 </script>
 
