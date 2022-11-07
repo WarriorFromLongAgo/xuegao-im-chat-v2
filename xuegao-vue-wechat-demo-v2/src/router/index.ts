@@ -22,6 +22,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/im/home",
     name: "imHome",
     component: () => import("@/views/im/ImHome.vue"),
+    redirect: "/im/chat",
+    children: [
+      {
+        path: "/im/chat",
+        component: () => import("@/views/im/ImChat.vue"),
+      },
+      {
+        path: "/im/friend",
+        component: () => import("@/views/im/ImFriend.vue"),
+      },
+      {
+        path: "/im/mark",
+        component: () => import("@/views/im/ImMark.vue"),
+      },
+    ],
   },
 ];
 
