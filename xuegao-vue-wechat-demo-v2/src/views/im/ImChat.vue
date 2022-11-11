@@ -1,11 +1,34 @@
 <template>
-  <div>im-chat</div>
+  <div class="content">
+    <div class="msgList">
+      <SearchInfo :placeholder="placeholder"></SearchInfo>
+      <ChatList></ChatList>
+    </div>
+    <div class="chatBox">
+      <MessageChat class="message" :key="selectChatId"></MessageChat>
+      <TextInput class="text"></TextInput>
+    </div>
+  </div>
 </template>
 
-<script>
-export default {
-  name: "ImChat",
-};
+<script lang="ts" setup>
+import SearchInfo from "@/components/search/SearchInfo.vue";
+import ChatList from "@/components/chat/ChatList.vue";
+import MessageChat from "@/components/message/FriendMessage.vue";
+import TextInput from "@/components/message/TextInput.vue";
+
+let placeholder = "搜索";
 </script>
 
-<style scoped></style>
+<style lang="css" scoped>
+.content {
+  display: flex;
+  width: 100%;
+}
+
+.msgList {
+  width: 250px;
+  background: #e6e6e6;
+  border-right: 1px solid #d6d6d6;
+}
+</style>

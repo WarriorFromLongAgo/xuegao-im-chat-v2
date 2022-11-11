@@ -95,7 +95,7 @@ function toLoginVue() {
   border-color: white;
 }
 
-.to-url button:active {
+.to-url button.active {
   border-color: white;
   transform: scale(1.1);
 }

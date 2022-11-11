@@ -78,7 +78,7 @@ let clearSearch = function () {
   cursor: pointer;
 }
 
-.icon:active {
+.icon.active {
   color: rgb(0, 220, 65);
 }
 
