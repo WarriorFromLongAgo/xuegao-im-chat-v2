@@ -26,8 +26,8 @@ public class SysUserController {
     }
 
     @RequestMapping(value = "/sysUser/register", method = {RequestMethod.POST})
-    public Result<SysUser> register(@RequestBody SysUser sysUser) {
-        return Result.success(sysUserService.insertService(sysUser));
+    public Result<Integer> registerService(@RequestBody SysUser sysUser) {
+        return Result.success(sysUserService.registerService(sysUser));
     }
 
     // @RequestMapping(value = "/sysUser/save", method = {RequestMethod.POST})

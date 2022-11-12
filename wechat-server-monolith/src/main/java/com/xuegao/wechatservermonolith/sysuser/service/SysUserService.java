@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.xuegao.core.common.FmkConstant;
 import com.xuegao.mapper.model.GenericModelDTO;
+import com.xuegao.util.JsonUtil;
 import com.xuegao.util.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
@@ -39,7 +40,8 @@ public class SysUserService {
         sysUserCheckService.checkIsNull("入参不能为空", sysUser);
         sysUserCheckService
                 .checkIsNull("用户名不能为空", sysUser.getUsername())
-                .checkIsNull("密码不能为空", sysUser.getPassword());
+                .checkIsNull("密码不能为空", sysUser.getPassword())
+        ;
         SysUser byUsernameAndPassword = sysUserMpManage.getByUsernameAndPassword(sysUser.getUsername(), sysUser.getPassword());
         if (ObjectUtils.isEmpty(byUsernameAndPassword)) {
             return null;
@@ -63,7 +65,7 @@ public class SysUserService {
         return sysLoginVO;
     }
 
-    public SysUser insertService(SysUser sysUser) {
+    public Integer registerService(SysUser sysUser) {
         sysUserCheckService.checkIsNull("入参不能为空", sysUser);
         sysUserCheckService
                 .checkIsNull("用户名不能为空", sysUser.getUsername());
@@ -75,7 +77,8 @@ public class SysUserService {
         sysUser.setUid(UUID.randomUUID().toString());
 
         sysUserMpManage.mpInsert(sysUser);
-        return sysUser;
+        log.info("[xuegao-im-chat-v2][SysUserService][registerService][sysUser={}]", JsonUtil.toJsonString(sysUser));
+        return 1;
     }
 
     public int updateService(SysUser sysUser) {
