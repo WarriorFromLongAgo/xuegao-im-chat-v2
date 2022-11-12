@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegao.wechatservermonolith.sysjob.mapper.SysJobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xuegao.wechatservermonolith.common.model.sysjob.doo.SysJob">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="trace_id" property="traceId"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+
+        <result column="execute_time" property="executeTime"/>
+        <result column="content" property="content"/>
+        <result column="execute_flag" property="executeFlag"/>
+        <result column="execute_count" property="executeCount"/>
+        <result column="execute_begin_time" property="executeBeginTime"/>
+        <result column="execute_end_time" property="executeEndTime"/>
+        <result column="execute_cost" property="executeCost"/>
+        <result column="remark" property="remark"/>
+        <result column="business_type" property="businessType"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, created_by, created_time, updated_by, updated_time, del_flag, trace_id,
+        execute_time, content, execute_flag, execute_count, execute_begin_time, execute_end_time, execute_cost, remark, business_type
+    </sql>
+
+</mapper>

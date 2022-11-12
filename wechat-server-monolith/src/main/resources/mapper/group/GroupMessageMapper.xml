@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuegao.wechatservermonolith.group.mapper.GroupMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xuegao.wechatservermonolith.common.model.group.doo.GroupMessage">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="trace_id" property="traceId"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="updated_time" property="updatedTime"/>
+
+        <result column="group_id" property="groupId"/>
+        <result column="user_id" property="userId"/>
+        <result column="message_type" property="messageType"/>
+        <result column="content" property="content"/>
+        <result column="ack_type" property="ackType"/>
+        <result column="data_status" property="dataStatus"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, created_by, created_time, updated_by, updated_time, del_flag, trace_id,
+        group_id, user_id, message_type, content, ack_type, data_status
+    </sql>
+
+</mapper>
