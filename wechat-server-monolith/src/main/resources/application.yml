@@ -5,3 +5,12 @@ netty:
   #  默认是我的名字，在26个字母里面对应的位置，6-10-13
   port: 61013
   ws: "ws://127.0.0.1:61013/ws"
+
+spring:
+  application:
+    name: 'mybatis-demo'
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/xue_gao_write_and_use?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true

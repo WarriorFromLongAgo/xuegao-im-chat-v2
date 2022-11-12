@@ -1,4 +1,5 @@
 create database if not exists xue_gao_im_chat_v2;
+use xue_gao_im_chat_v2;
 
 # username#uid，一般人登录就是这么展示
 CREATE TABLE xue_gao_user
@@ -104,8 +105,8 @@ CREATE TABLE friend_message
     `friend_id`    bigint(20)  NOT NULL COMMENT '接收人id',
     `message_type` VARCHAR(32) not null COMMENT '消息类型，text，image，audio，video，',
     `content`      VARCHAR(2048) COMMENT '消息内容',
-    `delivered`    tinyint(2)  not null default 10 COMMENT '消息是否送达10已送达，20未送达',
-    `data_status`  tinyint(2) COMMENT '消息状态，10正常，20撤回',
+    `ack_type`     tinyint(2)  not null default 10 COMMENT '消息是否送达10已送达，20未送达',
+    `data_status`  tinyint(2)  not null default 10 COMMENT '消息状态，10正常，20撤回',
     `del_flag`     tinyint     NOT NULL DEFAULT 1 COMMENT '0已删除，1默认值，未删除',
     `created_by`   VARCHAR(32) NOT NULL COMMENT '创建人',
     `created_time` DATETIME    NOT NULL DEFAULT now() COMMENT '创建时间',
@@ -144,17 +145,16 @@ values (1, '雪糕家online', '所有出生在雪糕家的人物记录群（雪�
 # http://www.52im.net/thread-1616-1-1.html
 CREATE TABLE group_user
 (
-    `id`             bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '',
-    `user_nickname`  varchar(32) COMMENT '群展示昵称',
-    `group_id`       bigint(20)  NOT NULL COMMENT '群id',
-    `user_id`        bigint(20)  NOT NULL COMMENT '用户id',
-    `last_ack_msgid` bigint(20)  NULL COMMENT '最后ack的消息表id',
-    `del_flag`       tinyint     NOT NULL DEFAULT 1 COMMENT '0已删除，1默认值，未删除',
-    `created_by`     VARCHAR(32) NOT NULL COMMENT '创建人',
-    `created_time`   DATETIME    NOT NULL DEFAULT now() COMMENT '创建时间',
-    `updated_by`     VARCHAR(32) NOT NULL COMMENT '更新人',
-    `updated_time`   DATETIME    NOT NULL DEFAULT now() COMMENT '更新时间',
-    `trace_id`       VARCHAR(32) COMMENT '',
+    `id`            bigint(20)  NOT NULL AUTO_INCREMENT COMMENT '',
+    `user_nickname` varchar(32) COMMENT '群展示昵称',
+    `group_id`      bigint(20)  NOT NULL COMMENT '群id',
+    `user_id`       bigint(20)  NOT NULL COMMENT '用户id',
+    `del_flag`      tinyint     NOT NULL DEFAULT 1 COMMENT '0已删除，1默认值，未删除',
+    `created_by`    VARCHAR(32) NOT NULL COMMENT '创建人',
+    `created_time`  DATETIME    NOT NULL DEFAULT now() COMMENT '创建时间',
+    `updated_by`    VARCHAR(32) NOT NULL COMMENT '更新人',
+    `updated_time`  DATETIME    NOT NULL DEFAULT now() COMMENT '更新时间',
+    `trace_id`      VARCHAR(32) COMMENT '',
     PRIMARY KEY (id),
     INDEX idx_user_id (user_id),
     INDEX idx_group_id (group_id)
@@ -172,6 +172,8 @@ CREATE TABLE group_message
     `user_id`      bigint(20)  NOT NULL COMMENT '发送人id',
     `message_type` VARCHAR(32) not null COMMENT '消息类型，text，image，audio，video，',
     `content`      VARCHAR(2048) COMMENT '消息内容',
+    `ack_type`     tinyint(2)  not null default 10 COMMENT '消息是否送达10已送达，20未送达',
+    `data_status`  tinyint(2)  not null default 10 COMMENT '消息状态，10正常，20撤回',
     `del_flag`     tinyint     NOT NULL DEFAULT 1 COMMENT '0已删除，1默认值，未删除',
     `created_by`   VARCHAR(32) NOT NULL COMMENT '创建人',
     `created_time` DATETIME    NOT NULL DEFAULT now() COMMENT '创建时间',

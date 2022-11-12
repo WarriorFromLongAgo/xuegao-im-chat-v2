@@ -13,24 +13,25 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+
+        <xuegao-framework.version>0.0.3</xuegao-framework.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.xuegao</groupId>
+            <artifactId>framework-config</artifactId>
+            <version>${xuegao-framework.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.xuegao</groupId>
+            <artifactId>framework-util</artifactId>
+            <version>${xuegao-framework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xuegao</groupId>
+            <artifactId>framework-mapper</artifactId>
+            <version>${xuegao-framework.version}</version>
         </dependency>
 
         <dependency>
@@ -39,11 +40,13 @@
             <version>4.1.72.Final</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
-            <version>2.0.5</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.3</version>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
