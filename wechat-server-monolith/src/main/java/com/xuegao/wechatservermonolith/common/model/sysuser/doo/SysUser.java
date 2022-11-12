@@ -86,7 +86,7 @@ public class SysUser extends GenericModel<Long> implements Serializable {
     private LocalDateTime lastLoginTime;
 
     /**
-     * 用户状态,10:正常,20:3个月未登录进行删除
+     * 用户状态,10:正常,20:3个月未登录进行删除锁定,30自主销号
      */
     @TableField("user_status")
     private Integer userStatus;

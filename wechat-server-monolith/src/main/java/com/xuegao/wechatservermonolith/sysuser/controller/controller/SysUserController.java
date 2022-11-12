@@ -4,6 +4,7 @@ import com.xuegao.core.model.Result;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.mapper.model.PageResult;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
+import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
 import com.xuegao.wechatservermonolith.sysuser.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,10 +20,20 @@ public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
 
-    @RequestMapping(value = "/sysUser/save", method = {RequestMethod.POST})
-    public Result<SysUser> save(@RequestBody SysUser sysUser) {
+    @RequestMapping(value = "/sysUser/login", method = {RequestMethod.POST, RequestMethod.GET})
+    public Result<SysLoginVO> login(@RequestBody SysUser sysUser) {
+        return Result.success(sysUserService.login(sysUser));
+    }
+
+    @RequestMapping(value = "/sysUser/register", method = {RequestMethod.POST})
+    public Result<SysUser> register(@RequestBody SysUser sysUser) {
         return Result.success(sysUserService.insertService(sysUser));
     }
+
+    // @RequestMapping(value = "/sysUser/save", method = {RequestMethod.POST})
+    // public Result<SysUser> save(@RequestBody SysUser sysUser) {
+    //     return Result.success(sysUserService.insertService(sysUser));
+    // }
 
     @RequestMapping(value = "/sysUser/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody SysUser sysUser) {
