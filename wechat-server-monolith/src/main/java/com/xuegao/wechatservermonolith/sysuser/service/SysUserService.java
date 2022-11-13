@@ -3,10 +3,12 @@ package com.xuegao.wechatservermonolith.sysuser.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.xuegao.core.common.FmkConstant;
+import com.xuegao.core.exception.ServiceException;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.util.JsonUtil;
 import com.xuegao.util.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
+import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
 import com.xuegao.wechatservermonolith.sysuser.check.SysUserCheckService;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
@@ -36,25 +38,24 @@ public class SysUserService {
     @Autowired
     private SysUserCheckService sysUserCheckService;
 
-    public SysLoginVO login(SysUser sysUser) {
-        sysUserCheckService.checkIsNull("入参不能为空", sysUser);
+    public SysLoginVO login(SysLoginDTO sysLoginDTO) {
+        sysUserCheckService.checkIsNull("入参不能为空", sysLoginDTO);
         sysUserCheckService
-                .checkIsNull("用户名不能为空", sysUser.getUsername())
-                .checkIsNull("密码不能为空", sysUser.getPassword())
+                .checkIsAllNull("用户名或者昵称不能为空", sysLoginDTO.getUsername(), sysLoginDTO.getNickname())
         ;
-        SysUser byUsernameAndPassword = sysUserMpManage.getByUsernameAndPassword(sysUser.getUsername(), sysUser.getPassword());
-        if (ObjectUtils.isEmpty(byUsernameAndPassword)) {
+        SysUser usernameAndNickName = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
+        if (ObjectUtils.isEmpty(usernameAndNickName)) {
             return null;
         }
         String token = UUID.randomUUID().toString();
         SysLoginVO sysLoginVO = new SysLoginVO();
         sysLoginVO.setToken(token);
-        sysLoginVO.setSysUser(byUsernameAndPassword);
+        sysLoginVO.setSysUser(usernameAndNickName);
 
         CompletableFuture
                 .runAsync(() -> {
-                            byUsernameAndPassword.setLastLoginTime(LocalDateTimeUtil.now());
-                            sysUserMpManage.mpUpdate(byUsernameAndPassword);
+                            usernameAndNickName.setLastLoginTime(LocalDateTimeUtil.now());
+                            sysUserMpManage.mpUpdate(usernameAndNickName);
                         },
                         xuegaoSpringTaskExecutor)
                 .exceptionally(throwable -> {
@@ -68,8 +69,17 @@ public class SysUserService {
     public Integer registerService(SysUser sysUser) {
         sysUserCheckService.checkIsNull("入参不能为空", sysUser);
         sysUserCheckService
-                .checkIsNull("用户名不能为空", sysUser.getUsername());
+                .checkIsNull("用户名不能为空", sysUser.getUsername())
+                .checkIsNull("昵称不能为空", sysUser.getNickname());
 
+        SysUser usernameOrNickName = sysUserMpManage.getByUsernameOrNickName(sysUser.getUsername(), sysUser.getNickname());
+        try {
+            sysUserCheckService.checkIsNotNull("用户名或者昵称已存在", usernameOrNickName);
+        } catch (Exception e) {
+            log.info("[xuegao-im-chat-v2][SysUserService][registerService][e={}]", e.getMessage(), e);
+            throw new ServiceException("用户名或者昵称已存在");
+        }
+        log.info("[xuegao-im-chat-v2][SysUserService][registerService][1111111111111111111111111111]");
         // 网站不需要填密码
         sysUser.setPassword("123456");
 

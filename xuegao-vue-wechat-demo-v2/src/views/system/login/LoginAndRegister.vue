@@ -6,13 +6,24 @@
           <div class="header">
             <img id="avatar" :src="avatar" class="avatar" />
           </div>
-          <input class="register-username" type="text" placeholder="登录账号" />
-          <input class="register-password" type="password" placeholder="密码" />
           <input
-            class="register-enter-password"
-            type="password"
-            placeholder="确认密码"
+            class="register-username"
+            type="text"
+            placeholder="登录账号"
+            v-model="sysUser.username"
           />
+          <input
+            class="register-nickname"
+            type="text"
+            placeholder="登录昵称"
+            v-model="sysUser.nickname"
+          />
+          <!--          <input class="register-password" type="password" placeholder="密码" />-->
+          <!--          <input-->
+          <!--            class="register-enter-password"-->
+          <!--            type="password"-->
+          <!--            placeholder="确认密码"-->
+          <!--          />-->
           <!--          <router-view :to="{ name: 'imHome' }">-->
 
           <!-- <button class="register-btn" @click.prevent="systemRegister">注册</button>-->
@@ -28,17 +39,23 @@
       <div class="sign-in-container">
         <form action="">
           <div class="header">
-            <img id="avatar" :src="avatar" class="avatar" />
+            <img id="avatar" :src="avatar2" class="avatar" />
           </div>
           <input
             class="login-username"
             type="text"
-            placeholder="账号/昵称/邮箱"
+            placeholder="账号/昵称"
+            v-model="sysUser.username"
           />
           <!-- <input type="email" placeholder="Email" /> -->
-          <input class="login-password" type="password" placeholder="密码" />
+          <!--          <input class="login-password" type="password" placeholder="密码" />-->
           <div class="remember-me">
-            <input type="checkbox" /><span>记住我</span>
+            <input
+              class="remember-me-checkbox"
+              type="checkbox"
+              v-model="rememberMe"
+            />
+            <span class="remember-me-span">记住我</span>
           </div>
 
           <!--  <button class="login-btn" @click.prevent="systemLogin">登录</button>-->
@@ -69,38 +86,62 @@
 import router from "@/router";
 import localAvatar1 from "/public/static/images/avatar1.png";
 import localAvatar2 from "/public/static/images/avatar2.png";
-import { setToken } from "@/common/token";
+import { LoginCall } from "@/service/imlogin/call/call/LoginCall";
+import { useLoginStore } from "@/service/imlogin/store/LoginInfoStore";
+import { ISysUserReq } from "@/service/imlogin/call/request/SysUserRequest";
+import { ref } from "vue";
+import { isBlank, isEmpty } from "@/util/ObjectUtil";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;
+let sysUser = ref<ISysUserReq>({
+  username: "",
+  nickname: "",
+});
+
+let rememberMe = ref<boolean>(false);
 
 function systemRegister() {
-  setToken("我登陆啦");
-  router.push({ path: "/im/home" });
+  let tempSysUser = sysUser.value;
+  if (isEmpty(tempSysUser)) {
+    alert("入参不能为空");
+    return;
+  }
+  if (isBlank(tempSysUser.username) || isBlank(tempSysUser.nickname)) {
+    alert("登录账号或者登录昵称不能为空");
+    return;
+  }
+  let promise = LoginCall.register(sysUser.value).then((res: any) => {
+    console.log("register  " + JSON.stringify(res));
+  });
 }
 
-function systemLogin() {
-  setToken("我登陆啦");
-  let failure = router.push({ path: "/im/home" });
-  console.log("systemLogin = ", JSON.stringify(failure));
-  // .then((failure) => {
-  // if (isNavigationFailure(failure, NavigationFailureType.)) {
-  //   failure.to.path; // '/admin'
-  //   failure.from.path; // '/'
-  // }
-  // });
-  // if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
-  //   // 给用户显示一个小通知
-  //   console.log("systemLogin aborted = ", failure);
-  // }
-  // if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
-  //   // 给用户显示一个小通知
-  //   console.log("systemLogin cancelled = ", failure);
-  // }
-  // if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-  //   // 给用户显示一个小通知
-  //   console.log("systemLogin duplicated = ", failure);
-  // }
+async function systemLogin() {
+  let tempSysUser = sysUser.value;
+  if (isEmpty(tempSysUser)) {
+    alert("入参不能为空");
+    return;
+  }
+  if (isBlank(tempSysUser.username)) {
+    alert("登录账号或者登录昵称不能为空");
+    return;
+  }
+  sysUser.value.nickname = sysUser.value.username;
+  await LoginCall.login(sysUser.value).then((res: any) => {
+    console.log("login 1 " + JSON.stringify(res));
+  });
+
+  console.log(" login 2 ");
+  let loginStore = useLoginStore();
+
+  console.log(
+    "loginStore.action.getLoginInfo = ",
+    JSON.parse(JSON.stringify(loginStore.action.getSysUser))
+  );
+}
+
+function redirectImHome() {
+  router.push({ path: "/im/home" });
 }
 </script>
 
@@ -160,26 +201,28 @@ function systemLogin() {
 }
 
 .register-username,
+.register-nickname,
 .login-username {
   background-image: url("./account.svg");
 }
 
 .register-username,
-.login-username {
+.login-username,
+.register-nickname {
   background-image: url("./account-choice.svg");
 }
 
-.register-password,
-.register-enter-password,
-.login-password {
-  background-image: url("./password.svg");
-}
+/*.register-password,*/
+/*.register-enter-password,*/
+/*.login-password {*/
+/*  background-image: url("./password.svg");*/
+/*}*/
 
-.register-password:focus,
-.register-enter-password:focus,
-.login-password:focus {
-  background-image: url("./password-choice.svg");
-}
+/*.register-password:focus,*/
+/*.register-enter-password:focus,*/
+/*.login-password:focus {*/
+/*  background-image: url("./password-choice.svg");*/
+/*}*/
 
 input {
   font-size: 16px;
@@ -200,6 +243,33 @@ input {
 input:focus {
   border-bottom-color: #1aad19;
   outline: 0;
+}
+
+.remember-me {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 41px;
+}
+
+.remember-me input {
+  width: 10%;
+  height: 16px;
+  margin-left: 15%;
+  margin-right: -10%;
+  margin-top: 5%;
+}
+
+.remember-me span {
+  width: 20%;
+  height: 15px;
+  margin-left: 10%;
+  margin-right: -5%;
+  margin-top: -1%;
+  text-align: left;
+  font-size: 16px;
 }
 
 .register-btn,

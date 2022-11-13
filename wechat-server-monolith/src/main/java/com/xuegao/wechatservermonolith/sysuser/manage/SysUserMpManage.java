@@ -1,5 +1,9 @@
 package com.xuegao.wechatservermonolith.sysuser.manage;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.xuegao.mapper.enums.DelFlagEnum;
+import com.xuegao.mapper.model.GenericModel;
 import com.xuegao.mapper.mpservice.AbstractMpServiceV2;
 import com.xuegao.wechatservermonolith.common.Constant;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
@@ -20,24 +24,30 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
      * getByUsernameAndPassword
      *
      * @param username:
-     * @param password:
+     * @param nickname:
      * @return com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser
      * @author xuegao
      * @date 2022/11/12 23:30
      */
-    public SysUser getByUsernameAndPassword(String username, String password) {
+    public SysUser getByUsernameOrNickName(String username, String nickname) {
         SysUser sysUser = new SysUser();
         sysUser.setUsername(username);
-        sysUser.setPassword(password);
+        sysUser.setNickname(nickname);
         sysUser.setUserStatus(UserStatusEnum.NORMAL.getCode());
 
-
-        List<SysUser> sysUserList = super.mpListLimit(sysUser, Constant.INT_10);
+        LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(GenericModel::getDelFlag, DelFlagEnum.DEL_FLAG_1);
+        queryWrapper.eq(SysUser::getUserStatus, UserStatusEnum.NORMAL.getCode());
+        queryWrapper.or(sysUserLambdaQueryWrapper -> {
+            sysUserLambdaQueryWrapper.eq(SysUser::getUsername, username);
+            sysUserLambdaQueryWrapper.eq(SysUser::getNickname, nickname);
+        });
+        List<SysUser> sysUserList = super.list(queryWrapper);
         if (ObjectUtils.isEmpty(sysUserList)) {
             return null;
         }
         if (sysUserList.size() > Constant.INT_1) {
-            log.error("SysUserMpManage.getByUsernameAndPassword() username:{} password:{} sysUserList.size():{}", username, password, sysUserList.size());
+            log.error("SysUserMpManage.getByUsernameAndPassword() username:{} nickname:{} sysUserList.size():{}", username, nickname, sysUserList.size());
             return sysUserList.get(0);
         }
         return sysUserList.get(0);
