@@ -41,7 +41,8 @@ public class SysUserService {
     public SysLoginVO login(SysLoginDTO sysLoginDTO) {
         sysUserCheckService.checkIsNull("入参不能为空", sysLoginDTO);
         sysUserCheckService
-                .checkIsAllNull("用户名或者昵称不能为空", sysLoginDTO.getUsername(), sysLoginDTO.getNickname())
+                .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getUsername())
+                .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getNickname())
         ;
         SysUser usernameAndNickName = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
         if (ObjectUtils.isEmpty(usernameAndNickName)) {
@@ -70,7 +71,8 @@ public class SysUserService {
         sysUserCheckService.checkIsNull("入参不能为空", sysUser);
         sysUserCheckService
                 .checkIsNull("用户名不能为空", sysUser.getUsername())
-                .checkIsNull("昵称不能为空", sysUser.getNickname());
+                .checkIsNull("昵称不能为空", sysUser.getNickname())
+        ;
 
         SysUser usernameOrNickName = sysUserMpManage.getByUsernameOrNickName(sysUser.getUsername(), sysUser.getNickname());
         try {
