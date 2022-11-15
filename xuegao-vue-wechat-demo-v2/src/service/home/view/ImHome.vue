@@ -20,12 +20,10 @@
 <script lang="ts" setup>
 import LeftMenu from "@/components/LeftMenu.vue";
 import router from "@/router";
-import { removeToken } from "@/common/token";
 
 function systemExit() {
-  removeToken();
-  router.push({
-    path: "/system/login",
+  router.replace({
+    path: "/",
   });
 }
 </script>

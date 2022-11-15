@@ -8,19 +8,24 @@
         alt=""
       />
     </header>
+    <!-- 导航栏，分布了三个功能，聊天消息，好友，收藏 -->
     <div class="navbar" @click="clearSearch">
+      <!--      第一个，点击进入聊天消息-->
       <router-link
         to="/im/chat"
         class="icon iconfont icon-wechat2"
       ></router-link>
+      <!--      第二个，点击进入 好友-->
       <router-link to="/im/friend" class="icon iconfont icon-friends_add">
       </router-link>
+      <!--      第二个，点击进入 收藏-->
       <router-link
         to="/im/mark"
         class="icon iconfont icon-shoucang-"
       ></router-link>
     </div>
     <footer>
+      <!--      设置按钮-->
       <i class="icon iconfont icon-shezhi"></i>
     </footer>
   </div>
@@ -33,15 +38,6 @@ console.log("LeftMenu");
 
 let openUserInfo = function (e: PointerEvent) {
   console.log("openMenu e", e);
-  let info = {
-    clientX: e.clientX,
-    clientY: e.clientY,
-    self: true,
-    visible: true,
-    visibleIng: true,
-    // info: this.getUser,
-  };
-  // $store.commit("system/setHeadMenu", info);
 };
 
 let clearSearch = function () {
@@ -68,7 +64,7 @@ let clearSearch = function () {
   text-align: center;
 }
 
-.icon {
+.navbar .icon {
   display: inline-block;
   font-size: 19px;
   margin-top: 28px;
@@ -78,13 +74,18 @@ let clearSearch = function () {
   cursor: pointer;
 }
 
-.icon.active {
+.navbar .icon:active {
+  background-color: #fa5151;
   color: rgb(0, 220, 65);
 }
+/*.router-link-active {*/
+/*  color: rgb(0, 220, 65);*/
+/*}*/
 
-.icon:hover {
+.navbar .icon:hover {
   opacity: 1;
   color: rgb(163, 163, 163);
+  /*background-color: brown;*/
 }
 
 .icon-wechat2,
