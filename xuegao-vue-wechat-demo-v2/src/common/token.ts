@@ -1,4 +1,4 @@
-import { isNotBlank } from "@/util/ObjectUtil";
+import { isNotBlank } from "@/common/ObjectUtil";
 
 export const TOKEN_KEY = "token";
 

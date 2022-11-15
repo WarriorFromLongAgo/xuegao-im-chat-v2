@@ -1,9 +1,9 @@
 import { readonly } from "vue";
-import { createAction } from "@/service/imlogin/store/LoginInfoAction";
-import { createState } from "@/service/imlogin/store/LoginInfo";
+import { createAction } from "@/service/login/store/LoginInfoAction";
+import { createState } from "@/service/login/store/LoginInfo";
 
 const state = createState();
-const action = createAction(state);
+const action = createAction();
 
 export const useLoginStore = () => {
   return {

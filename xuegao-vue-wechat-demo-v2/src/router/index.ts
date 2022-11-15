@@ -4,13 +4,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "index",
-    component: () => import("@/views/system/index/XuegaoIndex.vue"),
+    component: () => import("@/service/index/view/XueGaoIndex.vue"),
     alias: ["/index"],
   },
   {
     path: "/system/login",
     name: "systemLogin",
-    component: () => import("@/views/system/login/LoginAndRegister.vue"),
+    component: () => import("@/service/login/view/LoginAndRegister.vue"),
     meta: {
       //true 组件需要被缓存
       keepAlive: true,
@@ -21,20 +21,20 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/im/home",
     name: "imHome",
-    component: () => import("@/views/im/ImHome.vue"),
+    component: () => import("@/service/home/view/ImHome.vue"),
     redirect: "/im/chat",
     children: [
       {
         path: "/im/chat",
-        component: () => import("@/views/im/ImChat.vue"),
+        component: () => import("@/service/chat/view/ImChat.vue"),
       },
       {
         path: "/im/friend",
-        component: () => import("@/views/im/ImFriend.vue"),
+        component: () => import("@/service/friend/view/ImFriend.vue"),
       },
       {
         path: "/im/mark",
-        component: () => import("@/views/im/ImMark.vue"),
+        component: () => import("@/service/mark/view/ImMark.vue"),
       },
     ],
   },
@@ -46,9 +46,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log("to = ", JSON.stringify(to));
-  console.log("from = ", JSON.stringify(from));
-  console.log("next = ", JSON.stringify(next));
+  // console.log("to = ", JSON.stringify(to));
+  // console.log("from = ", JSON.stringify(from));
+  // console.log("next = ", JSON.stringify(next));
   next();
 });
 export default router;

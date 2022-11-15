@@ -1,7 +1,9 @@
 function isBlank(input: string | null): boolean {
-  return (
-    input === null || input === undefined || input === "" || input.trim() === ""
-  );
+  if (input === null || input == undefined) {
+    return true;
+  }
+  input = input.toString();
+  return input === "" || input.trim() === "";
 }
 
 function isNotBlank(input: string | null): boolean {

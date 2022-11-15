@@ -61,19 +61,19 @@
 }
 
 .account {
-  background-image: url("account.svg");
+  background-image: url("../view/account.svg");
 }
 
 .account :focus {
-  background-image: url("account-choice.svg");
+  background-image: url("../view/account-choice.svg");
 }
 
 .password {
-  background-image: url("password.svg");
+  background-image: url("../view/password.svg");
 }
 
 .password :focus {
-  background-image: url("password-choice.svg");
+  background-image: url("../view/password-choice.svg");
 }
 
 input {

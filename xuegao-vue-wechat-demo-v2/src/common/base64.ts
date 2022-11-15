@@ -4,7 +4,7 @@
  * @param dataUrl
  * @param fileName
  */
-import { isBlank, isEmpty } from "@/util/ObjectUtil";
+import { isBlank, isEmpty } from "@/common/ObjectUtil";
 
 export const base64toFile = function (
   dataUrl: string,

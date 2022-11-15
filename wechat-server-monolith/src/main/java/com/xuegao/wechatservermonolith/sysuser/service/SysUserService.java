@@ -39,11 +39,26 @@ public class SysUserService {
     private SysUserCheckService sysUserCheckService;
 
     public SysLoginVO login(SysLoginDTO sysLoginDTO) {
+        log.info("[xuegao-im-chat-v2][SysUserService][login][sysLoginDTO={}]", JsonUtil.toJsonString(sysLoginDTO));
         sysUserCheckService.checkIsNull("入参不能为空", sysLoginDTO);
         sysUserCheckService
                 .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getUsername())
                 .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getNickname())
         ;
+
+        // List<?> list = Lists.newArrayList("1", "2");
+        // list.stream().map(new Function<Object, JsonbHttpMessageConverter>() {
+        //     @Override
+        //     public JsonbHttpMessageConverter apply(Object o) {
+        //         return (JsonbHttpMessageConverter) o;
+        //     }
+        // }).forEach(new Consumer<JsonbHttpMessageConverter>() {
+        //     @Override
+        //     public void accept(JsonbHttpMessageConverter s) {
+        //         s.getJsonb()
+        //     }
+        // });
+
         SysUser usernameAndNickName = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
         if (ObjectUtils.isEmpty(usernameAndNickName)) {
             return null;
@@ -104,6 +119,7 @@ public class SysUserService {
 
     public List<SysUser> listService(GenericModelDTO<SysUser> dto) {
         // sysUserMpManage.mpGetByIds(dto.getIds());
+        log.info("[xuegao-im-chat-v2][SysUserService][listService][]");
         return Lists.newArrayList();
     }
 

@@ -10,13 +10,13 @@
             class="register-username"
             type="text"
             placeholder="登录账号"
-            v-model="sysUser.username"
+            v-model="loginRegisterSysUser.username"
           />
           <input
             class="register-nickname"
             type="text"
             placeholder="登录昵称"
-            v-model="sysUser.nickname"
+            v-model="loginRegisterSysUser.nickname"
           />
           <!--          <input class="register-password" type="password" placeholder="密码" />-->
           <!--          <input-->
@@ -45,7 +45,7 @@
             class="login-username"
             type="text"
             placeholder="账号/昵称"
-            v-model="sysUser.username"
+            v-model="loginRegisterSysUser.username"
           />
           <!-- <input type="email" placeholder="Email" /> -->
           <!--          <input class="login-password" type="password" placeholder="密码" />-->
@@ -86,23 +86,26 @@
 import router from "@/router";
 import localAvatar1 from "/public/static/images/avatar1.png";
 import localAvatar2 from "/public/static/images/avatar2.png";
-import { LoginCall } from "@/service/imlogin/call/call/LoginCall";
-import { useLoginStore } from "@/service/imlogin/store/LoginInfoStore";
-import { ISysUserReq } from "@/service/imlogin/call/request/SysUserRequest";
+import { LoginCall } from "@/service/login/call/call/LoginCall";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { ISysUserReq } from "@/service/login/call/request/SysUserRequest";
 import { ref } from "vue";
-import { isBlank, isEmpty } from "@/util/ObjectUtil";
+import { isBlank, isEmpty } from "@/common/ObjectUtil";
+import { ISysUserResp } from "@/service/login/call/response/SysUserResponse";
+import { Result } from "@/common/axios/response";
+import { LocalCacheUtil } from "@/common/LocalCache";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;
-let sysUser = ref<ISysUserReq>({
+let loginRegisterSysUser = ref<ISysUserReq>({
   username: "",
   nickname: "",
 });
 
 let rememberMe = ref<boolean>(false);
 
-function systemRegister() {
-  let tempSysUser = sysUser.value;
+async function systemRegister() {
+  let tempSysUser = loginRegisterSysUser.value;
   if (isEmpty(tempSysUser)) {
     alert("入参不能为空");
     return;
@@ -111,13 +114,22 @@ function systemRegister() {
     alert("登录账号或者登录昵称不能为空");
     return;
   }
-  let promise = LoginCall.register(sysUser.value).then((res: any) => {
-    console.log("register  " + JSON.stringify(res));
-  });
+  let respData: string = await LoginCall.register(tempSysUser).then(
+    (res: Result<string>) => {
+      console.log("register  " + JSON.stringify(res));
+      return res.data;
+    }
+  );
+  console.log(" respData ", respData);
+  if (isBlank(respData)) {
+    return;
+  }
+  await systemLogin();
+  console.log(" 注册成功，登录成功，进行跳转 ");
 }
 
 async function systemLogin() {
-  let tempSysUser = sysUser.value;
+  let tempSysUser = loginRegisterSysUser.value;
   if (isEmpty(tempSysUser)) {
     alert("入参不能为空");
     return;
@@ -126,22 +138,42 @@ async function systemLogin() {
     alert("登录账号或者登录昵称不能为空");
     return;
   }
-  sysUser.value.nickname = sysUser.value.username;
-  await LoginCall.login(sysUser.value).then((res: any) => {
-    console.log("login 1 " + JSON.stringify(res));
-  });
 
-  console.log(" login 2 ");
-  let loginStore = useLoginStore();
-
-  console.log(
-    "loginStore.action.getLoginInfo = ",
-    JSON.parse(JSON.stringify(loginStore.action.getSysUser))
+  tempSysUser.nickname = tempSysUser.username;
+  let respData: ISysUserResp = await LoginCall.login(tempSysUser).then(
+    (res: Result<ISysUserResp>) => {
+      console.log("login 1 " + JSON.stringify(res));
+      return res.data;
+    }
   );
+  if (isEmpty(respData)) {
+    return;
+  }
+  console.log(" respData ", respData);
+  let respSysUser = respData.sysUser;
+
+  let loginStore = useLoginStore();
+  loginStore.action.updateToken(respData.token);
+  loginStore.action.updateUser(respSysUser);
+  console.log("loginStore, ", loginStore.action.getLoginInfo());
+
+  setLocalStorage(tempSysUser.username, respData.token);
+  redirectImHome();
 }
 
 function redirectImHome() {
-  router.push({ path: "/im/home" });
+  router.replace({ path: "/im/home" });
+}
+
+function setLocalStorage(username: string, token: string) {
+  let tempRememberMe: boolean = rememberMe.value;
+  if (tempRememberMe) {
+    console.log("rememberMe true", tempRememberMe);
+    let localCacheUtil = new LocalCacheUtil();
+    localCacheUtil.set(username, token);
+  } else {
+    console.log("rememberMe false", tempRememberMe);
+  }
 }
 </script>
 
@@ -203,13 +235,13 @@ function redirectImHome() {
 .register-username,
 .register-nickname,
 .login-username {
-  background-image: url("./account.svg");
+  background-image: url("../view/account.svg");
 }
 
 .register-username,
 .login-username,
 .register-nickname {
-  background-image: url("./account-choice.svg");
+  background-image: url("../view/account-choice.svg");
 }
 
 /*.register-password,*/

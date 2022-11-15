@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { apiUrl } from "@/common/config/config";
-import { useLoginStore } from "@/service/imlogin/store/LoginInfoStore";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { CONSTANT_YES_NO } from "@/common/constant";
 
 // 定义接口
 interface RequestInfo {
@@ -76,9 +77,10 @@ instance.interceptors.request.use(
 
     if (config.headers !== null) {
       const store = useLoginStore();
-      const token = store.action.getToken;
+      const token = store.action.getToken();
       console.log("请求拦截器，token = ", token);
-      config.headers!.token = token;
+      config.headers!.head?.set("token", token);
+      // config.headers!.token = token;
     }
     console.log("请求拦截器，执行成功", JSON.stringify(config));
     return config;
@@ -107,10 +109,10 @@ instance.interceptors.response.use(
     // 请求失败
   },
   function (error) {
+    console.log(" 请求失败 ", JSON.stringify(error));
     const { response } = error;
     if (response) {
       // errorHandle(response.status, response.data.message);
-      console.log(" 请求失败 ", JSON.stringify(error));
       // 超时重新请求
       const config = error.config;
       // 全局的请求次数,请求的间隙
@@ -144,9 +146,9 @@ instance.interceptors.response.use(
       // network状态在app.vue中控制着一个全局的断网提示组件的显示隐藏
       // 后续增加断网情况下做的一些操作
       // store.commit("networkState", false);
-      const store = useLoginStore();
-      // store.action.updateNetworkState(false);
-      console.log("getLoginInfo axios", store.action.getLoginInfo);
+      const loginStore = useLoginStore();
+      loginStore.action.incrementNetworkStateCount();
+      console.log("getLoginInfo axios", loginStore.action.getLoginInfo());
     }
   }
 );

@@ -49,7 +49,7 @@
 
 <script lang="ts" setup>
 import { ChatInfo, getChatInfoList } from "@/model/ChatInfo";
-import { isEmpty } from "@/util/ObjectUtil";
+import { isEmpty } from "@/common/ObjectUtil";
 import { replaceFace } from "@/model/Emoji";
 import { computed } from "vue";
 

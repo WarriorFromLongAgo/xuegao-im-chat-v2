@@ -39,7 +39,7 @@ function systemExit() {
 
   height: 100vh;
   width: 100vw;
-  background: url(../../../public/static/images/bg.png);
+  background: url(../../../../public/static/images/bg.png);
   background-size: cover;
 }
 
