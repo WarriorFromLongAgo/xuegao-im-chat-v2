@@ -74,13 +74,13 @@ let clearSearch = function () {
   cursor: pointer;
 }
 
-.navbar .icon:active {
-  background-color: #fa5151;
-  color: rgb(0, 220, 65);
-}
-/*.router-link-active {*/
+/*.navbar .icon:active {*/
+/*  background-color: #fa5151;*/
 /*  color: rgb(0, 220, 65);*/
 /*}*/
+.navbar .icon.router-link-active {
+  color: rgb(0, 220, 65);
+}
 
 .navbar .icon:hover {
   opacity: 1;
