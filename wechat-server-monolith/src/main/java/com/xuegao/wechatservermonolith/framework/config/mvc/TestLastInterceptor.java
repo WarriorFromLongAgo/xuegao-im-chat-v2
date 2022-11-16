@@ -1,8 +1,8 @@
 package com.xuegao.wechatservermonolith.framework.config.mvc;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class TokenInterceptor implements HandlerInterceptor {
-    private static final Logger log = LoggerFactory.getLogger(TokenInterceptor.class);
+public class TestLastInterceptor implements HandlerInterceptor, Ordered {
+    private static final Logger log = LoggerFactory.getLogger(TestLastInterceptor.class);
 
     /**
      * 最先执行
@@ -29,13 +29,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        System.out.println("preHandle方法在控制器的处理请求方法调用之后，解析视图之前执行");
-        String token = request.getHeader("token");
-        log.info("[xuegao-im-chat-v2][TokenInterceptor][preHandle][token={}]", token);
-        if (StringUtils.isBlank(token)) {
-            return false;
-        }
-        // 注意 这里必须是true否则请求将就此终止。
+        log.info("[xuegao-im-chat-v2][TestLastInterceptor][preHandle][order={}]", getOrder());
         return true;
     }
 
@@ -68,4 +62,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     }
 
 
+    @Override
+    public int getOrder() {
+        return 1;
+    }
 }

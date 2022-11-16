@@ -9,14 +9,28 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private TokenInterceptor tokenInterceptor;
+    @Autowired
+    private TestFirstInterceptor testFirstInterceptor;
+    @Autowired
+    private TestLastInterceptor testLastInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry
-                .addInterceptor(tokenInterceptor)
-                // .addPathPatterns("/xxxx/*")
+                .addInterceptor(new TokenInterceptor())
                 .excludePathPatterns("/sysUser/login")
                 .excludePathPatterns("/sysUser/register")
-        ;
+                .excludePathPatterns("/sysUser/list")
+                .addPathPatterns("/**");
+        registry
+                .addInterceptor(new TestFirstInterceptor())
+                .excludePathPatterns("/sysUser/login")
+                .excludePathPatterns("/sysUser/register")
+                .addPathPatterns("/**");
+        registry
+                .addInterceptor(new TestLastInterceptor())
+                .excludePathPatterns("/sysUser/login")
+                .excludePathPatterns("/sysUser/register")
+                .addPathPatterns("/**");
     }
 }
