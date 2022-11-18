@@ -2,6 +2,7 @@ package com.xuegao.wechatservermonolith.framework.config.mvc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.core.Ordered;
 
 import javax.servlet.*;
@@ -16,6 +17,7 @@ public class TestFirstFilter implements Filter, Ordered {
         // 对request或 response 进行处理
         // 调用filter链中的下一个filter
         filterChain.doFilter(servletRequest, servletResponse);
+        MDC.put("xuegao", "xuegao");
     }
 
 

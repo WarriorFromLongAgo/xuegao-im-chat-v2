@@ -33,7 +33,11 @@
             <artifactId>framework-mapper</artifactId>
             <version>${xuegao-framework.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.xuegao</groupId>
+            <artifactId>framework-log</artifactId>
+            <version>${xuegao-framework.version}</version>
+        </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>

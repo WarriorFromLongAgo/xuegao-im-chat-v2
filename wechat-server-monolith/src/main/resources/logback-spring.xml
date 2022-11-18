@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <contextListener class="com.xuegao.log.logback.TtlMdcListener"/>
+
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <springProperty scope="context" name="serverPort" source="server.port"/>
+<!--    <property name="pid" value="${pid}"/>-->
+    <!--    <property name="log.colorPattern"-->
+    <!--              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldCyan([${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]) %yellow(%thread) %green(%logger) %msg%n"/>-->
+    <property name="log.pattern"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [${springAppName}] [port=${serverPort}] [pid=${pid}] [%thread] %-5level [%X{SOFA-TraceId},%X{SOFA-SpanId}] %logger{50} - %msg%n"/>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT_ERROR" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--    指定某个类的日志打印级别-->
+    <!--    <logger name="com.xuegao.springlog.controller.TestController" level="DEBUG"/>-->
+    <!--    <logger name="com.xuegao.springlog.service.TestService" level="INFO"/>-->
+
+    <!--    <root level="DEBUG">-->
+    <!--        <appender-ref ref="STDOUT"/>-->
+    <!--    </root>-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

@@ -8,7 +8,7 @@ netty:
 
 spring:
   application:
-    name: 'mybatis-demo'
+    name: 'wechat-server-monolith'
   datasource:
     username: root
     password: 123456

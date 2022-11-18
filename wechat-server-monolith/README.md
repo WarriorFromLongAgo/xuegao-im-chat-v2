@@ -39,6 +39,10 @@ use idea open xuegao-im-chat-v2
 
 run com.xuegao.wechatservermonolith.WechatServerMonolithApplication
 
+your computer file path 
+-javaagent:C:\Users\65126\devTool\GitProject_c\xuegao-im-chat-v2\wechat-server-monolith\src\main\resources\transmittable-thread-local-2.13.2.jar 
+-javaagent:C:\Users\65126\Downloads\skywalking-agent\skywalking-agent.jar
+
 ```
 
 # other
