@@ -14,11 +14,25 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/xue_gao_im_chat_v2?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    hikari:
+      #      连接超时时间（毫秒） 30秒
+      connection-timeout: 30000
+      #     空闲超时时间（毫秒）60000 = 1 分钟
+      idle-timeout: 60000
+      #      连接池中的连接的最长生命周期（毫秒），默认1800000 = 30分钟
+      maxLifetime: 1800000
+      #      连接池每分配一条连接前执行的查询语句（如：SELECT 1），以验证该连接是否是有效的
+      #      connectionTestQuery：SELECT 1
+
+      #      连接池中保留的最小连接数
+      minimum-idle: 10
+      #      连接池中可同时连接的最大连接数
+      maximum-pool-size: 20
 
 logging:
   level:
     root: info
-
+    com.zaxxer.hikari: debug
 
 xuegao:
   concurrent:

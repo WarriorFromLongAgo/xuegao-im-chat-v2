@@ -11,7 +11,9 @@
           <i class="icon iconfont icon-zuidahua"></i>
           <i @click="systemExit" class="icon iconfont icon-close"></i>
         </div>
-        <router-view></router-view>
+        <div class="routerViewDiv">
+          <router-view></router-view>
+        </div>
       </div>
     </div>
   </div>
@@ -55,16 +57,19 @@ function systemExit() {
 }
 
 .wechat .main {
-  flex: 1;
   height: 630px;
   background: #f5f5f5;
+  width: 100%;
 }
 
 .wechat .systemBottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  position: absolute;
+  /*窗口缩小，这里也跟着变了*/
+  /*left: 70%;*/
+  left: 1317px;
+
   height: 29px;
+  width: 130px;
 }
 
 .wechat .systemBottom i {
@@ -79,8 +84,14 @@ function systemExit() {
   color: #3f3f3f;
 }
 
-.wechat .systemBottom .close:hover {
+.wechat .systemBottom .icon-close:hover {
   background-color: #fa5151;
   color: #fff;
+}
+
+.wechat .routerViewDiv {
+  display: flex;
+  /*width: 100%;*/
+  /*height: 100%;*/
 }
 </style>
