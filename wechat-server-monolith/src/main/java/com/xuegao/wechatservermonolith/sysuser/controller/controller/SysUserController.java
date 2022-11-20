@@ -7,6 +7,7 @@ import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
 import com.xuegao.wechatservermonolith.sysuser.service.SysUserService;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,9 @@ public class SysUserController {
 
     @RequestMapping(value = "/sysUser/list", method = {RequestMethod.POST})
     public Result<List<SysUser>> list(@RequestBody GenericModelDTO<SysUser> dto) {
+        String fmk_traceId = MDC.get("fmk_TraceId");
+        System.out.println(fmk_traceId);
+
         return Result.success(sysUserService.listService(dto));
     }
 

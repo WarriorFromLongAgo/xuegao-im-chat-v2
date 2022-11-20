@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
 import com.xuegao.core.common.FmkConstant;
 import com.xuegao.core.exception.ServiceException;
+import com.xuegao.core.model.Context;
+import com.xuegao.core.model.ContextUtil;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.util.JsonUtil;
-import com.xuegao.util.LocalDateTimeUtil;
+import com.xuegao.util.time.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
@@ -68,8 +70,16 @@ public class SysUserService {
         sysLoginVO.setToken(token);
         sysLoginVO.setSysUser(usernameAndNickName);
 
+        Context context = ContextUtil.get();
+
         CompletableFuture
                 .runAsync(() -> {
+                            log.info("[xuegao-im-chat-v2][SysUserService][login][={}]", Thread.currentThread().getName());
+                            String string1 = JsonUtil.toJsonString(ContextUtil.get());
+                            log.info("[xuegao-im-chat-v2][SysUserService][login][context1={}]", string1);
+                            ContextUtil.set(context);
+                            String string2 = JsonUtil.toJsonString(ContextUtil.get());
+                            log.info("[xuegao-im-chat-v2][SysUserService][login][context2={}]", string2);
                             usernameAndNickName.setLastLoginTime(LocalDateTimeUtil.now());
                             sysUserMpManage.mpUpdate(usernameAndNickName);
                         },
@@ -120,6 +130,20 @@ public class SysUserService {
     public List<SysUser> listService(GenericModelDTO<SysUser> dto) {
         // sysUserMpManage.mpGetByIds(dto.getIds());
         log.info("[xuegao-im-chat-v2][SysUserService][listService][]");
+        CompletableFuture.runAsync(new Runnable() {
+            @Override
+            public void run() {
+                log.info("[xuegao-im-chat-v2][SysUserService][run][listService1=]");
+            }
+        });
+        xuegaoSpringTaskExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                log.info("[xuegao-im-chat-v2][SysUserService][run][listService2=]");
+            }
+        });
+
+
         return Lists.newArrayList();
     }
 

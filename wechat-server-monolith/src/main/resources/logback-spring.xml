@@ -8,7 +8,7 @@
     <!--    <property name="log.colorPattern"-->
     <!--              value="%magenta(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %boldCyan([${springAppName:-},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]) %yellow(%thread) %green(%logger) %msg%n"/>-->
     <property name="log.pattern"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [${springAppName}] [port=${serverPort}] [pid=${pid}] [%thread] %-5level [%X{SOFA-TraceId},%X{SOFA-SpanId}] %logger{50} - %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [${springAppName}] [${serverPort}] [%thread] %-5level [%X{fmk_TraceId},%X{fmk_SpanId}] %logger{50} - %msg%n"/>
 
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
