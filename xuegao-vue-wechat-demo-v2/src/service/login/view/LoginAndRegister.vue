@@ -84,8 +84,6 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import localAvatar1 from "/public/static/images/avatar1.png";
-import localAvatar2 from "/public/static/images/avatar2.png";
 import { LoginCall } from "@/service/login/call/call/LoginCall";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { ISysUserReq } from "@/service/login/call/request/SysUserRequest";
@@ -94,6 +92,9 @@ import { isBlank, isEmpty } from "@/common/ObjectUtil";
 import { ISysUserResp } from "@/service/login/call/response/SysUserResponse";
 import { Result } from "@/common/axios/response";
 import { LocalCacheUtil } from "@/common/LocalCache";
+
+import localAvatar1 from "/public/static/images/avatar1.png";
+import localAvatar2 from "/public/static/images/avatar2.png";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;

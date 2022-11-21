@@ -5,7 +5,7 @@
       <ChatList></ChatList>
     </div>
     <div class="chatBox">
-      <MessageChat class="message" :key="selectChatId"></MessageChat>
+      <MessageChat class="message"></MessageChat>
       <TextInput class="text"></TextInput>
     </div>
   </div>
@@ -14,7 +14,7 @@
 <script lang="ts" setup>
 import SearchInfo from "@/components/search/SearchInfo.vue";
 import ChatList from "@/components/chat/ChatList.vue";
-import MessageChat from "@/components/message/FriendMessage.vue";
+import MessageChat from "@/components/message/MessageChat.vue";
 import TextInput from "@/components/message/TextInput.vue";
 
 let placeholder = "搜索";

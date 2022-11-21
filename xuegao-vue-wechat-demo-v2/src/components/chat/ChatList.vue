@@ -1,12 +1,12 @@
 <template>
   <div class="msgList user-select-none">
     <ul>
-      <template v-for="item in list">
+      <template v-for="item in chatInfoList">
         <li
-          v-if="item.isShow"
+          v-if="item.blackFlag"
           :key="item.id"
-          class="chatList"
-          @click="selectChat(item, item.chatId)"
+          class="selectChat"
+          @click="selectChat(item)"
         >
           <div class="list-left">
             <img
@@ -18,10 +18,11 @@
                   ? item.friendInfo.nickname
                   : item.friendInfo.remark
               "
-              :src="localAvatar1"
+              :src="item.friendInfo.avatar"
             />
           </div>
           <div class="list-right">
+            <!--            聊天的人的备注 -->
             <p class="name">
               {{
                 item.friendInfo.remark === null || item.friendInfo.remark === ""
@@ -29,7 +30,9 @@
                   : item.friendInfo.remark
               }}
             </p>
+            <!--            朋友之间聊天的最后一条消息 的发送时间-->
             <span class="time" v-text="getTimes(item.lastMsgTime)"></span>
+            <!--            朋友之间聊天的最后一条消息-->
             <p
               class="lastMsg"
               v-html="
@@ -53,17 +56,15 @@ import { isEmpty } from "@/common/ObjectUtil";
 import { replaceFace } from "@/model/Emoji";
 import { computed } from "vue";
 
-import localAvatar1 from "/public/static/images/vue.jpg";
-
 console.log("  chat list 进来了");
 
-let list = computed(() => {
+let chatInfoList = computed(() => {
   return getChatInfoList();
 });
 
-let selectChat = function (item: ChatInfo, chatId: string) {
+let selectChat = function (item: ChatInfo) {
   console.log(" item = ", item);
-  console.log(" chatId = ", chatId);
+  console.log(" chatId = ", item.chatId);
 };
 
 let getTimes = function (lastMsgTime: Date) {
@@ -77,66 +78,73 @@ let getTimes = function (lastMsgTime: Date) {
     return lastMsgTime.getHours() + ":" + lastMsgTime.getMinutes();
   }
 };
+
+let consoleLog = function (msg: string, info: any) {
+  console.log(msg + " = ", info);
+};
 </script>
 
 <style lang="css" scoped>
 .msgList {
   width: 100%;
   height: 570px;
-  overflow-y: auto;
 }
-.chatList {
-  cursor: default;
+
+.selectChat {
   display: flex;
   padding: 12px;
   transition: background-color 0.1s;
   font-size: 0;
 }
-.chatList:hover {
-  cursor: default;
+
+.selectChat:hover {
   display: flex;
   padding: 12px;
-  transition: background-color 0.1s;
-  font-size: 0;
+  background-color: rgb(220, 220, 220);
 }
-.chatList.active {
-  cursor: default;
+
+.selectChat:active {
   display: flex;
   padding: 12px;
-  transition: background-color 0.1s;
-  font-size: 0;
+  background-color: rgb(196, 196, 196);
 }
-.chatList .list-left {
+
+.selectChat .list-left {
   position: relative;
   margin-right: 12px;
 }
-.chatList .list-left.avatar {
+
+.selectChat .list-left .avatar {
   border-radius: 2px;
 }
-.chatList .list-right {
+
+.selectChat .list-right {
   position: relative;
   flex: 1;
   margin-top: 4px;
 }
-.chatList .list-right .name {
+
+.selectChat .list-right .name {
   display: inline-block;
   vertical-align: top;
   font-size: 14px;
 }
-.chatList .list-right .time {
+
+.selectChat .list-right .time {
   float: right;
   color: #999;
   font-size: 10px;
   vertical-align: top;
 }
-.chatList .list-right .lastMsg {
+
+.selectChat .list-right .lastMsg {
   position: absolute;
   font-size: 12px;
   width: 130px;
   height: 15px;
   line-height: 15px;
   color: #999;
-  bottom: 0px;
+  bottom: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

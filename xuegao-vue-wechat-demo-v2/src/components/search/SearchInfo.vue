@@ -66,7 +66,6 @@ let del = function () {
 .search-list-wrapper {
   padding: 22px 12px 12px 12px;
   background-color: #f7f7f7;
-  display: flex;
 }
 
 .search-list {
@@ -74,17 +73,18 @@ let del = function () {
   display: flex;
   box-sizing: border-box;
   height: 26px;
-  width: 100%;
+  width: 192px;
   background-color: #e2e2e2;
   border: 1px solid #e2e2e2;
   border-radius: 5px;
 }
 
 .search-list .searchInput {
-  flex: 1;
+  width: 100%;
   font-size: 12px;
   padding: 6px;
   background-color: #e2e2e2;
+  border: 0 solid;
   outline: none;
 }
 
@@ -92,7 +92,7 @@ let del = function () {
   background-color: #f7f7f7;
 }
 
-.search-list .icon-search {
+.search-list .icon-search5 {
   display: inline-block;
   width: 24px;
   height: 24px;

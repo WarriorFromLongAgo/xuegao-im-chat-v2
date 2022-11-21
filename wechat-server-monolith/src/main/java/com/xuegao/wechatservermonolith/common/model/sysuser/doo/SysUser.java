@@ -91,4 +91,29 @@ public class SysUser extends GenericModel<Long> implements Serializable {
     @TableField("user_status")
     private Integer userStatus;
 
+    /**
+     * 用户注册的时候 用户ip
+     */
+    @TableField(exist = false)
+    private String userIp;
+    /**
+     * 用户注册的时候 省份
+     */
+    @TableField(exist = false)
+    private String userProvince;
+    /**
+     * 用户注册的时候 城市
+     */
+    @TableField(exist = false)
+    private String userCity;
+    /**
+     * 用户注册的时候 城市区号
+     */
+    @TableField(exist = false)
+    private String userCityCode;
+    /**
+     * 签名
+     */
+    @TableField(exist = false)
+    private String signature;
 }

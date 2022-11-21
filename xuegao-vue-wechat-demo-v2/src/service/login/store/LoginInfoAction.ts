@@ -1,9 +1,9 @@
-import { loginInfo } from "@/service/login/store/LoginInfo";
+import { loginInfoBO } from "@/service/login/store/LoginInfoBO";
 import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 import { CONSTANT_YES_NO } from "@/common/constant";
 
 function getLoginInfo() {
-  return loginInfo;
+  return loginInfoBO;
 }
 
 function getToken(): string {
@@ -56,10 +56,10 @@ export function createAction() {
     getSysUser,
     getToken,
 
-    // updateToken: updateToken(loginInfo.token)
-    // updateNetworkState: updateNetworkState(loginInfo.networkState),
-    // updateStatus: updateStatus(loginInfo.status),
-    // updateUser: updateUser(loginInfo.sysUser),
+    // updateToken: updateToken(loginInfoBO.token)
+    // updateNetworkState: updateNetworkState(loginInfoBO.networkState),
+    // updateStatus: updateStatus(loginInfoBO.status),
+    // updateUser: updateUser(loginInfoBO.sysUser),
     //
     // getLoginInfo: getLoginInfo(),
     // getSysUser: getSysUser(),

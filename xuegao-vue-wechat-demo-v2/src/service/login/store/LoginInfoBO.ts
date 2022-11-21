@@ -12,7 +12,7 @@ interface ILoginInfo {
   sysUser: ISysUser;
 }
 
-const loginInfo: ILoginInfo = {
+const loginInfoBO: ILoginInfo = {
   // 默认true是正常的
   networkState: CONSTANT_YES_NO.YES,
   networkStateCount: 0,
@@ -25,7 +25,7 @@ const loginInfo: ILoginInfo = {
 };
 
 function createState() {
-  return reactive(loginInfo);
+  return reactive(loginInfoBO);
 }
 
-export { loginInfo, ILoginInfo, createState };
+export { loginInfoBO, ILoginInfo, createState };

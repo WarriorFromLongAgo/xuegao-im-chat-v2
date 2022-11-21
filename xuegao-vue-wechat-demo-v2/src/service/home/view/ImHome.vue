@@ -44,6 +44,7 @@ function systemExit() {
 }
 
 .wechat {
+  position: absolute;
   display: flex;
   width: 1018px;
   height: 630px;
@@ -66,10 +67,11 @@ function systemExit() {
   position: absolute;
   /*窗口缩小，这里也跟着变了*/
   /*left: 70%;*/
-  left: 1317px;
+  /*left: 1317px;*/
+  right: 0;
 
   height: 29px;
-  width: 130px;
+  width: 128px;
 }
 
 .wechat .systemBottom i {
@@ -89,9 +91,9 @@ function systemExit() {
   color: #fff;
 }
 
-.wechat .routerViewDiv {
-  display: flex;
-  /*width: 100%;*/
-  /*height: 100%;*/
-}
+/*.wechat .routerViewDiv {*/
+/*  display: flex;*/
+/*  !*width: 100%;*!*/
+/*  !*height: 100%;*!*/
+/*}*/
 </style>

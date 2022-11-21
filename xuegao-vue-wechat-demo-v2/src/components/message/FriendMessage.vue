@@ -1,11 +1,12 @@
 <template>
-  <div>FriendMessage</div>
-  <div class="message">
+  <div class="messageChatClass">
     <header class="header user-select-none">
       <div class="friendName">
-        <span style="cursor: pointer" @click="showChatInfo"
-          >selectedChat.info.remark</span
-        >
+        <span style="cursor: pointer" @click="showChatInfo">{{
+          item.friendInfo.remark === ""
+            ? item.friendInfo.nickname
+            : item.friendInfo.remark
+        }}</span>
       </div>
       <!--      <i-->
       <!--        style="cursor: pointer"-->
@@ -13,13 +14,10 @@
       <!--        class="icon iconfont icon-more info"-->
       <!--      ></i>-->
     </header>
-    <div
-      class="message-wrapper scrollbar"
-      @scroll="handleScroll"
-      @mousewheel="mousewheel"
-      ref="list"
-    >
-      <ul v-if="selectedChat">
+    <!--      @mousewheel="mousewheel"-->
+    <div class="message-wrapper scrollbar" @scroll="handleScroll" ref="list">
+      <!--v-if="selectedChat"-->
+      <ul>
         <li v-for="item in showMessageList" class="message-item" :key="item.id">
           <div class="time selectNone">
             <span v-if="item.showTime">{{ convertToTime(item.date) }}</span>
@@ -53,26 +51,26 @@ let showMessageList = ref<Array<MessageInfo>>(new Array<MessageInfo>());
 let showChatInfo = function () {
   console.log("  showChatInfo ");
 };
-let mousewheel = function () {
-  console.log("  mousewheel ");
-};
+// let mousewheel = function () {
+//   console.log("  mousewheel ");
+// };
 let handleScroll = function () {
   console.log("  showChatInfo ");
   // this.$parent.showChatInfo();
 };
 
-let convertToTime = computed((date: Date) => {
+let convertToTime = function (date: Date) {
   if (date.getMinutes() < 10) {
     return date.getHours() + ":0" + date.getMinutes();
   } else {
     return date.getHours() + ":" + date.getMinutes();
   }
-});
+};
 
-let isMySelf = computed((userName: string) => {
+let isMySelf = function (userName: string) {
   // return userName === user.username
   return false;
-});
+};
 
 onMounted(() => {
   console.log(" onMounted ");
@@ -84,11 +82,12 @@ onMounted(() => {
 </script>
 
 <style scoped lang="css">
-.message {
+.messageChatClass {
   width: 100%;
   height: 100%;
   background-color: #f5f5f5;
 }
+
 .header {
   height: 60px;
   padding: 20px 0 0 30px;
@@ -122,7 +121,7 @@ onMounted(() => {
   margin-top: 16px;
 }
 
-.message-wrapper .message {
+.message-wrapper .messageChatClass {
   margin-bottom: 15px;
 }
 
