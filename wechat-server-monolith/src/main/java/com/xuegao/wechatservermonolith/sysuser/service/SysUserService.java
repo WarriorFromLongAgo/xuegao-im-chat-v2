@@ -11,7 +11,7 @@ import com.xuegao.util.JsonUtil;
 import com.xuegao.util.time.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
-import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
+import com.xuegao.wechatservermonolith.common.model.sysuser.vo.LoginInfoVO;
 import com.xuegao.wechatservermonolith.sysuser.check.SysUserCheckService;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
 import org.apache.commons.lang3.ObjectUtils;
@@ -40,7 +40,7 @@ public class SysUserService {
     @Autowired
     private SysUserCheckService sysUserCheckService;
 
-    public SysLoginVO login(SysLoginDTO sysLoginDTO) {
+    public LoginInfoVO login(SysLoginDTO sysLoginDTO) {
         log.info("[xuegao-im-chat-v2][SysUserService][login][sysLoginDTO={}]", JsonUtil.toJsonString(sysLoginDTO));
         sysUserCheckService.checkIsNull("入参不能为空", sysLoginDTO);
         sysUserCheckService
@@ -66,9 +66,9 @@ public class SysUserService {
             return null;
         }
         String token = UUID.randomUUID().toString();
-        SysLoginVO sysLoginVO = new SysLoginVO();
-        sysLoginVO.setToken(token);
-        sysLoginVO.setSysUser(usernameAndNickName);
+        LoginInfoVO loginInfoVO = new LoginInfoVO();
+        loginInfoVO.setToken(token);
+        loginInfoVO.setSysUser(usernameAndNickName);
 
         Context context = ContextUtil.get();
 
@@ -89,7 +89,7 @@ public class SysUserService {
                     return null;
                 });
 
-        return sysLoginVO;
+        return loginInfoVO;
     }
 
     public Integer registerService(SysUser sysUser) {

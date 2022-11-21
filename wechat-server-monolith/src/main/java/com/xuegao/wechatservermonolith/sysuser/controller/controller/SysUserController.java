@@ -5,7 +5,7 @@ import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.mapper.model.PageResult;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
-import com.xuegao.wechatservermonolith.common.model.sysuser.vo.SysLoginVO;
+import com.xuegao.wechatservermonolith.common.model.sysuser.vo.LoginInfoVO;
 import com.xuegao.wechatservermonolith.sysuser.service.SysUserService;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @RequestMapping(value = "/sysUser/login", method = {RequestMethod.POST, RequestMethod.GET})
-    public Result<SysLoginVO> login(@RequestBody SysLoginDTO sysLoginDTO) {
+    public Result<LoginInfoVO> login(@RequestBody SysLoginDTO sysLoginDTO) {
         return Result.success(sysUserService.login(sysLoginDTO));
     }
 
