@@ -55,7 +55,21 @@ if you have any question, please ask in issue, I will reply as soon as possible
 gmail: hubeixuegao@gmail.com
 ```
 
+# 概念
+```
+chat
+也就是每一个会话，最近的聊天记录，
+根据登陆人的userId，
+查询出所有的chat，然后根据chatId，查询出所有的message，
+然后根据messageId，查询出所有的messageContent
 
+message
+各个消息类型发送出来的东西，朋友的消息，群的消息，公众号的消息，都是message
+
+
+
+
+```
 
 
 

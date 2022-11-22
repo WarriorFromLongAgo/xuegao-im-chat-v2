@@ -2,11 +2,14 @@
   <div class="messageChatClass">
     <header class="header user-select-none">
       <div class="friendName">
-        <span style="cursor: pointer" @click="showChatInfo">{{
-          item.friendInfo.remark === ""
-            ? item.friendInfo.nickname
-            : item.friendInfo.remark
-        }}</span>
+        <!--        <span style="cursor: pointer" @click="showChatInfo">{{-->
+        <!--          item.friendInfo.remark === ""-->
+        <!--            ? item.friendInfo.nickname-->
+        <!--            : item.friendInfo.remark-->
+        <!--        }}</span>-->
+        <span style="cursor: pointer" @click="showChatInfo"
+          >item.friendInfo.remark</span
+        >
       </div>
       <!--      <i-->
       <!--        style="cursor: pointer"-->
