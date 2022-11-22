@@ -11,6 +11,7 @@ interface RequestInfo {
   cancel: any;
 }
 
+
 // 取消重复请求
 const requestInfoList: Array<RequestInfo> = [];
 const CancelToken = axios.CancelToken;
