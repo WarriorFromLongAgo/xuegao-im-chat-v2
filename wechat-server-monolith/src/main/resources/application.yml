@@ -13,7 +13,8 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/xue_gao_im_chat_v2?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://127.0.0.1:3306/xue_gao_im_chat_v2?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://2854wo5243.wicp.vip:38907/xue_gao_im_chat_v2?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowPublicKeyRetrieval=true
     hikari:
       #      连接超时时间（毫秒） 30秒
       connection-timeout: 30000
