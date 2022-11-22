@@ -57,11 +57,32 @@ gmail: hubeixuegao@gmail.com
 
 # 概念
 ```
-chat
-也就是每一个会话，最近的聊天记录，
-根据登陆人的userId，
-查询出所有的chat，然后根据chatId，查询出所有的message，
-然后根据messageId，查询出所有的messageContent
+chatList: 聊天列表，
+也就是根据登陆人查询出所有的会话，最近的聊天记录，根据最后发送消息的时间，进行倒序
+    根据登陆人的userId，
+    查询出所有的chat，然后根据chatId，查询出所有的message，
+    然后根据messageId，查询出所有的messageContent
+
+单个chat需要什么
+    未读的消息总数
+私聊的chat
+    朋友的信息
+    最后一条消息的内容
+    最后一条消息的时间
+    最后一条消息的发送人
+    最后一条消息的发送人的昵称
+    最后一条消息的发送人的id
+    最后一条消息的发送人的类型
+群聊的chat
+    
+
+
+
+每一个chat，都有type，要从不同的字段拿取信息，进行展示，
+
+
+
+
 
 message
 各个消息类型发送出来的东西，朋友的消息，群的消息，公众号的消息，都是message
