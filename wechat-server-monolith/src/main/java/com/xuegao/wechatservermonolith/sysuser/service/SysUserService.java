@@ -8,6 +8,7 @@ import com.xuegao.core.model.Context;
 import com.xuegao.core.model.ContextUtil;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.util.JsonUtil;
+import com.xuegao.util.UuidUtil;
 import com.xuegao.util.time.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
@@ -111,7 +112,7 @@ public class SysUserService {
         sysUser.setPassword("123456");
 
         sysUser.setNickname(sysUser.getUsername());
-        sysUser.setUid(UUID.randomUUID().toString());
+        sysUser.setUid(UuidUtil.uuid());
 
         sysUserMpManage.mpInsert(sysUser);
         log.info("[xuegao-im-chat-v2][SysUserService][registerService][sysUser={}]", JsonUtil.toJsonString(sysUser));
