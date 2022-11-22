@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { apiUrl } from "@/common/config/config";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
-import { CONSTANT_YES_NO } from "@/common/constant";
 
 // 定义接口
 interface RequestInfo {
@@ -80,7 +79,6 @@ instance.interceptors.request.use(
       const token = store.action.getToken();
       console.log("请求拦截器，token = ", token);
       config.headers!.head?.set("token", token);
-      // config.headers!.token = token;
     }
     console.log("请求拦截器，执行成功", JSON.stringify(config));
     return config;

@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import FriendMessageDO from "@/components/message/FriendMessage.vue";
+import FriendMessage from "@/components/message/FriendMessage.vue";
 </script>
 
 <style scoped></style>
