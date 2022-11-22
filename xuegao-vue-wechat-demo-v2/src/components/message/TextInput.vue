@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 let alertWarnMsgFlag = false;
 let pasteListener = function (e: PointerEvent) {
-  console.log(" 粘贴板事件 ");
+  console.log(" 粘贴板事件  ");
 };
 
 // 监听回退按键

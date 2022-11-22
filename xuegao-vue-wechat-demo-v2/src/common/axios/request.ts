@@ -19,8 +19,8 @@ export class Request {
     });
   }
 
-  //Promise类型需要接收一个泛型参数（目的是为了定义响应数据的类型）
-  //T用于指定响应数据中data的类型
+  // Promise类型需要接收一个泛型参数（目的是为了定义响应数据的类型）
+  // T用于指定响应数据中data的类型
   static async post<T>(url: string, params?: any): Promise<Result<T>> {
     return new Promise((resolve, reject) => {
       axios

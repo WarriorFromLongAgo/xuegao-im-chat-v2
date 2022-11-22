@@ -18,7 +18,7 @@
       <!--      第二个，点击进入 好友-->
       <router-link to="/im/friend" class="icon iconfont icon-friends_add">
       </router-link>
-      <!--      第二个，点击进入 收藏-->
+      <!--      第二个，点击进入 收藏 -->
       <router-link
         to="/im/mark"
         class="icon iconfont icon-shoucang-"

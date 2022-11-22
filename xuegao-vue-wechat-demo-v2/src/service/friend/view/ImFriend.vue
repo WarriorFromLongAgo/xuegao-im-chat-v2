@@ -1,5 +1,5 @@
 <template>
-  <div>ImFriend</div>
+  <div>ImFrieasand</div>
 </template>
 
 <script>

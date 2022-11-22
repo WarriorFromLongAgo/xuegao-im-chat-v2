@@ -22,7 +22,7 @@
             />
           </div>
           <div class="list-right">
-            <!--            聊天的人的备注 -->
+            <!--            聊天的人的备注  -->
             <p class="name">
               {{
                 item.friendInfo.remark === null || item.friendInfo.remark === ""
