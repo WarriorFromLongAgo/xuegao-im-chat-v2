@@ -45,13 +45,12 @@ import { isEmpty } from "@/common/ObjectUtil";
 import { replaceToFaceByMsg } from "@/model/Emoji";
 import { computed } from "vue";
 import { ChatInfoData, getChatInfoV2List } from "@/model/temp/ChatInfoData";
-import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
-import { createSelectChatMethod } from "@/service/chat/store/SelectChatBO";
+import { useStore } from "@/service/chat/store/SelectChatStore";
 
 // let loginStore = useLoginStore();
 // let sysUser = loginStore.action.getSysUser();
-let selectChatMethod = createSelectChatMethod();
+let selectChatUseStore = useStore();
 
 console.log("  chat list 进来了");
 
@@ -61,35 +60,37 @@ let chatInfoV2List = computed(() => {
 
 let selectChat = function (chatInfoData: ChatInfoData) {
   console.log(" selectChat input chatInfoData = ", chatInfoData);
+  let selectChatState = selectChatUseStore.state;
+  selectChatUseStore.action.updateChatType(ChatMsgTypeEnum.OneToOne);
 
-  let chatMsgTypeEnum = chatInfoData.chatType;
-  if (ChatMsgTypeEnum.OneToOne === chatMsgTypeEnum) {
-    if (
-      chatInfoData.friendInfo === undefined ||
-      chatInfoData.friendUser === undefined
-    ) {
-      throw new Error("选择朋友信息为空");
-    }
-    selectChatMethod.updateByFriend(
-      chatInfoData.friendInfo,
-      chatInfoData.friendUser
-    );
-  } else if (ChatMsgTypeEnum.ManyToMany === chatMsgTypeEnum) {
-    if (
-      chatInfoData.groupInfo === undefined ||
-      chatInfoData.groupUser === undefined
-    ) {
-      throw new Error("选择朋友信息为空");
-    }
-    selectChatMethod.updateByGroup(
-      chatInfoData.groupInfo,
-      chatInfoData.groupUser
-    );
-  }
-  console.log(
-    "selectChat finally selectChat = ",
-    selectChatMethod.getSelectChat()
-  );
+  // let chatMsgTypeEnum = chatInfoData.chatType;
+  // if (ChatMsgTypeEnum.OneToOne === chatMsgTypeEnum) {
+  //   if (
+  //     chatInfoData.friendInfo === undefined ||
+  //     chatInfoData.friendUser === undefined
+  //   ) {
+  //     throw new Error("选择朋友信息为空");
+  //   }
+  //   selectChatMethod.updateByFriend(
+  //     chatInfoData.friendInfo,
+  //     chatInfoData.friendUser
+  //   );
+  // } else if (ChatMsgTypeEnum.ManyToMany === chatMsgTypeEnum) {
+  //   if (
+  //     chatInfoData.groupInfo === undefined ||
+  //     chatInfoData.groupUser === undefined
+  //   ) {
+  //     throw new Error("选择朋友信息为空");
+  //   }
+  //   selectChatMethod.updateByGroup(
+  //     chatInfoData.groupInfo,
+  //     chatInfoData.groupUser
+  //   );
+  // }
+  // console.log(
+  //   "selectChat finally selectChat = ",
+  //   selectChatMethod.getSelectChat()
+  // );
 };
 
 let getTimes = function (lastMsgTime: Date) {
