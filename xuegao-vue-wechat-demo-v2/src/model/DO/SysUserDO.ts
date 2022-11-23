@@ -16,7 +16,7 @@ interface SysUserDO extends GenericModel {
   /**
    * 性别,1男，2女，3其他
    */
-  gender: string;
+  gender: number;
   /**
    * 头像
    */
