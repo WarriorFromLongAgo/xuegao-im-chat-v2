@@ -39,7 +39,7 @@ public class FriendUser extends GenericModel<Long> implements Serializable {
      * 免打扰
      */
     @TableField(exist = false)
-    private Integer notDisturb;
+    private Boolean notDisturb;
     /**
      * 好友备注
      */

@@ -38,6 +38,10 @@ export enum ChatMsgTypeEnum {
    * 视频消息
    */
   Video,
+  /**
+   * 文件消息
+   */
+  File,
 
   // endregion
 

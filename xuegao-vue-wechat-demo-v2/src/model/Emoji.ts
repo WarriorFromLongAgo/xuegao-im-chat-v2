@@ -1,6 +1,8 @@
-import { MessageInfo } from "@/model/MessageInfo";
+import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
+import { GroupMessageDO } from "@/model/DO/GroupMessageDO";
+import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 
-export { Emoji, getEmojiList, replaceFace };
+export { Emoji, getEmojiList, replaceToFaceByMsg };
 
 interface Emoji {
   sign: string;
@@ -11,12 +13,14 @@ interface Emoji {
   id: string;
 }
 
-const replaceFace = function (messageInfo: MessageInfo) {
+const replaceToFaceByMsg = function (
+  messageInfo: FriendMessageDO | GroupMessageDO
+) {
   console.log(" messageInfo ", messageInfo);
-  if (messageInfo.type == 2) {
+  if (messageInfo.messageType === ChatMsgTypeEnum.Image) {
     return "[图片]";
   }
-  if (messageInfo.type == 3) {
+  if (messageInfo.messageType === ChatMsgTypeEnum.File) {
     return "[文件]";
   }
   let messageContent = messageInfo.content;

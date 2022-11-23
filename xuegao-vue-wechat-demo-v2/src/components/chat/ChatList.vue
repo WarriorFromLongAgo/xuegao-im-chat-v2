@@ -1,22 +1,17 @@
 <template>
   <div class="msgList user-select-none">
     <ul>
-      <template v-for="item in chatInfoList">
-        <li
-          v-if="item.blackFlag"
-          :key="item.id"
-          class="selectChat"
-          @click="selectChat(item)"
-        >
+      <template v-for="item in chatInfoV2List" :key="item.friendInfo.id">
+        <li class="selectChat" @click="selectChat(item)">
           <div class="list-left">
             <img
               class="avatar"
               width="40"
               height="40"
               :alt="
-                item.friendInfo.remark === ''
+                item.friendUser.friendNote === ''
                   ? item.friendInfo.nickname
-                  : item.friendInfo.remark
+                  : item.friendUser.friendNote
               "
               :src="item.friendInfo.avatar"
             />
@@ -25,9 +20,10 @@
             <!--            聊天的人的备注  -->
             <p class="name">
               {{
-                item.friendInfo.remark === null || item.friendInfo.remark === ""
+                item.friendUser.friendNote === null ||
+                item.friendUser.friendNote === ""
                   ? item.friendInfo.nickname
-                  : item.friendInfo.remark
+                  : item.friendUser.friendNote
               }}
             </p>
             <!--            朋友之间聊天的最后一条消息 的发送时间-->
@@ -35,13 +31,7 @@
             <!--            朋友之间聊天的最后一条消息-->
             <p
               class="lastMsg"
-              v-html="
-                replaceFace(
-                  item.messageList.length > 0
-                    ? item.messageList[item.messageList.length - 1]
-                    : ''
-                )
-              "
+              v-html="replaceToFaceByMsg(item.lastFriendMessage)"
             ></p>
           </div>
         </li>
@@ -51,20 +41,55 @@
 </template>
 
 <script lang="ts" setup>
-import { ChatInfo, getChatInfoList } from "@/model/ChatInfo";
 import { isEmpty } from "@/common/ObjectUtil";
-import { replaceFace } from "@/model/Emoji";
+import { replaceToFaceByMsg } from "@/model/Emoji";
 import { computed } from "vue";
+import { ChatInfoData, getChatInfoV2List } from "@/model/temp/ChatInfoData";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
+import { createSelectChatMethod } from "@/service/chat/store/SelectChatBO";
+
+// let loginStore = useLoginStore();
+// let sysUser = loginStore.action.getSysUser();
+let selectChatMethod = createSelectChatMethod();
 
 console.log("  chat list 进来了");
 
-let chatInfoList = computed(() => {
-  return getChatInfoList();
+let chatInfoV2List = computed(() => {
+  return getChatInfoV2List();
 });
 
-let selectChat = function (item: ChatInfo) {
-  console.log(" item = ", item);
-  console.log(" chatId = ", item.chatId);
+let selectChat = function (chatInfoData: ChatInfoData) {
+  console.log(" selectChat input chatInfoData = ", chatInfoData);
+
+  let chatMsgTypeEnum = chatInfoData.chatType;
+  if (ChatMsgTypeEnum.OneToOne === chatMsgTypeEnum) {
+    if (
+      chatInfoData.friendInfo === undefined ||
+      chatInfoData.friendUser === undefined
+    ) {
+      throw new Error("选择朋友信息为空");
+    }
+    selectChatMethod.updateByFriend(
+      chatInfoData.friendInfo,
+      chatInfoData.friendUser
+    );
+  } else if (ChatMsgTypeEnum.ManyToMany === chatMsgTypeEnum) {
+    if (
+      chatInfoData.groupInfo === undefined ||
+      chatInfoData.groupUser === undefined
+    ) {
+      throw new Error("选择朋友信息为空");
+    }
+    selectChatMethod.updateByGroup(
+      chatInfoData.groupInfo,
+      chatInfoData.groupUser
+    );
+  }
+  console.log(
+    "selectChat finally selectChat = ",
+    selectChatMethod.getSelectChat()
+  );
 };
 
 let getTimes = function (lastMsgTime: Date) {

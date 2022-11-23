@@ -1,9 +1,26 @@
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
-import { SysUserDO } from "@/model/DO/SysUserDO";
 import { GroupInfoDO } from "@/model/DO/GroupInfoDO";
 import { GroupMessageDO } from "@/model/DO/GroupMessageDO";
 import { getDate } from "@/common/time";
+import { SysUserBO } from "@/model/BO/SysUserBO";
+import {
+  friendInfoDataOne,
+  friendInfoDataThree,
+  friendInfoDataTwo,
+} from "@/model/temp/FriendInfoData";
+import {
+  friendMessageDataOne,
+  friendMessageDataThree,
+  friendMessageDataTwo,
+} from "@/model/temp/FriendMessageData";
+import { FriendUserDO } from "@/model/DO/FriendUserDO";
+import { GroupUserDO } from "@/model/DO/GroupUserDO";
+import {
+  friendUserDataOne,
+  friendUserDataThree,
+  friendUserDataTwo,
+} from "@/model/temp/FriendUserData";
 
 const nowDate = getDate();
 
@@ -18,13 +35,17 @@ interface ChatInfoData {
   // 1000 私聊，1001 群聊
   chatType: ChatMsgTypeEnum;
   // 私聊的时候，对方的详细信息
-  friendInfo: SysUserDO;
+  friendInfo?: SysUserBO;
   // 私聊的时候，这里应该只存最后一条消息，这里面需要冗余对方的名字，id
-  lastFriendMessage: FriendMessageDO;
+  lastFriendMessage?: FriendMessageDO;
+  // 私聊的时候，人和人的关系
+  friendUser?: FriendUserDO;
   // 群聊的时候，群的详细信息
-  groupInfo: GroupInfoDO;
-  // 消息的列表，这里应该只存最后一条消息，这里面需要冗余对方的名字，id
-  lastGroupMessage: GroupMessageDO;
+  groupInfo?: GroupInfoDO;
+  // 群聊的时候，这里应该只存最后一条消息，这里面需要冗余群的名字，id
+  lastGroupMessage?: GroupMessageDO;
+  // 私聊的时候，人和群的关系
+  groupUser?: GroupUserDO;
 }
 
 const chatInfoV2One: ChatInfoData = {
@@ -32,15 +53,29 @@ const chatInfoV2One: ChatInfoData = {
   newMsgNum: 0,
   lastMsgTime: nowDate,
   chatType: ChatMsgTypeEnum.OneToOne,
-  friendInfo:
+  friendInfo: friendInfoDataOne,
+  lastFriendMessage: friendMessageDataOne,
+  friendUser: friendUserDataOne,
 };
 
 const chatInfoV2Two: ChatInfoData = {
   index: 2,
+  newMsgNum: 98,
+  lastMsgTime: nowDate,
+  chatType: ChatMsgTypeEnum.OneToOne,
+  friendInfo: friendInfoDataTwo,
+  lastFriendMessage: friendMessageDataTwo,
+  friendUser: friendUserDataTwo,
 };
 
 const chatInfoV2Three: ChatInfoData = {
   index: 3,
+  newMsgNum: 100,
+  lastMsgTime: nowDate,
+  chatType: ChatMsgTypeEnum.OneToOne,
+  friendInfo: friendInfoDataThree,
+  lastFriendMessage: friendMessageDataThree,
+  friendUser: friendUserDataThree,
 };
 
 function getChatInfoV2List(): Array<ChatInfoData> {

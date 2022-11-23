@@ -35,7 +35,7 @@
             <div
               class="text"
               v-if="item.type === 1"
-              v-html="replaceFace(item)"
+              v-html="replaceToFaceByMsg(item)"
             ></div>
           </div>
         </li>
@@ -47,7 +47,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { getMessageInfoList, MessageInfo } from "@/model/MessageInfo";
-import { replaceFace } from "@/model/Emoji";
+import { replaceToFaceByMsg } from "@/model/Emoji";
 
 let showMessageList = ref<Array<MessageInfo>>(new Array<MessageInfo>());
 

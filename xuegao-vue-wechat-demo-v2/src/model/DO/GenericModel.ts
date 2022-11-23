@@ -4,7 +4,7 @@ interface GenericModel {
   createdBy?: string;
   createdTime?: Date;
   updatedBy?: string;
-  updatedTime?: string;
+  updatedTime?: Date;
   traceId?: string;
 }
 
