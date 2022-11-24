@@ -33,20 +33,26 @@ public class NettyServer {
 
     private Channel serverChannel;
 
+    private NioEventLoopGroup bossGroup;
+
+    private NioEventLoopGroup workerGroup;
+
     @Bean(name = "bossGroup", destroyMethod = "shutdownGracefully")
     public NioEventLoopGroup bossGroup() {
-        return new NioEventLoopGroup();
+        return bossGroup = new NioEventLoopGroup();
     }
 
     @Bean(name = "workerGroup", destroyMethod = "shutdownGracefully")
     public NioEventLoopGroup workerGroup() {
-        return new NioEventLoopGroup();
+        return workerGroup = new NioEventLoopGroup();
     }
 
     @Bean(name = "serverBootstrap")
     public ServerBootstrap bootstrap() {
         ServerBootstrap serverBootstrap = new ServerBootstrap();
+        // 设置两个 EventLoopGroup 对象
         serverBootstrap.group(bossGroup(), workerGroup())
+                // 指定 Channel 为服务端 NioServerSocketChannel
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
@@ -63,13 +69,18 @@ public class NettyServer {
                         // pipeline.addLast(new WSServerHandler());
                     }
                 })
-                .option(ChannelOption.SO_BACKLOG, 128)
-                .childOption(ChannelOption.SO_KEEPALIVE, true);
+                // 服务端 accept 队列的大小
+                .option(ChannelOption.SO_BACKLOG, 1024)
+                // TCP Keepalive 机制，实现 TCP 层级的心跳保活功能
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
+                // 允许较小的数据包的发送，降低延迟
+                .childOption(ChannelOption.TCP_NODELAY, true);
+        ;
         return serverBootstrap;
     }
 
     public void start(int port) throws Exception {
-        log.info("[xuegao-im-chat-2022][NettyServer][start][port={}]", port);
+        log.info("[xuegao-im-chat-2022][NettyServer][start][serverChannel.port={}]", port);
         serverChannel = bootstrap().bind(port)
                 .sync()
                 .channel();
@@ -85,6 +96,15 @@ public class NettyServer {
         if (Objects.nonNull(serverChannel) && Objects.nonNull(serverChannel.parent())) {
             serverChannel.parent().close();
             log.info("[xuegao-im-chat-2022][NettyServer][stop][serverChannel.parent().close()]");
+        }
+        // 优雅关闭两个 EventLoopGroup 对象
+        if (Objects.nonNull(bossGroup)) {
+            bossGroup.shutdownGracefully();
+            log.info("[xuegao-im-chat-2022][NettyServer][stop][bossGroup.shutdownGracefully()]");
+        }
+        if (Objects.nonNull(workerGroup)) {
+            workerGroup.shutdownGracefully();
+            log.info("[xuegao-im-chat-2022][NettyServer][stop][workerGroup.shutdownGracefully()]");
         }
         log.info("[xuegao-im-chat-2022][NettyServer][stop完成]");
     }
