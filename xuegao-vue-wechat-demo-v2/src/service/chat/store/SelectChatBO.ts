@@ -9,7 +9,7 @@ export { SelectChatBO, createState };
 
 interface SelectChatBO {
   // 1000 私聊，1001 群聊
-  chatType: ChatMsgTypeEnum;
+  chatType?: ChatMsgTypeEnum;
   // 私聊的时候，对方的详细信息
   friendInfo?: SysUserBO;
   // 私聊的时候，人和人的关系
@@ -20,9 +20,7 @@ interface SelectChatBO {
   groupUser?: GroupUserDO;
 }
 
-const selectChat: SelectChatBO = {
-  chatType: ChatMsgTypeEnum.OneToOne,
-};
+const selectChat: SelectChatBO = {};
 
 function createState(): SelectChatBO {
   return reactive(selectChat);

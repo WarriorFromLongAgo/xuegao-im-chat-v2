@@ -117,11 +117,11 @@ async function systemRegister() {
   }
   let respData: string = await LoginCall.register(tempSysUser).then(
     (res: Result<string>) => {
-      console.log("register  " + JSON.stringify(res));
+      // console.log("register  " + JSON.stringify(res));
       return res.data;
     }
   );
-  console.log(" respData ", respData);
+  // console.log(" respData ", respData);
   if (isBlank(respData)) {
     return;
   }
@@ -143,20 +143,20 @@ async function systemLogin() {
   tempSysUser.nickname = tempSysUser.username;
   let respData: ISysUserResp = await LoginCall.login(tempSysUser).then(
     (res: Result<ISysUserResp>) => {
-      console.log("login 1 " + JSON.stringify(res));
+      // console.log("login 1 " + JSON.stringify(res));
       return res.data;
     }
   );
   if (isEmpty(respData)) {
     return;
   }
-  console.log(" respData ", respData);
+  // console.log(" respData ", respData);
   let respSysUser = respData.sysUser;
 
   let loginStore = useLoginStore();
   loginStore.action.updateToken(respData.token);
-  loginStore.action.updateUser(respSysUser);
-  console.log("loginStore, ", loginStore.action.getLoginInfo());
+  loginStore.action.updateLoginUser(respSysUser);
+  // console.log("loginStore, ", loginStore.action.getLoginInfo);
 
   setLocalStorage(tempSysUser.username, respData.token);
   redirectImHome();
@@ -169,11 +169,11 @@ function redirectImHome() {
 function setLocalStorage(username: string, token: string) {
   let tempRememberMe: boolean = rememberMe.value;
   if (tempRememberMe) {
-    console.log("rememberMe true", tempRememberMe);
+    // console.log("rememberMe true", tempRememberMe);
     let localCacheUtil = new LocalCacheUtil();
     localCacheUtil.set(username, token);
   } else {
-    console.log("rememberMe false", tempRememberMe);
+    // console.log("rememberMe false", tempRememberMe);
   }
 }
 </script>

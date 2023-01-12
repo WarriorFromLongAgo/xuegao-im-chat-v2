@@ -34,7 +34,7 @@
 <script lang="ts" setup>
 import localAvatar1 from "/public/static/images/avatar1.png";
 
-console.log("LeftMenu");
+// console.log("LeftMenu");
 
 let openUserInfo = function (e: PointerEvent) {
   console.log("openMenu e", e);

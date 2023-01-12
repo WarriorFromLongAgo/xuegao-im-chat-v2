@@ -25,9 +25,10 @@ import {
 const nowDate = getDate();
 
 // 聊天会话 列表
-interface ChatInfoData {
+interface ChatInfo {
   // 聊天在会话列表的位置
   index: number;
+
   // 新消息条数
   newMsgNum: number;
   // 最后的消息时间
@@ -48,7 +49,7 @@ interface ChatInfoData {
   groupUser?: GroupUserDO;
 }
 
-const chatInfoV2One: ChatInfoData = {
+const chatInfoOne: ChatInfo = {
   index: 1,
   newMsgNum: 0,
   lastMsgTime: nowDate,
@@ -58,7 +59,7 @@ const chatInfoV2One: ChatInfoData = {
   friendUser: friendUserDataOne,
 };
 
-const chatInfoV2Two: ChatInfoData = {
+const chatInfoTwo: ChatInfo = {
   index: 2,
   newMsgNum: 98,
   lastMsgTime: nowDate,
@@ -68,7 +69,7 @@ const chatInfoV2Two: ChatInfoData = {
   friendUser: friendUserDataTwo,
 };
 
-const chatInfoV2Three: ChatInfoData = {
+const chatInfoThree: ChatInfo = {
   index: 3,
   newMsgNum: 100,
   lastMsgTime: nowDate,
@@ -78,13 +79,12 @@ const chatInfoV2Three: ChatInfoData = {
   friendUser: friendUserDataThree,
 };
 
-function getChatInfoV2List(): Array<ChatInfoData> {
-  const chatInfoV2List: Array<ChatInfoData> = new Array<ChatInfoData>();
-  chatInfoV2List.push(chatInfoV2One);
-  chatInfoV2List.push(chatInfoV2Two);
-  chatInfoV2List.push(chatInfoV2Three);
-  console.log(" getChatInfoV2List ");
+function getChatInfoList(): Array<ChatInfo> {
+  const chatInfoV2List: Array<ChatInfo> = new Array<ChatInfo>();
+  chatInfoV2List.push(chatInfoOne);
+  chatInfoV2List.push(chatInfoTwo);
+  chatInfoV2List.push(chatInfoThree);
   return chatInfoV2List;
 }
 
-export { ChatInfoData, getChatInfoV2List };
+export { ChatInfo, getChatInfoList };

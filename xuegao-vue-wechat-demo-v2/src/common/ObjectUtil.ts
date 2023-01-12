@@ -10,7 +10,7 @@ function isNotBlank(input: string | null): boolean {
   return !isBlank(input);
 }
 
-function isEmpty(input: object | null | number): boolean {
+function isEmpty(input: object | null | number | undefined): boolean {
   if (input === null || input == undefined) {
     return true;
   }
@@ -29,7 +29,7 @@ function isEmpty(input: object | null | number): boolean {
   return false;
 }
 
-function isNotEmpty(input: object | null | number): boolean {
+function isNotEmpty(input: object | null | number | undefined): boolean {
   return !isEmpty(input);
 }
 

@@ -1,10 +1,7 @@
-import { SysUserBO } from "@/model/BO/SysUserBO";
-import { FriendUserDO } from "@/model/DO/FriendUserDO";
 import { isEmpty } from "@/common/ObjectUtil";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
-import { GroupInfoDO } from "@/model/DO/GroupInfoDO";
-import { GroupUserDO } from "@/model/DO/GroupUserDO";
 import { SelectChatBO } from "@/service/chat/store/SelectChatBO";
+import { ChatInfo } from "@/model/BO/ChatInfo";
 
 export { createAction };
 
@@ -28,45 +25,66 @@ function getGroupUser(state: SelectChatBO) {
   return state.groupUser;
 }
 
-function updateByFriend(
-  state: SelectChatBO,
-  friendInfo: SysUserBO,
-  friendUser: FriendUserDO
-) {
-  if (isEmpty(friendInfo) || isEmpty(friendUser)) {
-    throw new Error("保存朋友的信息异常");
-  }
+// /**
+//  * 修改，当前选择的为单聊
+//  * */
+// function updateByFriend(state: SelectChatBO) {
+//   return (friendInfo: SysUserBO, friendUser: FriendUserDO) => {
+//     if (isEmpty(friendInfo) || isEmpty(friendUser)) {
+//       throw new Error("保存朋友的信息异常");
+//     }
+//     state.friendInfo = friendInfo;
+//     state.friendUser = friendUser;
+//     state.groupInfo = undefined;
+//     state.groupUser = undefined;
+//   };
+// }
+//
+// /**
+//  * 修改，当前选择的为群聊
+//  * */
+// function updateByGroup(state: SelectChatBO) {
+//   return (groupInfo: GroupInfoDO, groupUser: GroupUserDO) => {
+//     if (isEmpty(groupInfo) || isEmpty(groupUser)) {
+//       throw new Error("保存群组的信息异常");
+//     }
+//     state.friendUser = undefined;
+//     state.friendInfo = undefined;
+//     state.groupInfo = groupInfo;
+//     state.groupUser = groupUser;
+//   };
+// }
 
-  state.chatType = ChatMsgTypeEnum.OneToOne;
-  state.friendUser = friendUser;
-  state.friendInfo = friendInfo;
-  state.groupInfo = undefined;
-  state.groupUser = undefined;
-}
+function updateSelectChat(state: SelectChatBO) {
+  return (chatInfo: ChatInfo) => {
+    if (isEmpty(chatInfo)) {
+      throw new Error("入参不能为空");
+    }
+    const selectChatType = chatInfo.chatType;
+    state.chatType = selectChatType;
 
-function updateByGroup(
-  state: SelectChatBO,
-  groupInfo: GroupInfoDO,
-  groupUser: GroupUserDO
-) {
-  if (isEmpty(groupInfo) || isEmpty(groupUser)) {
-    throw new Error("保存群组的信息异常");
-  }
-  state.chatType = ChatMsgTypeEnum.ManyToMany;
-  state.friendUser = undefined;
-  state.friendInfo = undefined;
-  state.groupInfo = groupInfo;
-  state.groupUser = groupUser;
-}
-
-function updateChatType(state: SelectChatBO) {
-  return (chatType: ChatMsgTypeEnum) => {
-    state.chatType = chatType;
+    if (ChatMsgTypeEnum.OneToOne === selectChatType) {
+      state.friendInfo = chatInfo.friendInfo;
+      state.friendUser = chatInfo.friendUser;
+      state.groupInfo = undefined;
+      state.groupUser = undefined;
+    }
+    if (ChatMsgTypeEnum.ManyToMany === selectChatType) {
+      state.friendUser = undefined;
+      state.friendInfo = undefined;
+      state.groupInfo = chatInfo.groupInfo;
+      state.groupUser = chatInfo.groupUser;
+    }
   };
+}
+
+function getSelectChat(state: SelectChatBO) {
+  return state;
 }
 
 function createAction(state: SelectChatBO) {
   return {
+    getSelectChat: getSelectChat(state),
     getChatType: getChatType(state),
     getFriendInfo: getFriendInfo(state),
     getFriendUser: getFriendUser(state),
@@ -74,6 +92,6 @@ function createAction(state: SelectChatBO) {
     getGroupUser: getGroupUser(state),
     // updateByFriend: updateByFriend(state),
     // updateByGroup: updateByGroup(state),
-    updateChatType: updateChatType(state),
+    updateSelectChat: updateSelectChat(state),
   };
 }

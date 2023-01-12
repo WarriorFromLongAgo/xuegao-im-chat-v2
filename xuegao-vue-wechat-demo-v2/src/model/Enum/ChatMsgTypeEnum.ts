@@ -9,19 +9,19 @@ export enum ChatMsgTypeEnum {
   /**
    * 系统机器人
    */
-  Robot = 0,
+  Robot = 1,
   /**
    * 系统通知
    */
-  SystemNotify = 1,
+  SystemNotify = 2,
   /**
    * 心跳，发送
    */
-  HeartBeatPing = 2,
+  HeartBeatPing = 3,
   /**
    * 心跳，接收
    */
-  HeartBeatPong = 3,
+  HeartBeatPong = 4,
   /**
    * 文字消息
    */

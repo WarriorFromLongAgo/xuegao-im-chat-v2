@@ -2,20 +2,10 @@
   <div class="messageChatClass">
     <header class="header user-select-none">
       <div class="friendName">
-        <!--        <span style="cursor: pointer" @click="showChatInfo">{{-->
-        <!--          item.friendInfo.remark === ""-->
-        <!--            ? item.friendInfo.nickname-->
-        <!--            : item.friendInfo.remark-->
-        <!--        }}</span>-->
         <span style="cursor: pointer" @click="showChatInfo"
           >item.friendInfo.remark</span
         >
       </div>
-      <!--      <i-->
-      <!--        style="cursor: pointer"-->
-      <!--        @click="showChatInfo"-->
-      <!--        class="icon iconfont icon-more info"-->
-      <!--      ></i>-->
     </header>
     <!--      @mousewheel="mousewheel"-->
     <div class="message-wrapper scrollbar" @scroll="handleScroll" ref="list">
@@ -23,18 +13,20 @@
       <ul>
         <li v-for="item in showMessageList" class="message-item" :key="item.id">
           <div class="time selectNone">
-            <span v-if="item.showTime">{{ convertToTime(item.date) }}</span>
+            <span v-if="item.showTime">{{
+              convertToTime(item.createdTime)
+            }}</span>
           </div>
           <div
             class="main"
             :class="{
-              self: isMySelf(item.username),
-              other: !isMySelf(item.username),
+              self: isMySelf(item.userId),
+              other: !isMySelf(item.userId),
             }"
           >
             <div
               class="text"
-              v-if="item.type === 1"
+              v-if="ChatMsgTypeEnum.Text === item.messageType"
               v-html="replaceToFaceByMsg(item)"
             ></div>
           </div>
@@ -46,20 +38,19 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { getMessageInfoList, MessageInfo } from "@/model/MessageInfo";
 import { replaceToFaceByMsg } from "@/model/Emoji";
+import { friendMessageList1To1List } from "@/model/temp/FriendMessageListData";
+import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
+import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 
-let showMessageList = ref<Array<MessageInfo>>(new Array<MessageInfo>());
+let showMessageList = ref<Array<FriendMessageBO>>(new Array<FriendMessageBO>());
 
 let showChatInfo = function () {
   console.log("  showChatInfo ");
 };
-// let mousewheel = function () {
-//   console.log("  mousewheel ");
-// };
+
 let handleScroll = function () {
-  console.log("  showChatInfo ");
-  // this.$parent.showChatInfo();
+  console.log("  handleScroll ");
 };
 
 let convertToTime = function (date: Date) {
@@ -71,14 +62,13 @@ let convertToTime = function (date: Date) {
 };
 
 let isMySelf = function (userName: string) {
-  // return userName === user.username
   return false;
 };
 
+// 页面初始化完毕，调用一次
 onMounted(() => {
-  console.log(" onMounted ");
-  for (const messageInfo of getMessageInfoList()) {
-    showMessageList.value.push(messageInfo);
+  for (let friendMessage of friendMessageList1To1List) {
+    showMessageList.value.push(friendMessage);
   }
   console.log(" onMounted ", JSON.stringify(showMessageList));
 });

@@ -1,68 +1,61 @@
-import { loginInfoBO } from "@/service/login/store/LoginInfoBO";
+import { ILoginInfo, loginInfoBO } from "@/service/login/store/LoginInfoBO";
 import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 import { CONSTANT_YES_NO } from "@/common/constant";
 
-function getLoginInfo() {
-  return loginInfoBO;
+function getLoginInfo(state: ILoginInfo) {
+  return state;
 }
 
-function getToken(): string {
-  return getLoginInfo().token;
+function getToken(state: ILoginInfo): string {
+  return state.token;
 }
 
-function getSysUser() {
-  return getLoginInfo().sysUser;
+function getLoginSysUser(state: ILoginInfo) {
+  return state.sysUser;
 }
 
-function updateNetworkState(networkState: CONSTANT_YES_NO) {
-  getLoginInfo().networkState = networkState;
+function updateNetworkState(state: ILoginInfo) {
+  return (networkState: CONSTANT_YES_NO) => {
+    state.networkState = networkState;
+  };
 }
 
-function incrementNetworkStateCount() {
-  const loginInfo = getLoginInfo();
-  let networkStateCount = loginInfo.networkStateCount;
-  networkStateCount++;
-  loginInfo.networkStateCount = networkStateCount;
-  if (networkStateCount >= 3) {
-    loginInfo.networkState = CONSTANT_YES_NO.NO;
+function incrementNetworkStateCount(state: ILoginInfo) {
+  state.networkStateCount += state.networkStateCount;
+  if (state.networkStateCount >= 3) {
+    state.networkState = CONSTANT_YES_NO.NO;
   }
+  return state.networkStateCount;
 }
 
-function updateToken(token: string) {
-  getLoginInfo().token = token;
+function updateToken(state: ILoginInfo) {
+  return (token: string) => {
+    state.token = token;
+  };
 }
 
-function updateUser(sysUser: ISysUser) {
-  const loginInfo = getLoginInfo();
-  const oldSysUser = loginInfo.sysUser;
-  oldSysUser.username = sysUser.username;
-  oldSysUser.uid = sysUser.uid;
-  oldSysUser.nickname = sysUser.nickname;
-  loginInfo.sysUser = oldSysUser;
+function updateLoginUser(state: ILoginInfo) {
+  return (sysUser: ISysUser) => {
+    const oldSysUser = state.sysUser;
+    oldSysUser.username = sysUser.username;
+    oldSysUser.uid = sysUser.uid;
+    oldSysUser.nickname = sysUser.nickname;
+    state.sysUser = oldSysUser;
+  };
 }
 
 /**
  * 创建Action
- * @param loginInfo
  */
-export function createAction() {
+export function createAction(state: ILoginInfo) {
   return {
-    updateToken,
-    updateNetworkState,
-    incrementNetworkStateCount,
-    updateUser,
+    updateToken: updateToken(state),
+    updateNetworkState: updateNetworkState(state),
+    incrementNetworkStateCount: incrementNetworkStateCount(state),
+    updateLoginUser: updateLoginUser(state),
 
-    getLoginInfo,
-    getSysUser,
-    getToken,
-
-    // updateToken: updateToken(loginInfoBO.token)
-    // updateNetworkState: updateNetworkState(loginInfoBO.networkState),
-    // updateStatus: updateStatus(loginInfoBO.status),
-    // updateUser: updateUser(loginInfoBO.sysUser),
-    //
-    // getLoginInfo: getLoginInfo(),
-    // getSysUser: getSysUser(),
-    // getToken: getToken(),
+    getLoginInfo: getLoginInfo(state),
+    getLoginSysUser: getLoginSysUser(state),
+    getToken: getToken(state),
   };
 }

@@ -5,7 +5,7 @@ import { readonly } from "vue";
 const state = createState();
 const action = createAction(state);
 
-export const useStore = () => {
+export const useSelectChatStore = () => {
   return {
     state: readonly(state),
     action: readonly(action),

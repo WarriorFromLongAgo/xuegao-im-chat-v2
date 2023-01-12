@@ -1,7 +1,7 @@
 <template>
   <div class="msgList user-select-none">
     <ul>
-      <template v-for="item in chatInfoV2List" :key="item.friendInfo.id">
+      <template v-for="item in chatInfoList" :key="item.friendInfo.id">
         <li class="selectChat" @click="selectChat(item)">
           <div class="list-left">
             <img
@@ -44,57 +44,33 @@
 import { isEmpty } from "@/common/ObjectUtil";
 import { replaceToFaceByMsg } from "@/model/Emoji";
 import { computed } from "vue";
-import { ChatInfoData, getChatInfoV2List } from "@/model/temp/ChatInfoData";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
-import { useStore } from "@/service/chat/store/SelectChatStore";
+import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
+import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
 
-// let loginStore = useLoginStore();
-// let sysUser = loginStore.action.getSysUser();
-let selectChatUseStore = useStore();
+let selectChatStore = useSelectChatStore();
+// console.log("  chat list 进来了");
 
-console.log("  chat list 进来了");
-
-let chatInfoV2List = computed(() => {
-  return getChatInfoV2List();
+// 获取聊天列表的消息，最新的聊天消息在最上面
+let chatInfoList = computed(() => {
+  let tempChatInfoList = getChatInfoList();
+  tempChatInfoList.sort(function (a, b) {
+    return a.index - b.index;
+  });
+  // 根据时间进行排序，最新的时间在最上面
+  // console.log("tempChatInfoV2List ", tempChatInfoList);
+  // console.log("getSelectChat ", selectChatStore.action.getSelectChat);
+  return tempChatInfoList;
 });
 
-let selectChat = function (chatInfoData: ChatInfoData) {
-  console.log(" selectChat input chatInfoData = ", chatInfoData);
-  let selectChatState = selectChatUseStore.state;
-  selectChatUseStore.action.updateChatType(ChatMsgTypeEnum.OneToOne);
-
-  // let chatMsgTypeEnum = chatInfoData.chatType;
-  // if (ChatMsgTypeEnum.OneToOne === chatMsgTypeEnum) {
-  //   if (
-  //     chatInfoData.friendInfo === undefined ||
-  //     chatInfoData.friendUser === undefined
-  //   ) {
-  //     throw new Error("选择朋友信息为空");
-  //   }
-  //   selectChatMethod.updateByFriend(
-  //     chatInfoData.friendInfo,
-  //     chatInfoData.friendUser
-  //   );
-  // } else if (ChatMsgTypeEnum.ManyToMany === chatMsgTypeEnum) {
-  //   if (
-  //     chatInfoData.groupInfo === undefined ||
-  //     chatInfoData.groupUser === undefined
-  //   ) {
-  //     throw new Error("选择朋友信息为空");
-  //   }
-  //   selectChatMethod.updateByGroup(
-  //     chatInfoData.groupInfo,
-  //     chatInfoData.groupUser
-  //   );
-  // }
-  // console.log(
-  //   "selectChat finally selectChat = ",
-  //   selectChatMethod.getSelectChat()
-  // );
+// 每次选择chat聊天框的时候，都需要更新，当前选择的东西
+let selectChat = function (chatInfo: ChatInfo) {
+  console.log(" selectChat input chatInfo = ", chatInfo);
+  selectChatStore.action.updateSelectChat(chatInfo);
 };
 
+// 将时间进行转换成 mm:ss
 let getTimes = function (lastMsgTime: Date) {
-  console.log(" lastMsgTime ", lastMsgTime);
+  // console.log(" lastMsgTime ", lastMsgTime);
   if (isEmpty(lastMsgTime)) {
     return "";
   }
@@ -103,10 +79,6 @@ let getTimes = function (lastMsgTime: Date) {
   } else {
     return lastMsgTime.getHours() + ":" + lastMsgTime.getMinutes();
   }
-};
-
-let consoleLog = function (msg: string, info: any) {
-  console.log(msg + " = ", info);
 };
 </script>
 

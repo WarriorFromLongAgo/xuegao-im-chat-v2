@@ -76,7 +76,7 @@ instance.interceptors.request.use(
 
     if (config.headers !== null) {
       const store = useLoginStore();
-      const token = store.action.getToken();
+      const token = store.action.getToken;
       console.log("请求拦截器，token = ", token);
       config.headers!.head?.set("token", token);
     }
@@ -145,8 +145,9 @@ instance.interceptors.response.use(
       // 后续增加断网情况下做的一些操作
       // store.commit("networkState", false);
       const loginStore = useLoginStore();
-      loginStore.action.incrementNetworkStateCount();
-      console.log("getLoginInfo axios", loginStore.action.getLoginInfo());
+      loginStore.action.incrementNetworkStateCount;
+
+      console.log("getLoginInfo axios", loginStore.action.getLoginInfo);
     }
   }
 );

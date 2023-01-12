@@ -1,8 +1,8 @@
-import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
 import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
 import { getDate } from "@/common/time";
+import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
 
 const nowTimeOne = getDate();
 const nowTimeTwo = getDate();
@@ -10,7 +10,7 @@ const nowTimeThree = getDate();
 
 const date = getDate();
 date.setTime(nowTimeOne.setSeconds(nowTimeOne.getSeconds() - 2));
-const friendMessageDataOne: FriendMessageDO = {
+const friendMessageDataOne: FriendMessageBO = {
   id: "1",
   userId: "2",
   friendId: "1",
@@ -19,10 +19,12 @@ const friendMessageDataOne: FriendMessageDO = {
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
   createdTime: date,
+  mySelfFlag: false,
+  showTime: false,
 };
 
 date.setTime(nowTimeTwo.setSeconds(nowTimeTwo.getSeconds() - 2));
-const friendMessageDataTwo: FriendMessageDO = {
+const friendMessageDataTwo: FriendMessageBO = {
   id: "2",
   userId: "2",
   friendId: "1",
@@ -31,10 +33,12 @@ const friendMessageDataTwo: FriendMessageDO = {
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
   createdTime: date,
+  mySelfFlag: false,
+  showTime: false,
 };
 
 date.setTime(nowTimeThree.setSeconds(nowTimeThree.getSeconds() - 2));
-const friendMessageDataThree: FriendMessageDO = {
+const friendMessageDataThree: FriendMessageBO = {
   id: "3",
   userId: "2",
   friendId: "1",
@@ -43,6 +47,8 @@ const friendMessageDataThree: FriendMessageDO = {
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
   createdTime: date,
+  mySelfFlag: false,
+  showTime: false,
 };
 
 export { friendMessageDataOne, friendMessageDataTwo, friendMessageDataThree };
