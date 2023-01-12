@@ -37,10 +37,6 @@ function updateByFriend(
     throw new Error("保存朋友的信息异常");
   }
 
-  return (friendInfo: SysUserBO, friendUser: FriendUserDO) => {
-    state.chatType = chatType;
-  };
-
   state.chatType = ChatMsgTypeEnum.OneToOne;
   state.friendUser = friendUser;
   state.friendInfo = friendInfo;
@@ -76,8 +72,8 @@ function createAction(state: SelectChatBO) {
     getFriendUser: getFriendUser(state),
     getGroupInfo: getGroupInfo(state),
     getGroupUser: getGroupUser(state),
-    updateByFriend: updateByFriend(state),
-    updateByGroup: updateByGroup(state),
+    // updateByFriend: updateByFriend(state),
+    // updateByGroup: updateByGroup(state),
     updateChatType: updateChatType(state),
   };
 }
