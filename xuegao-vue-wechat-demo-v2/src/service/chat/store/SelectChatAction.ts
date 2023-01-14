@@ -27,7 +27,7 @@ function getGroupUser(state: SelectChatBO) {
 
 function updateSelectChat(state: SelectChatBO) {
   return (chatInfo: ChatInfo) => {
-    console.log(" updateSelectChat ", chatInfo);
+    console.log(" updateSelectChat 1 ", JSON.stringify(state));
     if (isEmpty(chatInfo)) {
       throw new Error("入参不能为空");
     }
@@ -46,16 +46,19 @@ function updateSelectChat(state: SelectChatBO) {
       state.groupInfo = chatInfo.groupInfo;
       state.groupUser = chatInfo.groupUser;
     }
+    console.log(" updateSelectChat 2 ", JSON.stringify(state));
   };
 }
 
 function clearSelectChat(state: SelectChatBO) {
+  console.log("  clearSelectChat 1 ", JSON.stringify(state));
   state.chatType = undefined;
   state.friendInfo = undefined;
   state.friendUser = undefined;
   state.groupInfo = undefined;
   state.groupUser = undefined;
-  console.log("  clearSelectChat ");
+  console.log("  clearSelectChat 2 ", JSON.stringify(state));
+  return state;
 }
 
 function getSelectChat(state: SelectChatBO) {

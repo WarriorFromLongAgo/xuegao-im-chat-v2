@@ -40,10 +40,13 @@ let openUserInfo = function (e: PointerEvent) {
   console.log("openUserInfo e", e);
 };
 
-// 切换功能
+// 切换功能后，要清空一些数据
 let checkOutFunction = function () {
   console.log(" checkOutFunction ");
-  selectChatStore.action.clearSelectChat;
+  let selectChat = selectChatStore.action.getSelectChat;
+  console.log("selectChat ", JSON.stringify(selectChat));
+  let clearSelectChat = selectChatStore.action.clearSelectChat;
+  console.log("clearSelectChat ", JSON.stringify(clearSelectChat));
 };
 </script>
 
