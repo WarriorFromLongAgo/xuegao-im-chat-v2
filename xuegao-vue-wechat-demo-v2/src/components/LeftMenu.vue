@@ -9,7 +9,7 @@
       />
     </header>
     <!-- 导航栏，分布了三个功能，聊天消息，好友，收藏 -->
-    <div class="navbar" @click="clearSearch">
+    <div class="navbar" @click="checkOutFunction">
       <!--      第一个，点击进入聊天消息-->
       <router-link
         to="/im/chat"
@@ -33,15 +33,17 @@
 
 <script lang="ts" setup>
 import localAvatar1 from "/public/static/images/avatar1.png";
-
-// console.log("LeftMenu");
+import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
+let selectChatStore = useSelectChatStore();
 
 let openUserInfo = function (e: PointerEvent) {
-  console.log("openMenu e", e);
+  console.log("openUserInfo e", e);
 };
 
-let clearSearch = function () {
-  console.log(" clearSearch ");
+// 切换功能
+let checkOutFunction = function () {
+  console.log(" checkOutFunction ");
+  selectChatStore.action.clearSelectChat;
 };
 </script>
 

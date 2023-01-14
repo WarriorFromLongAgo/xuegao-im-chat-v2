@@ -1,4 +1,4 @@
-import { ILoginInfo, loginInfoBO } from "@/service/login/store/LoginInfoBO";
+import { ILoginInfo } from "@/service/login/store/LoginInfoBO";
 import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 import { CONSTANT_YES_NO } from "@/common/constant";
 

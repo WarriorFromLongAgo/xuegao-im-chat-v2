@@ -1,4 +1,4 @@
-export interface Result<T = any> {
+export interface Result<T = never> {
   code: number;
   message: string;
   data: T;
