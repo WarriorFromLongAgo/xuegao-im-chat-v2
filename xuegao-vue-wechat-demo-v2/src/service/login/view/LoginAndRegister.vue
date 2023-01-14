@@ -64,6 +64,10 @@
             登录
           </button>
 
+          <button type="button" class="login-btn" @click="redirectImHome">
+            跳转到主页面
+          </button>
+
           <!--        <div class="login-other-operate">-->
           <!--          <a href="#">忘记密码</a> |-->
           <!--          <a href="#">注册新账号</a>-->
