@@ -3,15 +3,21 @@ import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 import { CONSTANT_YES_NO } from "@/common/constant";
 
 function getLoginInfo(state: ILoginInfo) {
-  return state;
+  return () => {
+    return state;
+  };
 }
 
-function getToken(state: ILoginInfo): string {
-  return state.token;
+function getToken(state: ILoginInfo) {
+  return () => {
+    return state.token;
+  };
 }
 
 function getLoginSysUser(state: ILoginInfo) {
-  return state.sysUser;
+  return () => {
+    return state.sysUser;
+  };
 }
 
 function updateNetworkState(state: ILoginInfo) {
@@ -21,11 +27,13 @@ function updateNetworkState(state: ILoginInfo) {
 }
 
 function incrementNetworkStateCount(state: ILoginInfo) {
-  state.networkStateCount += state.networkStateCount;
-  if (state.networkStateCount >= 3) {
-    state.networkState = CONSTANT_YES_NO.NO;
-  }
-  return state.networkStateCount;
+  return () => {
+    state.networkStateCount += state.networkStateCount;
+    if (state.networkStateCount >= 3) {
+      state.networkState = CONSTANT_YES_NO.NO;
+    }
+    return state.networkStateCount;
+  };
 }
 
 function updateToken(state: ILoginInfo) {

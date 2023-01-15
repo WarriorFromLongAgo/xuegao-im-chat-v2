@@ -27,12 +27,11 @@ let placeholder = "搜索";
 // 如果已经选择了聊天，那么就展示聊天框，
 // 否则展示微信的图标
 let getSelectChatFlag = computed(() => {
-  let tempSelectChat = selectChatStore.action.getSelectChat;
+  let tempSelectChat = selectChatStore.action.getSelectChat();
   // console.log("getSelectChat ", selectChatStore.action.getSelectChat);
   // 如果不为空，那么就是有值，代表已经选择了数据
-  let selectChatFlag = isNotEmpty(tempSelectChat.chatType);
   // console.log(" getSelectChatFlag ", selectChatFlag);
-  return selectChatFlag;
+  return isNotEmpty(tempSelectChat.chatType);
 });
 </script>
 

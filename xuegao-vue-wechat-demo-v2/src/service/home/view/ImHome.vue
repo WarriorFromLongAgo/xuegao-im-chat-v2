@@ -22,8 +22,15 @@
 <script lang="ts" setup>
 import LeftMenu from "@/components/LeftMenu.vue";
 import router from "@/router";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { LocalCacheUtil } from "@/common/LocalCache";
 
 function systemExit() {
+  let loginStore = useLoginStore();
+  let username = loginStore.action.getLoginSysUser().username;
+  let localCacheUtil = new LocalCacheUtil();
+  localCacheUtil.remove(username);
+
   router.replace({
     path: "/",
   });

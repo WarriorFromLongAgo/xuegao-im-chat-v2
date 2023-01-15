@@ -64,7 +64,7 @@
             登录
           </button>
 
-          <button type="button" class="login-btn" @click="redirectImHome">
+          <button type="button" class="login-btn" @click="goToHome">
             跳转到主页面
           </button>
 
@@ -93,7 +93,10 @@ import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { ISysUserReq } from "@/service/login/call/request/SysUserRequest";
 import { ref } from "vue";
 import { isBlank, isEmpty } from "@/common/ObjectUtil";
-import { ISysUserResp } from "@/service/login/call/response/SysUserResponse";
+import {
+  ISysUser,
+  ISysUserResp,
+} from "@/service/login/call/response/SysUserResponse";
 import { Result } from "@/common/axios/response";
 import { LocalCacheUtil } from "@/common/LocalCache";
 
@@ -168,6 +171,23 @@ async function systemLogin() {
 
 function redirectImHome() {
   router.replace({ path: "/im/home" });
+}
+
+function goToHome() {
+  console.log(" goToHome=================== ");
+  let loginStore = useLoginStore();
+  loginStore.action.updateToken("temp token---------------");
+  let sysUser: ISysUser = {
+    username: "temp username",
+    nickname: "temp nickname",
+    uid: "temp uid",
+  };
+  loginStore.action.updateLoginUser(sysUser);
+  // console.log("loginStore, ", loginStore.action.getLoginInfo);
+  rememberMe.value = true;
+  console.log("getLoginInfo ", loginStore.action.getLoginInfo());
+  setLocalStorage(sysUser.username, "temp token---------------");
+  redirectImHome();
 }
 
 function setLocalStorage(username: string, token: string) {

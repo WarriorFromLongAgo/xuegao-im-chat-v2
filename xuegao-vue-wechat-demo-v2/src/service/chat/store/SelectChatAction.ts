@@ -6,28 +6,37 @@ import { ChatInfo } from "@/model/BO/ChatInfo";
 export { createAction };
 
 function getChatType(state: SelectChatBO) {
-  return state.chatType;
+  return () => {
+    return state.chatType;
+  };
 }
 
 function getFriendInfo(state: SelectChatBO) {
-  return state.friendInfo;
+  return () => {
+    return state.friendInfo;
+  };
 }
 
 function getFriendUser(state: SelectChatBO) {
-  return state.friendUser;
+  return () => {
+    return state.friendUser;
+  };
 }
 
 function getGroupInfo(state: SelectChatBO) {
-  return state.groupInfo;
+  return () => {
+    return state.groupInfo;
+  };
 }
 
 function getGroupUser(state: SelectChatBO) {
-  return state.groupUser;
+  return () => {
+    return state.groupUser;
+  };
 }
 
 function updateSelectChat(state: SelectChatBO) {
   return (chatInfo: ChatInfo) => {
-    console.log(" updateSelectChat 1 ", JSON.stringify(state));
     if (isEmpty(chatInfo)) {
       throw new Error("入参不能为空");
     }
@@ -46,23 +55,23 @@ function updateSelectChat(state: SelectChatBO) {
       state.groupInfo = chatInfo.groupInfo;
       state.groupUser = chatInfo.groupUser;
     }
-    console.log(" updateSelectChat 2 ", JSON.stringify(state));
   };
 }
 
 function clearSelectChat(state: SelectChatBO) {
-  console.log("  clearSelectChat 1 ", JSON.stringify(state));
-  state.chatType = undefined;
-  state.friendInfo = undefined;
-  state.friendUser = undefined;
-  state.groupInfo = undefined;
-  state.groupUser = undefined;
-  console.log("  clearSelectChat 2 ", JSON.stringify(state));
-  return state;
+  return () => {
+    state.chatType = undefined;
+    state.friendInfo = undefined;
+    state.friendUser = undefined;
+    state.groupInfo = undefined;
+    state.groupUser = undefined;
+  };
 }
 
 function getSelectChat(state: SelectChatBO) {
-  return state;
+  return () => {
+    return state;
+  };
 }
 
 function createAction(state: SelectChatBO) {
@@ -73,6 +82,7 @@ function createAction(state: SelectChatBO) {
     getFriendUser: getFriendUser(state),
     getGroupInfo: getGroupInfo(state),
     getGroupUser: getGroupUser(state),
+
     updateSelectChat: updateSelectChat(state),
     clearSelectChat: clearSelectChat(state),
   };

@@ -42,11 +42,12 @@ let openUserInfo = function (e: PointerEvent) {
 
 // 切换功能后，要清空一些数据
 let checkOutFunction = function () {
-  console.log(" checkOutFunction ");
-  let selectChat = selectChatStore.action.getSelectChat;
-  console.log("selectChat ", JSON.stringify(selectChat));
-  let clearSelectChat = selectChatStore.action.clearSelectChat;
-  console.log("clearSelectChat ", JSON.stringify(clearSelectChat));
+  // console.log(" checkOutFunction ");
+  // let selectChat = selectChatStore.action.getSelectChat();
+  // console.log("selectChat ", JSON.stringify(selectChat));
+
+  selectChatStore.action.clearSelectChat();
+  // console.log("clearSelectChat ", JSON.stringify(clearSelectChat));
 };
 </script>
 

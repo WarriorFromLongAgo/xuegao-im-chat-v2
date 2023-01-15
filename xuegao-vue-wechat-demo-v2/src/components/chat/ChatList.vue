@@ -46,8 +46,17 @@ import { replaceToFaceByMsg } from "@/model/Emoji";
 import { computed } from "vue";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
+import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
+import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
+import {
+  friendMessageList1To1List,
+  friendMessageList1To2List,
+  friendMessageList1To3List,
+} from "@/model/temp/FriendMessageListData";
+import { SelectChatMessageBO } from "@/service/chat/store/SelectChatMessageBO";
 
 let selectChatStore = useSelectChatStore();
+let selectChatMessageStore = useSelectChatMessageStore();
 // console.log("  chat list 进来了");
 
 // 获取聊天列表的消息，最新的聊天消息在最上面
@@ -64,8 +73,36 @@ let chatInfoList = computed(() => {
 
 // 每次选择chat聊天框的时候，都需要更新，当前选择的东西
 let selectChat = function (chatInfo: ChatInfo) {
-  console.log(" selectChat input chatInfo = ", chatInfo);
+  // console.log(" selectChat input chatInfo = ", JSON.stringify(chatInfo));
   selectChatStore.action.updateSelectChat(chatInfo);
+
+  let chatType = chatInfo.chatType;
+  if (ChatMsgTypeEnum.OneToOne === chatType) {
+    let friendUserId = chatInfo.friendInfo?.id;
+    let selectChatMessageBO: SelectChatMessageBO = {
+      chatType: ChatMsgTypeEnum.OneToOne,
+    };
+    if (friendUserId === "1") {
+      selectChatMessageBO.friendMessageList = friendMessageList1To1List;
+      selectChatMessageStore.action.updateSelectChatMessage(
+        selectChatMessageBO
+      );
+    } else if (friendUserId === "2") {
+      selectChatMessageBO.friendMessageList = friendMessageList1To2List;
+      selectChatMessageStore.action.updateSelectChatMessage(
+        selectChatMessageBO
+      );
+    } else if (friendUserId === "3") {
+      selectChatMessageBO.friendMessageList = friendMessageList1To3List;
+      selectChatMessageStore.action.updateSelectChatMessage(
+        selectChatMessageBO
+      );
+    }
+    console.log(
+      "chatList ",
+      JSON.stringify(selectChatMessageStore.action.getState())
+    );
+  }
 };
 
 // 将时间进行转换成 mm:ss

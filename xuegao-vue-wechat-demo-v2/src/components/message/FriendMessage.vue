@@ -11,7 +11,11 @@
     <div class="message-wrapper scrollbar" @scroll="handleScroll" ref="list">
       <!--v-if="selectedChat"-->
       <ul>
-        <li v-for="item in showMessageList" class="message-item" :key="item.id">
+        <li
+          v-for="item in selectChatFriendMessageList"
+          class="message-item"
+          :key="item.id"
+        >
           <div class="time selectNone">
             <span v-if="item.showTime">{{
               convertToTime(item.createdTime)
@@ -39,11 +43,12 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
 import { replaceToFaceByMsg } from "@/model/Emoji";
-import { friendMessageList1To1List } from "@/model/temp/FriendMessageListData";
-import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
+import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
+let selectChatMessageStore = useSelectChatMessageStore();
 
-let showMessageList = ref<Array<FriendMessageBO>>(new Array<FriendMessageBO>());
+let selectChatFriendMessageList =
+  selectChatMessageStore.action.getFriendMessageList();
 
 let showChatInfo = function () {
   console.log("  showChatInfo ");
@@ -67,10 +72,10 @@ let isMySelf = function (userName: string) {
 
 // 页面初始化完毕，调用一次
 onMounted(() => {
-  for (let friendMessage of friendMessageList1To1List) {
-    showMessageList.value.push(friendMessage);
-  }
-  console.log(" onMounted ", JSON.stringify(showMessageList));
+  console.log(
+    " onMounted ",
+    JSON.stringify(selectChatMessageStore.action.getState())
+  );
 });
 </script>
 
