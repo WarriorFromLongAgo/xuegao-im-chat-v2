@@ -98,10 +98,10 @@ let selectChat = function (chatInfo: ChatInfo) {
         selectChatMessageBO
       );
     }
-    console.log(
-      "chatList ",
-      JSON.stringify(selectChatMessageStore.action.getState())
-    );
+    // console.log(
+    //   "chatList ",
+    //   JSON.stringify(selectChatMessageStore.action.getState())
+    // );
   }
 };
 

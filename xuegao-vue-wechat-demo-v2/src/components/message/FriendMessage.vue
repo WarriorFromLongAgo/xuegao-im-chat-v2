@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 import { replaceToFaceByMsg } from "@/model/Emoji";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
@@ -71,14 +71,6 @@ let convertToTime = function (date: Date) {
 let isMySelf = function (userName: string) {
   return false;
 };
-
-// 页面初始化完毕，调用一次
-onMounted(() => {
-  console.log(
-    " onMounted ",
-    JSON.stringify(selectChatMessageStore.action.getState())
-  );
-});
 </script>
 
 <style scoped lang="css">
