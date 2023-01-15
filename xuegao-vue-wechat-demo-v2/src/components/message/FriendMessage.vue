@@ -41,14 +41,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { replaceToFaceByMsg } from "@/model/Emoji";
 import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
 let selectChatMessageStore = useSelectChatMessageStore();
 
-let selectChatFriendMessageList =
-  selectChatMessageStore.action.getFriendMessageList();
+// 获取聊天记录
+let selectChatFriendMessageList = computed(() => {
+  return selectChatMessageStore.action.getFriendMessageList();
+});
 
 let showChatInfo = function () {
   console.log("  showChatInfo ");
