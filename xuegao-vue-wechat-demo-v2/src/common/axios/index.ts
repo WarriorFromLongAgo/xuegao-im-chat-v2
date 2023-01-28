@@ -77,7 +77,7 @@ instance.interceptors.request.use(
     const store = useLoginStore();
     const token = store.action.getToken();
     console.log("请求拦截器，token = ", token);
-    debugger;
+    // debugger;
     if (config.headers !== null) {
       const tempHeaders = config.headers;
       if (tempHeaders) {
