@@ -24,13 +24,20 @@ import LeftMenu from "@/components/LeftMenu.vue";
 import router from "@/router";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { LocalCacheUtil } from "@/common/LocalCache";
+import { useWsStore } from "@/common/ws/store/wsStore";
+import { onMounted } from "vue";
+import initWebSocket from "@/common/ws/ws";
+
+onMounted(() => {
+  initWebSocket();
+});
 
 function systemExit() {
   let loginStore = useLoginStore();
   let username = loginStore.action.getLoginSysUser().username;
   let localCacheUtil = new LocalCacheUtil();
   localCacheUtil.remove(username);
-
+  useWsStore().action.closeWs();
   router.replace({
     path: "/",
   });

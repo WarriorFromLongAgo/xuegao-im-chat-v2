@@ -1,34 +1,38 @@
-function initWebSocket(wsUrl: string): WebSocket {
-  console.log("启动中");
+import { wsUrl } from "@/common/config/config";
+import hearBeat from "@/common/ws/heartBeat";
+import { useWsStore } from "@/common/ws/store/wsStore";
+
+function initWebSocket() {
   const ws: WebSocket = new WebSocket(wsUrl);
-  console.log("initWebSocket new WebSocket");
 
+  // 第一次客户端，链接服务端，就会调用这里
   ws.onopen = function wsOnOpen(ev: Event) {
-    console.log("wsOnOpen");
     console.log("wsOnOpen ev", ev);
-    ws.send("我们的链接已经打开了");
+    sendFirst();
+    hearBeat();
   };
-  console.log("initWebSocket wsOnOpen");
 
+  // 每次收到服务端的返回，都会调用这里
   ws.onmessage = function wsOnMsg(ev: MessageEvent) {
-    console.log("wsOnMsg");
     console.log("wsOnMsg ev", ev);
   };
-  console.log("initWebSocket wsOnMsg");
 
   ws.onerror = function wsOnError(ev: Event) {
-    console.log("wsOnError");
     console.log("wsOnError ev", ev);
   };
-  console.log("initWebSocket wsOnError");
 
   ws.onclose = function wsOnClose(ev: CloseEvent) {
-    console.log("wsOnClose");
     console.log("wsOnClose ev", ev);
   };
-  console.log("initWebSocket wsOnClose");
 
-  console.log("ws = ", ws);
-
-  return ws;
+  console.log("ws 1 = ", ws);
+  useWsStore().action.initWebSocket(ws);
+  // console.log("ws 2 = ", ws);
 }
+
+function sendFirst() {
+  const webSocket = useWsStore().action.getWebSocket();
+  webSocket.send("ws.onopen 我们的链接已经打开了");
+}
+
+export default initWebSocket;

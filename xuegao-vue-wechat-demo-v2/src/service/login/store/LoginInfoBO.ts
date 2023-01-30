@@ -25,6 +25,7 @@ const loginInfoBO: ILoginInfo = {
 };
 
 function createState() {
+  // console.log("loginInfoBO createState");
   return reactive(loginInfoBO);
 }
 

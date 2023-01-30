@@ -1,4 +1,4 @@
-function isBlank(input: string | null): boolean {
+function isBlank(input: string | null | undefined): boolean {
   if (input === null || input == undefined) {
     return true;
   }
@@ -6,7 +6,7 @@ function isBlank(input: string | null): boolean {
   return input === "" || input.trim() === "";
 }
 
-function isNotBlank(input: string | null): boolean {
+function isNotBlank(input: string | null | undefined): boolean {
   return !isBlank(input);
 }
 

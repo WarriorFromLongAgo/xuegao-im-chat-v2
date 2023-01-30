@@ -4,14 +4,13 @@
       id="textarea"
       class="textarea"
       contenteditable="true"
-      ref="text"
-      @onpaste="pasteListener($event)"
+      ref="sendText"
+      @paste="pasteListener($event)"
       @keydown.delete="backspaceKeyDownListener($event)"
       @keydown.enter="enterKeyDownListener($event)"
-      @paste="pasteListener"
     ></div>
     <div class="send" @click="sendMsg">
-      <span>发送(ent)</span>
+      <span>发送(S)</span>
     </div>
     <transition name="appear">
       <div class="warn" v-show="alertWarnMsgFlag">
@@ -22,9 +21,16 @@
 </template>
 
 <script lang="ts" setup>
-let alertWarnMsgFlag = false;
-let pasteListener = function (e: PointerEvent) {
-  console.log(" 粘贴板事件  ");
+import { ref } from "vue";
+import { isBlank } from "@/common/ObjectUtil";
+import { useWsStore } from "@/common/ws/store/wsStore";
+
+let alertWarnMsgFlag = ref(false);
+const sendText = ref<HTMLTextAreaElement>();
+
+// ctrl + v  ClipboardEvent
+let pasteListener = function (e: ClipboardEvent) {
+  console.log(" pasteListener 粘贴板事件  ", e);
 };
 
 // 监听回退按键
@@ -33,17 +39,31 @@ let backspaceKeyDownListener = function (e: PointerEvent) {
 };
 
 // 按回车发送信息
-let enterKeyDownListener = function onkeydown(e: PointerEvent) {
-  // if (e.ctrlKey && e.keyCode == 13) {
-  // } else {
-  //   send();
-  //   e.preventDefault();
-  // }
-  console.log(" enterKeyDownListener ");
+let enterKeyDownListener = function onkeydown(e: KeyboardEvent) {
+  console.log(" enterKeyDownListener ", e);
+  sendMsg();
 };
 
 let sendMsg = function () {
-  console.log(" sendMsg ");
+  let value: HTMLTextAreaElement | undefined = sendText.value;
+  if (value === undefined) {
+    value = window.document.createElement("textarea");
+  }
+  // console.log(" sendMsg value = ", value);
+  let textAreaText = value.innerHTML;
+  // console.log(" innerHTML textAreaText = ", textAreaText);
+  if (isBlank(textAreaText)) {
+    alertWarnMsgFlag.value = true;
+    // 一秒钟后消息
+    setTimeout(() => {
+      alertWarnMsgFlag.value = false;
+    }, 1000);
+    return;
+  } else {
+    alertWarnMsgFlag.value = false;
+  }
+  useWsStore().action.sendMsg(textAreaText);
+  value.innerHTML = "";
 };
 </script>
 
@@ -69,6 +89,7 @@ let sendMsg = function () {
   font-size: 14px;
   color: #7c7c7c;
 }
+
 .text .send:hover {
   background: rgb(18, 150, 17);
   color: #fff;
