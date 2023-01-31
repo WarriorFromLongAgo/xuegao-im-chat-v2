@@ -1,5 +1,7 @@
 package com.xuegao.wechatservermonolith.framework.netty;
 
+import com.xuegao.wechatservermonolith.framework.netty.heartbeat.HeartBeatServerHandler;
+import com.xuegao.wechatservermonolith.framework.netty.heartbeat.ImIdleStateHandler;
 import com.xuegao.wechatservermonolith.framework.netty.ws.TextWsFrameHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -64,6 +66,8 @@ public class NettyServer {
                         // 第一种 websocket 方法
                         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
                         pipeline.addLast(new TextWsFrameHandler());
+                        pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
+                        pipeline.addLast(new HeartBeatServerHandler());
 
                         // 第二种 websocket 方法
                         // pipeline.addLast(new WSServerHandler());
@@ -79,7 +83,7 @@ public class NettyServer {
         return serverBootstrap;
     }
 
-    public void start(int port) throws Exception {
+    public synchronized void start(int port) throws Exception {
         log.info("[xuegao-im-chat-2022][NettyServer][start][serverChannel.port={}]", port);
         serverChannel = bootstrap().bind(port)
                 .sync()
@@ -87,7 +91,7 @@ public class NettyServer {
         log.info("[xuegao-im-chat-2022][NettyServer][start完成]");
     }
 
-    public void stop() {
+    public synchronized void stop() {
         log.info("[xuegao-im-chat-2022][NettyServer][stop]");
         if (Objects.nonNull(serverChannel)) {
             serverChannel.close();

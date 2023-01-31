@@ -1,5 +1,4 @@
 import { wsUrl } from "@/common/config/config";
-import hearBeat from "@/common/ws/heartBeat";
 import { useWsStore } from "@/common/ws/store/wsStore";
 
 function initWebSocket() {
@@ -9,7 +8,7 @@ function initWebSocket() {
   ws.onopen = function wsOnOpen(ev: Event) {
     console.log("wsOnOpen ev", ev);
     sendFirst();
-    hearBeat();
+    // hearBeat();
   };
 
   // 每次收到服务端的返回，都会调用这里

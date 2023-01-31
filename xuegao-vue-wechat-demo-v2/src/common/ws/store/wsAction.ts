@@ -1,4 +1,8 @@
 import { WsBO } from "@/common/ws/store/wsBO";
+import HearBeatMessageBO from "@/common/ws/heartBeat/HearBeatMessageBO";
+import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
+import { useWsStore } from "@/common/ws/store/wsStore";
+import hearBeat from "@/common/ws/heartBeat/heartBeat";
 
 function initWebSocket(state: WsBO) {
   return (ws: WebSocket) => {
@@ -6,6 +10,7 @@ function initWebSocket(state: WsBO) {
     // console.log("initWebSocket ws 2 ", ws);
     state.webSocket = ws;
     // console.log("initWebSocket state ", state);
+    startHeartBeat(state);
   };
 }
 
@@ -24,6 +29,7 @@ function sendMsg(state: WsBO) {
   return (message: string) => {
     const webSocket = state.webSocket;
     console.log("sendMsg ", webSocket);
+    // 如果链接已经断开了，就不要再发送了
     if (webSocket !== null && webSocket?.CLOSED === webSocket?.readyState) {
       return;
     }
@@ -38,13 +44,29 @@ function sendMsg(state: WsBO) {
 function closeWs(state: WsBO) {
   return () => {
     const webSocket = state.webSocket;
-    // console.log("closeWs ", webSocket);
+    console.log("closeWs ", webSocket);
     if (webSocket === null) {
       console.log("closeWs webSocket is null ");
       return;
     }
-    webSocket.close();
+    // webSocket.close();
+    stopHeartBeat(state);
   };
+}
+
+function startHeartBeat(state: WsBO) {
+  const interval = hearBeat();
+  console.log("startHeartBeat ", interval);
+  state.interval = interval;
+}
+
+function stopHeartBeat(state: WsBO) {
+  console.log("stopHeartBeat ", state.interval);
+  if (state.interval === null) {
+    return;
+  }
+  clearInterval(state.interval);
+  console.log("clearInterval ", state.interval);
 }
 
 /**

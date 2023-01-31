@@ -1,16 +1,15 @@
 import { reactive } from "vue";
-import hearBeatMessageBO from "@/model/BO/HearBeatMessageBO";
-import { GroupMessageDO } from "@/model/DO/GroupMessageDO";
-import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
 
 interface WsBO {
   // data: hearBeatMessageBO | FriendMessageDO | GroupMessageDO | object;
   webSocket: null | WebSocket;
+  interval: null | number;
 }
 
 const ws: WsBO = {
   // data: {},
   webSocket: null,
+  interval: null,
 };
 
 function createState() {

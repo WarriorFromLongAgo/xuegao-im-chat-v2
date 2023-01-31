@@ -1,9 +1,6 @@
 package com.xuegao.wechatservermonolith.framework.netty.ws;
 
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelId;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -19,7 +16,7 @@ public class TextWsFrameHandler extends SimpleChannelInboundHandler<TextWebSocke
     /**
      * 用于记录和管理所有客户端的channel
      */
-    private final ChannelGroup clients = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    private final ChannelGroup clientChannelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
@@ -43,7 +40,12 @@ public class TextWsFrameHandler extends SimpleChannelInboundHandler<TextWebSocke
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
         // 不能在这里做关联，因为这里不能接受客户端的消息，是没法绑定的
-        // clients.add(ctx.channel());
+        Channel channel = ctx.channel();
+        ChannelId channelId = channel.id();
+        String asLongText = channelId.asLongText();
+        String asShortText = channelId.asShortText();
+        log.info("[xuegao-im-chat-2022][WsServerHandler][handlerAdded][长id={}][短id={}]", asLongText, asShortText);
+        clientChannelGroup.add(channel);
     }
 
     /**
@@ -52,11 +54,13 @@ public class TextWsFrameHandler extends SimpleChannelInboundHandler<TextWebSocke
      * @param ctx ChannelHandlerContext
      */
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) {
-        ChannelId channelId = ctx.channel().id();
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        Channel channel = ctx.channel();
+        ChannelId channelId = channel.id();
         String asLongText = channelId.asLongText();
         String asShortText = channelId.asShortText();
         log.info("[xuegao-im-chat-2022][WsServerHandler][handlerRemoved][长id={}][短id={}]", asLongText, asShortText);
+        clientChannelGroup.remove(channel);
     }
 }
 

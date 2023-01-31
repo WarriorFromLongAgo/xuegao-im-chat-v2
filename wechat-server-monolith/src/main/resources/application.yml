@@ -33,7 +33,7 @@ spring:
 logging:
   level:
     root: info
-    com.zaxxer.hikari: debug
+    com.zaxxer.hikari: info
 
 xuegao:
   concurrent:

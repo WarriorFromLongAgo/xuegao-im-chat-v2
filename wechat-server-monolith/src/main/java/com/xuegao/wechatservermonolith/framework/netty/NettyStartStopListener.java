@@ -26,7 +26,11 @@ public class NettyStartStopListener implements DisposableBean, CommandLineRunner
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        nettyServer.start(nettyPort);
+    public void run(String... args) {
+        try {
+            nettyServer.start(nettyPort);
+        } catch (Exception e) {
+            nettyServer.stop();
+        }
     }
 }
