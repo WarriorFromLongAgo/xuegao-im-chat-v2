@@ -19,6 +19,7 @@ public class HeartBeatPing implements Serializable, IMessageType {
 
     @Override
     public Integer getMessageTypeHandler() {
+        // MessageTypeFactory.register(MsgSendTypeEnum.HeartBeatPing.getCode(), this);
         return MsgSendTypeEnum.HeartBeatPing.getCode();
     }
 }

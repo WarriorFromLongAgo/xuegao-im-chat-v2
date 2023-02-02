@@ -2,6 +2,7 @@ package com.xuegao.wechatservermonolith.framework.netty.support.request;
 
 import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
 import com.xuegao.wechatservermonolith.framework.netty.support.IMessageType;
+import com.xuegao.wechatservermonolith.framework.netty.support.MessageTypeFactory;
 
 import java.io.Serializable;
 
@@ -19,6 +20,7 @@ public class CommonMessage implements Serializable, IMessageType {
 
     @Override
     public Integer getMessageTypeHandler() {
+        MessageTypeFactory.register(MsgSendTypeEnum.UNKNOWN.getCode(), this);
         return MsgSendTypeEnum.UNKNOWN.getCode();
     }
 }

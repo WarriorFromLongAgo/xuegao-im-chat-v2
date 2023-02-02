@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.xuegao.mapper.model.GenericModel;
 import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
 import com.xuegao.wechatservermonolith.framework.netty.support.IMessageType;
+import com.xuegao.wechatservermonolith.framework.netty.support.MessageTypeFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -64,6 +65,7 @@ public class FriendMessage extends GenericModel<Long> implements Serializable, I
 
     @Override
     public Integer getMessageTypeHandler() {
+        MessageTypeFactory.register(MsgSendTypeEnum.OneToOne.getCode(), this);
         return MsgSendTypeEnum.OneToOne.getCode();
     }
 }
