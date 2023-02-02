@@ -1,8 +1,8 @@
 import { SelectChatMessageBO } from "@/service/chat/store/SelectChatMessageBO";
 import { isEmpty } from "@/common/ObjectUtil";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
 import { GroupMessageDO } from "@/model/DO/GroupMessageDO";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 export { createAction };
 
@@ -27,11 +27,11 @@ function updateSelectChatMessage(state: SelectChatMessageBO) {
     const selectChatType = selectChatMessage.chatType;
     state.chatType = selectChatType;
 
-    if (ChatMsgTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.OneToOne === selectChatType) {
       state.friendMessageList = selectChatMessage.friendMessageList;
       state.groupMessageList = undefined;
     }
-    if (ChatMsgTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
       state.friendMessageList = undefined;
       state.groupMessageList = selectChatMessage.groupMessageList;
     }
@@ -61,10 +61,10 @@ function getGroupMessageList(state: SelectChatMessageBO) {
 function getState(state: SelectChatMessageBO) {
   return (): Array<GroupMessageDO> | Array<FriendMessageDO> | undefined => {
     const selectChatType = state.chatType;
-    if (ChatMsgTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.OneToOne === selectChatType) {
       return state.friendMessageList;
     }
-    if (ChatMsgTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
       return state.groupMessageList;
     }
   };

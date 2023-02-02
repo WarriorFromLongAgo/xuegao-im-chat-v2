@@ -47,13 +47,13 @@ import { computed } from "vue";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import {
   friendMessageList1To1List,
   friendMessageList1To2List,
   friendMessageList1To3List,
 } from "@/model/temp/FriendMessageListData";
 import { SelectChatMessageBO } from "@/service/chat/store/SelectChatMessageBO";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 let selectChatStore = useSelectChatStore();
 let selectChatMessageStore = useSelectChatMessageStore();
@@ -77,10 +77,10 @@ let selectChat = function (chatInfo: ChatInfo) {
   selectChatStore.action.updateSelectChat(chatInfo);
 
   let chatType = chatInfo.chatType;
-  if (ChatMsgTypeEnum.OneToOne === chatType) {
+  if (MsgSendTypeEnum.OneToOne === chatType) {
     let friendUserId = chatInfo.friendInfo?.id;
     let selectChatMessageBO: SelectChatMessageBO = {
-      chatType: ChatMsgTypeEnum.OneToOne,
+      chatType: MsgSendTypeEnum.OneToOne,
     };
     if (friendUserId === "1") {
       selectChatMessageBO.friendMessageList = friendMessageList1To1List;

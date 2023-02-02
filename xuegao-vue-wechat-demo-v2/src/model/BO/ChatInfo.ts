@@ -1,4 +1,3 @@
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
 import { GroupInfoDO } from "@/model/DO/GroupInfoDO";
 import { GroupMessageDO } from "@/model/DO/GroupMessageDO";
@@ -21,6 +20,7 @@ import {
   friendUserDataThree,
   friendUserDataTwo,
 } from "@/model/temp/FriendUserData";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 const nowDate = getDate();
 
@@ -34,7 +34,7 @@ interface ChatInfo {
   // 最后的消息时间
   lastMsgTime: Date;
   // 1000 私聊，1001 群聊
-  chatType: ChatMsgTypeEnum;
+  chatType: MsgSendTypeEnum;
   // 私聊的时候，对方的详细信息
   friendInfo?: SysUserBO;
   // 私聊的时候，这里应该只存最后一条消息，这里面需要冗余对方的名字，id
@@ -53,7 +53,7 @@ const chatInfoOne: ChatInfo = {
   index: 1,
   newMsgNum: 0,
   lastMsgTime: nowDate,
-  chatType: ChatMsgTypeEnum.OneToOne,
+  chatType: MsgSendTypeEnum.OneToOne,
   friendInfo: friendInfoDataOne,
   lastFriendMessage: friendMessageDataOne,
   friendUser: friendUserDataOne,
@@ -63,7 +63,7 @@ const chatInfoTwo: ChatInfo = {
   index: 2,
   newMsgNum: 98,
   lastMsgTime: nowDate,
-  chatType: ChatMsgTypeEnum.OneToOne,
+  chatType: MsgSendTypeEnum.OneToOne,
   friendInfo: friendInfoDataTwo,
   lastFriendMessage: friendMessageDataTwo,
   friendUser: friendUserDataTwo,
@@ -73,7 +73,7 @@ const chatInfoThree: ChatInfo = {
   index: 3,
   newMsgNum: 100,
   lastMsgTime: nowDate,
-  chatType: ChatMsgTypeEnum.OneToOne,
+  chatType: MsgSendTypeEnum.OneToOne,
   friendInfo: friendInfoDataThree,
   lastFriendMessage: friendMessageDataThree,
   friendUser: friendUserDataThree,

@@ -1,4 +1,4 @@
-package com.xuegao.wechatservermonolith.framework.netty.listener;
+package com.xuegao.wechatservermonolith.framework.netty.deprecated.listener;
 
 // 启动的时候
 // com.xuegao.im.netty.listener.ServerStartListener10=============10

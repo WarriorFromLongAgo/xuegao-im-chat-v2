@@ -1,10 +1,10 @@
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 interface HearBeatMessageBO {
   /**
    * 消息类型，HeartBeatPong = 4
    */
-  messageType: ChatMsgTypeEnum;
+  messageType: MsgSendTypeEnum;
   /**
    * 消息内容
    */

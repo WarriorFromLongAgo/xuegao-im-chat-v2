@@ -1,7 +1,7 @@
 import { GenericModel } from "@/model/DO/GenericModel";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
 import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 /**
  * 群消息
@@ -18,7 +18,7 @@ interface GroupMessageDO extends GenericModel {
   /**
    * 群id
    */
-  messageType: ChatMsgTypeEnum;
+  messageType: MsgSendTypeEnum;
   /**
    * 消息内容
    */

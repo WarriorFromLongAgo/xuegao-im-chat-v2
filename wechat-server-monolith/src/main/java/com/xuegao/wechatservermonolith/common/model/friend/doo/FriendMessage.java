@@ -3,6 +3,8 @@ package com.xuegao.wechatservermonolith.common.model.friend.doo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xuegao.mapper.model.GenericModel;
+import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
+import com.xuegao.wechatservermonolith.framework.netty.support.IMessageType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,7 +23,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @TableName("friend_message")
-public class FriendMessage extends GenericModel<Long> implements Serializable{
+public class FriendMessage extends GenericModel<Long> implements Serializable, IMessageType {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -60,4 +62,8 @@ public class FriendMessage extends GenericModel<Long> implements Serializable{
     @TableField("data_status")
     private Integer dataStatus;
 
+    @Override
+    public Integer getMessageTypeHandler() {
+        return MsgSendTypeEnum.OneToOne.getCode();
+    }
 }

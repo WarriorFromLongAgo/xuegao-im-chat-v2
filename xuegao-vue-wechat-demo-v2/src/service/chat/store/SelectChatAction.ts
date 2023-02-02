@@ -1,7 +1,7 @@
 import { isEmpty } from "@/common/ObjectUtil";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { SelectChatBO } from "@/service/chat/store/SelectChatBO";
 import { ChatInfo } from "@/model/BO/ChatInfo";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 export { createAction };
 
@@ -43,13 +43,13 @@ function updateSelectChat(state: SelectChatBO) {
     const selectChatType = chatInfo.chatType;
     state.chatType = selectChatType;
 
-    if (ChatMsgTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.OneToOne === selectChatType) {
       state.friendInfo = chatInfo.friendInfo;
       state.friendUser = chatInfo.friendUser;
       state.groupInfo = undefined;
       state.groupUser = undefined;
     }
-    if (ChatMsgTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
       state.friendUser = undefined;
       state.friendInfo = undefined;
       state.groupInfo = chatInfo.groupInfo;

@@ -1,7 +1,7 @@
 import { GenericModel } from "@/model/DO/GenericModel";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
 import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
+import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
 
 interface FriendMessageDO extends GenericModel {
   /**
@@ -15,7 +15,7 @@ interface FriendMessageDO extends GenericModel {
   /**
    * 消息类型，text，image，audio，video，
    */
-  messageType: ChatMsgTypeEnum;
+  messageType: MsgTypeEnum;
   /**
    * 消息内容
    */

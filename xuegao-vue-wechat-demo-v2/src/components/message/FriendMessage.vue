@@ -41,9 +41,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { replaceToFaceByMsg } from "@/model/Emoji";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
 let selectChatMessageStore = useSelectChatMessageStore();
 

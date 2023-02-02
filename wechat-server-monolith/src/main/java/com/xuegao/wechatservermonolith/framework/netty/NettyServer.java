@@ -1,5 +1,7 @@
 package com.xuegao.wechatservermonolith.framework.netty;
 
+import com.xuegao.wechatservermonolith.framework.netty.code.MessageTypeDecoder;
+import com.xuegao.wechatservermonolith.framework.netty.handler.CommonMessageHandler;
 import com.xuegao.wechatservermonolith.framework.netty.heartbeat.HeartBeatServerHandler;
 import com.xuegao.wechatservermonolith.framework.netty.heartbeat.ImIdleStateHandler;
 import com.xuegao.wechatservermonolith.framework.netty.ws.TextWsFrameHandler;
@@ -65,12 +67,16 @@ public class NettyServer {
                         pipeline.addLast(new HttpObjectAggregator(65536));
                         // 第一种 websocket 方法
                         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
+                        // 第二种 websocket 方法
+                        // pipeline.addLast(new WSServerHandler());
+
+                        // 根据消息类型，决定走什么数据
+                        pipeline.addLast(new MessageTypeDecoder());
+
                         pipeline.addLast(new TextWsFrameHandler());
                         pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
                         pipeline.addLast(new HeartBeatServerHandler());
-
-                        // 第二种 websocket 方法
-                        // pipeline.addLast(new WSServerHandler());
+                        pipeline.addLast(new CommonMessageHandler());
                     }
                 })
                 // 服务端 accept 队列的大小

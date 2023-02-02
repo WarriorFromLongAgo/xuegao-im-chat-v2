@@ -1,4 +1,4 @@
-package com.xuegao.wechatservermonolith.framework.netty.listener;
+package com.xuegao.wechatservermonolith.framework.netty.deprecated.listener;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;

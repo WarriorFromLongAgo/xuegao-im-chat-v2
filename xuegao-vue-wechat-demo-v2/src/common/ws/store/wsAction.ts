@@ -1,7 +1,4 @@
 import { WsBO } from "@/common/ws/store/wsBO";
-import HearBeatMessageBO from "@/common/ws/heartBeat/HearBeatMessageBO";
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
-import { useWsStore } from "@/common/ws/store/wsStore";
 import hearBeat from "@/common/ws/heartBeat/heartBeat";
 
 function initWebSocket(state: WsBO) {

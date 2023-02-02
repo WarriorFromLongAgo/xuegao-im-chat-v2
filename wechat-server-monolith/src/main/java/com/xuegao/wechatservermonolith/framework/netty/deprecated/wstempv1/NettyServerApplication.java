@@ -1,4 +1,4 @@
-package com.xuegao.wechatservermonolith.framework.netty.wstempv1;// package com.xuegao.im.netty.wstempv1;
+package com.xuegao.wechatservermonolith.framework.netty.deprecated.wstempv1;// package com.xuegao.im.netty.wstempv1;
 //
 // import io.netty.bootstrap.ServerBootstrap;
 // import io.netty.channel.ChannelInitializer;

@@ -1,4 +1,4 @@
-package com.xuegao.wechatservermonolith.framework.netty.listener;
+package com.xuegao.wechatservermonolith.framework.netty.deprecated.listener;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @date 2022/6/4 16:19
  */
 @Component
-public class ServerStartListener10 implements ApplicationRunner, Ordered {
+public class ServerStartListener12 implements ApplicationRunner, Ordered {
     @Override
     public void run(ApplicationArguments args) {
         System.out.println(getClass().getName() + "=============" + getOrder());
@@ -19,6 +19,6 @@ public class ServerStartListener10 implements ApplicationRunner, Ordered {
 
     @Override
     public int getOrder() {
-        return 10;
+        return 12;
     }
 }

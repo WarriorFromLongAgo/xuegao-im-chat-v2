@@ -1,4 +1,4 @@
-package com.xuegao.wechatservermonolith.framework.netty.wstempv1;// package com.xuegao.im.netty;
+package com.xuegao.wechatservermonolith.framework.netty.deprecated.wstempv1;// package com.xuegao.im.netty;
 //
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,8 +1,8 @@
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
 import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
 import { getDate } from "@/common/time";
 import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
+import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
 
 const nowTimeOne = getDate();
 const nowTimeTwo = getDate();
@@ -16,7 +16,7 @@ const friendMessageList1To1_One: FriendMessageBO = {
   id: "1",
   userId: "1",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 1 我已经通过你的好友请求，现在可以开始聊天了",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -28,7 +28,7 @@ const friendMessageList1To1_Two: FriendMessageBO = {
   id: "2",
   userId: "1",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 1  hello 我叫偷懒的机器人",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -40,7 +40,7 @@ const friendMessageList1To1_Three: FriendMessageBO = {
   id: "3",
   userId: "1",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 1 hello 我叫偷懒的机器人",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -61,7 +61,7 @@ const friendMessageList1To2_One: FriendMessageBO = {
   id: "1",
   userId: "1",
   friendId: "2",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 2 我已经通过你的好友请求，现在可以开始聊天了",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -73,7 +73,7 @@ const friendMessageList1To2_Two: FriendMessageBO = {
   id: "2",
   userId: "1",
   friendId: "2",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 2 hello 我叫偷懒的机器人",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -85,7 +85,7 @@ const friendMessageList1To2_Three: FriendMessageBO = {
   id: "3",
   userId: "2",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 2 ello 我叫偷懒的雪糕",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -106,7 +106,7 @@ const friendMessageList1To3_One: FriendMessageBO = {
   id: "1",
   userId: "1",
   friendId: "3",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 3 我已经通过你的好友请求，现在可以开始聊天了",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -118,7 +118,7 @@ const friendMessageList1To3_Two: FriendMessageBO = {
   id: "2",
   userId: "1",
   friendId: "3",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 3 hello 我叫偷懒的机器人",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -130,7 +130,7 @@ const friendMessageList1To3_Three: FriendMessageBO = {
   id: "3",
   userId: "3",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "friendId 3 hello 我叫满足的雪糕",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,

@@ -1,8 +1,8 @@
-import { ChatMsgTypeEnum } from "@/model/Enum/ChatMsgTypeEnum";
 import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
 import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
 import { getDate } from "@/common/time";
 import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
+import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
 
 const nowTimeOne = getDate();
 const nowTimeTwo = getDate();
@@ -14,7 +14,7 @@ const friendMessageDataOne: FriendMessageBO = {
   id: "1",
   userId: "2",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "我会跟你聊聊天的哟11",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -28,7 +28,7 @@ const friendMessageDataTwo: FriendMessageBO = {
   id: "2",
   userId: "2",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "我会跟你聊聊天的哟22",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
@@ -42,7 +42,7 @@ const friendMessageDataThree: FriendMessageBO = {
   id: "3",
   userId: "2",
   friendId: "1",
-  messageType: ChatMsgTypeEnum.Text,
+  messageType: MsgTypeEnum.Text,
   content: "我会跟你聊聊天的哟33",
   ackType: AckTypeEnum.ACK_YES,
   dataStatus: MsgDataStatusEnum.MSG_NORMAL,
