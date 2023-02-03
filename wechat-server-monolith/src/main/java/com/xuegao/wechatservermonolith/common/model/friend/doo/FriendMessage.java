@@ -64,8 +64,10 @@ public class FriendMessage extends GenericModel<Long> implements Serializable, I
     private Integer dataStatus;
 
     @Override
-    public Integer getMessageTypeHandler() {
+    public static Integer getMessageTypeHandler() {
         MessageTypeFactory.register(MsgSendTypeEnum.OneToOne.getCode(), this);
         return MsgSendTypeEnum.OneToOne.getCode();
     }
+
+
 }
