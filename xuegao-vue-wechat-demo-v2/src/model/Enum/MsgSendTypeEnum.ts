@@ -29,15 +29,15 @@ export enum MsgSendTypeEnum {
   /**
    * 10001 = 系统机器人
    */
-  Robot = 10001,
+  robot = 10001,
   /**
    * 10002 = 系统通知
    */
-  SystemNotify = 10002,
+  systemNotify = 10002,
   /**
    * 10003 = 心跳，客户端发送
    */
-  HeartBeatPing = 10003,
+  heartBeatPing = 10003,
   /**
    * 10004 = 心跳，服务端发送
    */
@@ -48,21 +48,26 @@ export enum MsgSendTypeEnum {
   /**
    * 10005 = 私聊
    */
-  OneToOne = 10005,
+  oneToOne = 10005,
   /**
    * 10006 = 群聊
    */
-  ManyToMany = 10006,
+  manyToMany = 10006,
   // endregion
 
   // region 其他会话
   /**
    * 10007 = 文件发送助手
    */
-  FileSend = 10007,
+  fileSend = 10007,
   /**
    * 10008 = 服务订阅号
    */
-  ServiceSubscription = 10008,
+  serviceSubscription = 10008,
   // endregion
+
+  /**
+   * 10009 = 绑定session
+   */
+  bingSession = 10009,
 }

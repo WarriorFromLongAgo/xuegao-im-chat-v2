@@ -33,7 +33,7 @@ function sendMsg(state: WsBO) {
     if (webSocket !== null && webSocket?.CLOSED === webSocket?.readyState) {
       return;
     }
-    console.log("sendMsg message ", message);
+    console.log("sendMsg 客户端发送消息 = ", message);
     if (webSocket === null) {
       throw Error("dada");
     }
@@ -49,13 +49,14 @@ function closeWs(state: WsBO) {
       console.log("closeWs webSocket is null ");
       return;
     }
-    // webSocket.close();
     stopHeartBeat(state);
     const closeWs: CommonMsgBO = {
       messageType: MsgSendTypeEnum.wsClose,
       content: "断开 websocket",
     };
     useWsStore().action.sendMsg(JSON.stringify(closeWs));
+    state.webSocket = null;
+    webSocket.close();
   };
 }
 

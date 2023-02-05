@@ -7,13 +7,13 @@
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 //
-// public class HeartBeatServerHandler extends SimpleChannelInboundHandler<String> {
+// public class HeartBeatServerHandler extends SimpleChannelInboundHandler<Object> {
 //     private static final Logger log = LoggerFactory.getLogger(HeartBeatServerHandler.class);
 //
 //     private int readTimeOutCount = 0;
 //
 //     @Override
-//     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+//     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 //         // 将收到的消息打印出来
 //         log.info("[wechat-server-monolith][HeartBeatServerHandler][channelRead0][={}]", JsonUtil.toJsonString(msg));
 //         // 如果消息内容是 Heartbeat Packet 则说明这是一个心跳包，我们返回 ok
@@ -33,6 +33,7 @@
 //      */
 //     @Override
 //     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+//         log.info("[wechat-server-monolith][HeartBeatServerHandler][userEventTriggered][evt={}]", JsonUtil.toJsonString(evt));
 //         // 入站的消息就是 IdleStateEvent 具体的事件
 //         if (!(evt instanceof IdleStateEvent)) {
 //             return;
@@ -69,11 +70,11 @@
 //             ctx.channel().close(); // 手动断开连接
 //         }
 //     }
-//
-//     @Override
-//     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-//         log.info("[wechat-server-monolith][HeartBeatServerHandler][channelActive][=active{}]", ctx.channel().remoteAddress());
-//     }
+//     //
+//     // @Override
+//     // public void channelActive(ChannelHandlerContext ctx) throws Exception {
+//     //     log.info("[wechat-server-monolith][HeartBeatServerHandler][channelActive][=active{}]", ctx.channel().remoteAddress());
+//     // }
 //
 //
 // }

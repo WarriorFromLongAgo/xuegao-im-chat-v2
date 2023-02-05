@@ -4,7 +4,7 @@ import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 function hearBeat() {
   const heart: CommonMsgBO = {
-    messageType: MsgSendTypeEnum.HeartBeatPing,
+    messageType: MsgSendTypeEnum.heartBeatPing,
     content: "ping",
   };
 

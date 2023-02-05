@@ -43,13 +43,13 @@ function updateSelectChat(state: SelectChatBO) {
     const selectChatType = chatInfo.chatType;
     state.chatType = selectChatType;
 
-    if (MsgSendTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.oneToOne === selectChatType) {
       state.friendInfo = chatInfo.friendInfo;
       state.friendUser = chatInfo.friendUser;
       state.groupInfo = undefined;
       state.groupUser = undefined;
     }
-    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.manyToMany === selectChatType) {
       state.friendUser = undefined;
       state.friendInfo = undefined;
       state.groupInfo = chatInfo.groupInfo;

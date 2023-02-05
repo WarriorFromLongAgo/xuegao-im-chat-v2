@@ -1,10 +1,8 @@
 package com.xuegao.wechatservermonolith.framework.netty;
 
 import com.xuegao.wechatservermonolith.framework.netty.code.MessageTypeDecoder;
-import com.xuegao.wechatservermonolith.framework.netty.handler.CommonMsgReqHandler;
-import com.xuegao.wechatservermonolith.framework.netty.handler.FriendMsgReqHandler;
-import com.xuegao.wechatservermonolith.framework.netty.handler.GroupMsgReqHandler;
-import com.xuegao.wechatservermonolith.framework.netty.handler.HeartBeatPingHandler;
+import com.xuegao.wechatservermonolith.framework.netty.handler.*;
+import com.xuegao.wechatservermonolith.framework.netty.heartbeat.ImIdleStateHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -70,16 +68,19 @@ public class NettyServer {
                         // 第二种 websocket 方法
                         // pipeline.addLast(new WSServerHandler());
 
-                        // pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
-                        // pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
-
                         // 根据消息类型，决定走什么数据
                         pipeline.addLast(new MessageTypeDecoder());
+
+                        // 使用了MessageTypeDecoder后，就只能使用这个了
+                        pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
+                        // 如果没使用，那么可以随便控制
+                        // pipeline.addLast(new HeartBeatServerHandler());
 
                         // 根据 msgType 解析出对应的 handler
                         pipeline.addLast(new HeartBeatPingHandler());
                         pipeline.addLast(new FriendMsgReqHandler());
                         pipeline.addLast(new GroupMsgReqHandler());
+                        pipeline.addLast(new SysUserMsgReqHandler());
                         pipeline.addLast(new CommonMsgReqHandler());
                         // 根据 msgType 解析出对应的 handler
 

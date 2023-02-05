@@ -26,6 +26,7 @@ public enum MsgSendTypeEnum {
      * 4 = 异常 websocket
      */
     WS_ERROR(4, "异常 websocket"),
+
     /**
      * 10001 = 系统机器人
      */
@@ -67,6 +68,11 @@ public enum MsgSendTypeEnum {
     SERVICE_SUBSCRIPTION(10008, "服务订阅号"),
     // endregion
 
+    /**
+     * 10009 = bing session
+     */
+    BING_SESSION(10009, "绑定session"),
+
     ;
 
     private static final Logger log = LoggerFactory.getLogger(MsgSendTypeEnum.class);
@@ -95,6 +101,13 @@ public enum MsgSendTypeEnum {
         }
         log.info("[wechat-server-monolith][MsgSendTypeEnum][getEnumByCode][code={}]", code);
         throw new ServiceException("MsgSendTypeEnum getEnumByCode 找不到数据");
+    }
+
+    public static boolean containWs(MsgSendTypeEnum typeEnum) {
+        return MsgSendTypeEnum.WS_OPEN.equals(typeEnum)
+                || MsgSendTypeEnum.WS_MSG.equals(typeEnum)
+                || MsgSendTypeEnum.WS_CLOSE.equals(typeEnum)
+                || MsgSendTypeEnum.WS_ERROR.equals(typeEnum);
     }
 
 }

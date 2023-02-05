@@ -27,11 +27,11 @@ function updateSelectChatMessage(state: SelectChatMessageBO) {
     const selectChatType = selectChatMessage.chatType;
     state.chatType = selectChatType;
 
-    if (MsgSendTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.oneToOne === selectChatType) {
       state.friendMessageList = selectChatMessage.friendMessageList;
       state.groupMessageList = undefined;
     }
-    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.manyToMany === selectChatType) {
       state.friendMessageList = undefined;
       state.groupMessageList = selectChatMessage.groupMessageList;
     }
@@ -61,10 +61,10 @@ function getGroupMessageList(state: SelectChatMessageBO) {
 function getState(state: SelectChatMessageBO) {
   return (): Array<GroupMessageDO> | Array<FriendMessageDO> | undefined => {
     const selectChatType = state.chatType;
-    if (MsgSendTypeEnum.OneToOne === selectChatType) {
+    if (MsgSendTypeEnum.oneToOne === selectChatType) {
       return state.friendMessageList;
     }
-    if (MsgSendTypeEnum.ManyToMany === selectChatType) {
+    if (MsgSendTypeEnum.manyToMany === selectChatType) {
       return state.groupMessageList;
     }
   };

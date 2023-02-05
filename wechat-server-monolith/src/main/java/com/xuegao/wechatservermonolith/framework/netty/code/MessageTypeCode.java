@@ -4,10 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.xuegao.util.JsonUtil;
 import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
 import com.xuegao.wechatservermonolith.framework.netty.support.IMessageType;
-import com.xuegao.wechatservermonolith.framework.netty.support.request.CommonMsgReq;
-import com.xuegao.wechatservermonolith.framework.netty.support.request.FriendMsgReq;
-import com.xuegao.wechatservermonolith.framework.netty.support.request.GroupMsgReq;
-import com.xuegao.wechatservermonolith.framework.netty.support.request.HeartBeatPingMsgReq;
+import com.xuegao.wechatservermonolith.framework.netty.support.request.*;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -37,12 +34,16 @@ public class MessageTypeCode {
             if (log.isDebugEnabled()) {
                 log.info("[wechat-server-monolith][MessageTypeCode][decode][jsonObject={}]", jsonObject);
             }
-            if (MsgSendTypeEnum.HEART_BEAT_PING.equals(sendTypeEnum)) {
+            if (MsgSendTypeEnum.containWs(sendTypeEnum)) {
+                return CommonMsgReq.buildMsgReqByReq(sendTypeEnum, text);
+            } else if (MsgSendTypeEnum.HEART_BEAT_PING.equals(sendTypeEnum)) {
                 return HeartBeatPingMsgReq.buildMsgReqByReq(text);
             } else if (MsgSendTypeEnum.ONE_TO_ONE.equals(sendTypeEnum)) {
                 return FriendMsgReq.buildMsgReqByReq(text);
             } else if (MsgSendTypeEnum.MANY_TO_MANY.equals(sendTypeEnum)) {
                 return GroupMsgReq.buildMsgReqByReq(text);
+            } else if (MsgSendTypeEnum.BING_SESSION.equals(sendTypeEnum)) {
+                return SysUserMsgReq.buildMsgReqByReq(text);
             } else {
                 return CommonMsgReq.buildMsgReqByReq(text);
             }

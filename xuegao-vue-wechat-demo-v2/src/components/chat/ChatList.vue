@@ -77,10 +77,10 @@ let selectChat = function (chatInfo: ChatInfo) {
   selectChatStore.action.updateSelectChat(chatInfo);
 
   let chatType = chatInfo.chatType;
-  if (MsgSendTypeEnum.OneToOne === chatType) {
+  if (MsgSendTypeEnum.oneToOne === chatType) {
     let friendUserId = chatInfo.friendInfo?.id;
     let selectChatMessageBO: SelectChatMessageBO = {
-      chatType: MsgSendTypeEnum.OneToOne,
+      chatType: MsgSendTypeEnum.oneToOne,
     };
     if (friendUserId === "1") {
       selectChatMessageBO.friendMessageList = friendMessageList1To1List;

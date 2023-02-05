@@ -45,6 +45,7 @@ function updateToken(state: ILoginInfo) {
 function updateLoginUser(state: ILoginInfo) {
   return (sysUser: ISysUser) => {
     const oldSysUser = state.sysUser;
+    oldSysUser.id = sysUser.id;
     oldSysUser.username = sysUser.username;
     oldSysUser.uid = sysUser.uid;
     oldSysUser.nickname = sysUser.nickname;

@@ -65,4 +65,13 @@ public class CommonMsgReq implements Serializable, IMessageType {
         req.setContent(msg);
         return req;
     }
+
+    public static CommonMsgReq buildMsgReqByReq(MsgSendTypeEnum typeEnum,
+                                                String msg) {
+        CommonMsgReq req = new CommonMsgReq();
+        req.setMessageType(typeEnum.getCode());
+        req.setMessageName(typeEnum.getMsg());
+        req.setContent(msg);
+        return req;
+    }
 }
