@@ -12,12 +12,13 @@ import com.xuegao.wechatservermonolith.sysuser.mapper.SysUserMapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser, Long> {
+public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser, Long> implements InitializingBean {
     private static final Logger log = LoggerFactory.getLogger(SysUserMpManage.class);
 
     /**
@@ -53,4 +54,8 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         return sysUserList.get(0);
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println(" afterPropertiesSet ");
+    }
 }

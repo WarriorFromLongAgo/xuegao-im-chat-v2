@@ -178,6 +178,7 @@ function goToHome() {
   let loginStore = useLoginStore();
   loginStore.action.updateToken("temp token---------------");
   let sysUser: ISysUser = {
+    id: "temp id",
     username: "temp username",
     nickname: "temp nickname",
     uid: "temp uid",

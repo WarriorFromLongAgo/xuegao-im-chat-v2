@@ -18,6 +18,7 @@ const loginInfoBO: ILoginInfo = {
   networkStateCount: 0,
   token: "",
   sysUser: {
+    id: "",
     username: "",
     nickname: "",
     uid: "",

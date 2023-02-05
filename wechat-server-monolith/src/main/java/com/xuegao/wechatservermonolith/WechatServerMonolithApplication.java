@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.xuegao.wechatservermonolith"})
 public class WechatServerMonolithApplication {
 
     public static void main(String[] args) {
