@@ -30,7 +30,7 @@
           >
             <div
               class="text"
-              v-if="ChatMsgTypeEnum.Text === item.messageType"
+              v-if="MsgTypeEnum.Text === item.messageType"
               v-html="replaceToFaceByMsg(item)"
             ></div>
           </div>
@@ -43,7 +43,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { replaceToFaceByMsg } from "@/model/Emoji";
+import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
+
 let selectChatMessageStore = useSelectChatMessageStore();
 
 // 获取聊天记录

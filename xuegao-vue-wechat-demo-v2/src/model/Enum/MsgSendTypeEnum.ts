@@ -7,42 +7,62 @@
 export enum MsgSendTypeEnum {
   // region 系统层面的消息或者会话
   /**
-   * 1 = 系统机器人
+   * 0 = 未知
    */
-  Robot = 1,
+  unKnown = 0,
   /**
-   * 2 = 系统通知
+   * 1 = 链接 websocket
    */
-  SystemNotify = 2,
+  wsOpen = 1,
   /**
-   * 3 = 心跳，客户端发送
+   * 2 = 断开 websocket
    */
-  HeartBeatPing = 3,
+  wsClose = 2,
   /**
-   * 4 = 心跳，服务端发送
+   * 3 = 发送 websocket 消息
    */
-  HeartBeatPong = 4,
+  wsMsg = 3,
+  /**
+   * 4 = 异常 websocket
+   */
+  wsError = 4,
+  /**
+   * 10001 = 系统机器人
+   */
+  Robot = 10001,
+  /**
+   * 10002 = 系统通知
+   */
+  SystemNotify = 10002,
+  /**
+   * 10003 = 心跳，客户端发送
+   */
+  HeartBeatPing = 10003,
+  /**
+   * 10004 = 心跳，服务端发送
+   */
+  HeartBeatPong = 10004,
   // endregion
 
   // region 人和人之间的会话
   /**
-   * 5 = 私聊
+   * 10005 = 私聊
    */
-  OneToOne = 5,
+  OneToOne = 10005,
   /**
-   * 6 = 群聊
+   * 10006 = 群聊
    */
-  ManyToMany = 6,
+  ManyToMany = 10006,
   // endregion
 
   // region 其他会话
   /**
-   * 7 = 文件发送助手
+   * 10007 = 文件发送助手
    */
-  FileSend = 7,
+  FileSend = 10007,
   /**
-   * 8 = 服务订阅号
+   * 10008 = 服务订阅号
    */
-  ServiceSubscription = 8,
+  ServiceSubscription = 10008,
   // endregion
 }

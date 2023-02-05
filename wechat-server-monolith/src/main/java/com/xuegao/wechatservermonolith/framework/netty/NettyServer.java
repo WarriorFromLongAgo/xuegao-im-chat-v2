@@ -1,10 +1,10 @@
 package com.xuegao.wechatservermonolith.framework.netty;
 
 import com.xuegao.wechatservermonolith.framework.netty.code.MessageTypeDecoder;
-import com.xuegao.wechatservermonolith.framework.netty.handler.CommonMessageHandler;
-import com.xuegao.wechatservermonolith.framework.netty.heartbeat.HeartBeatServerHandler;
-import com.xuegao.wechatservermonolith.framework.netty.heartbeat.ImIdleStateHandler;
-import com.xuegao.wechatservermonolith.framework.netty.ws.TextWsFrameHandler;
+import com.xuegao.wechatservermonolith.framework.netty.handler.CommonMsgReqHandler;
+import com.xuegao.wechatservermonolith.framework.netty.handler.FriendMsgReqHandler;
+import com.xuegao.wechatservermonolith.framework.netty.handler.GroupMsgReqHandler;
+import com.xuegao.wechatservermonolith.framework.netty.handler.HeartBeatPingHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -70,13 +70,19 @@ public class NettyServer {
                         // 第二种 websocket 方法
                         // pipeline.addLast(new WSServerHandler());
 
+                        // pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
+                        // pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
+
                         // 根据消息类型，决定走什么数据
                         pipeline.addLast(new MessageTypeDecoder());
 
-                        pipeline.addLast(new TextWsFrameHandler());
-                        pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
-                        pipeline.addLast(new HeartBeatServerHandler());
-                        pipeline.addLast(new CommonMessageHandler());
+                        // 根据 msgType 解析出对应的 handler
+                        pipeline.addLast(new HeartBeatPingHandler());
+                        pipeline.addLast(new FriendMsgReqHandler());
+                        pipeline.addLast(new GroupMsgReqHandler());
+                        pipeline.addLast(new CommonMsgReqHandler());
+                        // 根据 msgType 解析出对应的 handler
+
                     }
                 })
                 // 服务端 accept 队列的大小

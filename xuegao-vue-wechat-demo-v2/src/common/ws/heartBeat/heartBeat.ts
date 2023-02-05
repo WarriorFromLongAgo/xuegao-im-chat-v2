@@ -1,9 +1,9 @@
-import HearBeatMessageBO from "@/model/BO/HearBeatMessageBO";
+import CommonMsgBO from "@/model/BO/CommonMsgBO";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 function hearBeat() {
-  const heart: HearBeatMessageBO = {
+  const heart: CommonMsgBO = {
     messageType: MsgSendTypeEnum.HeartBeatPing,
     content: "ping",
   };

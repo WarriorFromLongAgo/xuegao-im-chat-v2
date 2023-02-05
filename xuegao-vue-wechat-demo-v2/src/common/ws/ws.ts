@@ -1,5 +1,7 @@
 import { wsUrl } from "@/common/config/config";
 import { useWsStore } from "@/common/ws/store/wsStore";
+import CommonMsgBO from "@/model/BO/CommonMsgBO";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 function initWebSocket() {
   const ws: WebSocket = new WebSocket(wsUrl);
@@ -14,12 +16,15 @@ function initWebSocket() {
   // 每次收到服务端的返回，都会调用这里
   ws.onmessage = function wsOnMsg(ev: MessageEvent) {
     console.log("wsOnMsg ev", ev);
+    const data = ev.data;
+    console.log("wsOnMsg ", data);
   };
 
   ws.onerror = function wsOnError(ev: Event) {
     console.log("wsOnError ev", ev);
   };
 
+  // 服务端主动触发
   ws.onclose = function wsOnClose(ev: CloseEvent) {
     console.log("wsOnClose ev", ev);
   };
@@ -30,8 +35,11 @@ function initWebSocket() {
 }
 
 function sendFirst() {
-  const webSocket = useWsStore().action.getWebSocket();
-  webSocket.send("ws.onopen 我们的链接已经打开了");
+  const closeWs: CommonMsgBO = {
+    messageType: MsgSendTypeEnum.wsOpen,
+    content: "链接 websocket",
+  };
+  useWsStore().action.sendMsg(JSON.stringify(closeWs));
 }
 
 export default initWebSocket;

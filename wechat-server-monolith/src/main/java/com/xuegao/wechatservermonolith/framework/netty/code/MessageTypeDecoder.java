@@ -15,7 +15,7 @@ public class MessageTypeDecoder extends MessageToMessageDecoder<Object> {
     @Override
     protected void decode(ChannelHandlerContext ctx, Object msg, List out) {
         IMessageType decode = MessageTypeCode.INSTANCE.decode(msg);
-        log.info("[wechat-server-monolith][MessageTypeDecoder][decode][={}]", JsonUtil.toJsonString(decode));
+        log.info("[wechat-server-monolith][MessageTypeDecoder][decode][decode={}]", JsonUtil.toJsonString(decode));
         out.add(decode);
     }
 }

@@ -1,6 +1,6 @@
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
-interface HearBeatMessageBO {
+interface CommonMsgBO {
   /**
    * 消息类型，HeartBeatPong = 4
    */
@@ -11,4 +11,4 @@ interface HearBeatMessageBO {
   content: string;
 }
 
-export default HearBeatMessageBO;
+export default CommonMsgBO;

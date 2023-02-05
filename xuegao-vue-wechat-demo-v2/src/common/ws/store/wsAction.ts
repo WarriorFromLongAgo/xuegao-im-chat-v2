@@ -1,5 +1,8 @@
 import { WsBO } from "@/common/ws/store/wsBO";
 import hearBeat from "@/common/ws/heartBeat/heartBeat";
+import CommonMsgBO from "@/model/BO/CommonMsgBO";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
+import { useWsStore } from "@/common/ws/store/wsStore";
 
 function initWebSocket(state: WsBO) {
   return (ws: WebSocket) => {
@@ -30,7 +33,7 @@ function sendMsg(state: WsBO) {
     if (webSocket !== null && webSocket?.CLOSED === webSocket?.readyState) {
       return;
     }
-    console.log("message ", message);
+    console.log("sendMsg message ", message);
     if (webSocket === null) {
       throw Error("dada");
     }
@@ -48,6 +51,11 @@ function closeWs(state: WsBO) {
     }
     // webSocket.close();
     stopHeartBeat(state);
+    const closeWs: CommonMsgBO = {
+      messageType: MsgSendTypeEnum.wsClose,
+      content: "断开 websocket",
+    };
+    useWsStore().action.sendMsg(JSON.stringify(closeWs));
   };
 }
 
