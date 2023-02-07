@@ -72,6 +72,10 @@ public enum MsgSendTypeEnum {
      * 10009 = bing session
      */
     BING_SESSION(10009, "绑定session"),
+    /**
+     * 10010 = ack 消息
+     */
+    ACK(10010, "ack 消息"),
 
     ;
 

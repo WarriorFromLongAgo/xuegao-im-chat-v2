@@ -27,7 +27,7 @@ public class ImIdleStateHandler extends IdleStateHandler {
     @Override
     protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) {
         Channel channel = ctx.channel();
-        log.info(READER_IDLE_TIME + "秒内未读到数据，关闭连接，" + channel.remoteAddress() + ", " + JsonUtil.toJsonString(evt));
+        log.info("{}秒内未读到数据，{}关闭连接, {}", READER_IDLE_TIME, channel.remoteAddress(), JsonUtil.toJsonString(evt));
         SessionUtil.unbindSession(channel);
         channel.close();
     }

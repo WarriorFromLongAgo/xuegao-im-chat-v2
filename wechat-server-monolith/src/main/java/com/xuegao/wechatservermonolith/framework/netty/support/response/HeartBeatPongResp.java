@@ -14,10 +14,10 @@ public class HeartBeatPongResp extends CommonMsgResp {
     }
 
     public static HeartBeatPongResp buildPongByPing() {
-        HeartBeatPongResp pong = new HeartBeatPongResp();
-        pong.setMessageType(MsgSendTypeEnum.HEART_BEAT_PONG.getCode());
-        pong.setMessageName(MsgSendTypeEnum.HEART_BEAT_PONG.getMsg());
-        pong.setContent("pong");
-        return pong;
+        HeartBeatPongResp resp = new HeartBeatPongResp();
+        resp.setMessageType(MsgSendTypeEnum.HEART_BEAT_PONG.getCode());
+        resp.setMessageName(MsgSendTypeEnum.HEART_BEAT_PONG.getMsg());
+        resp.setContent("pong");
+        return resp;
     }
 }
