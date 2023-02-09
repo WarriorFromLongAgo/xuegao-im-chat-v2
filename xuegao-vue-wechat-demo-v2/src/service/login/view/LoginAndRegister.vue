@@ -164,11 +164,12 @@ async function systemLogin() {
   let respSysUser = respData.sysUser;
 
   let loginStore = useLoginStore();
-  loginStore.action.updateToken(respData.token);
+  let localCacheUtil = new LocalCacheUtil();
+  localCacheUtil.set("token", respData.token);
   loginStore.action.updateLoginUser(respSysUser);
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
 
-  setLocalStorage(tempSysUser.username, respData.token);
+  setLocalStorage(respData.token);
   redirectImHome();
 }
 
@@ -190,15 +191,15 @@ function goToHome() {
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
   rememberMe.value = true;
   console.log("getLoginInfo ", loginStore.action.getLoginInfo());
-  setLocalStorage(sysUser.username, "temp token---------------");
+  setLocalStorage("temp token---------------");
   redirectImHome();
 }
 
-function setLocalStorage(username: string, token: string) {
+function setLocalStorage(token: string) {
   // let tempRememberMe: boolean = rememberMe.value;
   // console.log("rememberMe true", tempRememberMe);
   let localCacheUtil = new LocalCacheUtil();
-  localCacheUtil.set(username, token);
+  localCacheUtil.set("token", token);
 }
 </script>
 

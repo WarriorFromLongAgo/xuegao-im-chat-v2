@@ -4,7 +4,7 @@ import com.xuegao.util.JsonUtil;
 import com.xuegao.util.SpringUtil;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.framework.netty.support.request.SysUserMsgReq;
-import com.xuegao.wechatservermonolith.util.SessionUtil;
+import com.xuegao.wechatservermonolith.util.WsSessionUtil;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -31,6 +31,6 @@ public class SysUserMsgReqHandler extends SimpleChannelInboundHandler<SysUserMsg
         SysUser sysUser = mpManage.mpGetById(inputSysUser.getId());
         // SysUser sysUser = sysUserMpManage.mpGetById(inputSysUser.getId());
         log.info("[wechat-server-monolith][SysUserMsgReqHandler][channelRead0][sysUser={}]", JsonUtil.toJsonString(sysUser));
-        SessionUtil.bindSession(sysUser, ctx.channel());
+        WsSessionUtil.bindSession(sysUser, ctx.channel());
     }
 }

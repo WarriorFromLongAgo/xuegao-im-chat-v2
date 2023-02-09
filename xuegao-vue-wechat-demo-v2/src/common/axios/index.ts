@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, Method } from "axios";
 import { apiUrl } from "@/common/config/config";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { LocalCacheUtil } from "@/common/LocalCache";
 
 // 定义接口
 interface RequestInfo {
@@ -57,7 +58,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     console.log("请求拦截器，执行", JSON.stringify(config));
-    removeRequestInfo(config);
+    // removeRequestInfo(config);
     config.cancelToken = new CancelToken((c) => {
       requestInfoList.push({
         url: config.url,
@@ -74,15 +75,16 @@ instance.interceptors.request.use(
     // const token = store.state.token;
     // localStorage.setItem('token', token);
 
-    const store = useLoginStore();
-    const token = store.action.getToken();
-    console.log("请求拦截器，token = ", token);
+    const localCacheUtil = new LocalCacheUtil();
+    const localToken = localCacheUtil.get("token");
+    console.log(" localToken ", localToken);
     // debugger;
     if (config.headers !== null) {
       const tempHeaders = config.headers;
       if (tempHeaders) {
-        tempHeaders.token = token;
+        tempHeaders.token = localToken;
       }
+      console.log(" tempHeaders ", tempHeaders);
     }
     console.log("请求拦截器，执行成功", JSON.stringify(config));
     return config;
@@ -98,7 +100,7 @@ instance.interceptors.response.use(
   function (config) {
     // dataList.show = true;
     console.log("响应拦截器，执行", JSON.stringify(config));
-    removeRequestInfo(config.config);
+    // removeRequestInfo(config.config);
     // 请求成功
     if (config.status === 200 || config.status === 204) {
       // setTimeout(() => {

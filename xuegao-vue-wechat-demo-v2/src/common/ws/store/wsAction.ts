@@ -3,6 +3,7 @@ import hearBeat from "@/common/ws/heartBeat/heartBeat";
 import CommonMsgBO from "@/model/BO/CommonMsgBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 import { useWsStore } from "@/common/ws/store/wsStore";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 
 function initWebSocket(state: WsBO) {
   return (ws: WebSocket) => {
@@ -75,6 +76,17 @@ function stopHeartBeat(state: WsBO) {
   console.log("clearInterval ", state.interval);
 }
 
+function bindSession(state: WsBO) {
+  return () => {
+    const session: CommonMsgBO = {
+      messageType: MsgSendTypeEnum.bingSession,
+      content: JSON.stringify(useLoginStore().action.getLoginSysUser()),
+    };
+    console.log(" ============================== ");
+    // useWsStore().action.sendMsg(JSON.stringify(session));
+  };
+}
+
 /**
  * 创建Action
  */
@@ -84,5 +96,6 @@ export function createAction(state: WsBO) {
     getWebSocket: getWebSocket(state),
     sendMsg: sendMsg(state),
     closeWs: closeWs(state),
+    bindSession: bindSession(state),
   };
 }

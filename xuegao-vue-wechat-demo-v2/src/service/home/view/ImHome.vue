@@ -27,9 +27,18 @@ import { LocalCacheUtil } from "@/common/LocalCache";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import { onMounted } from "vue";
 import initWebSocket from "@/common/ws/ws";
+import { HomeCall } from "@/service/home/call/call/HomeCall";
+import { Result } from "@/common/axios/response";
+import { SysUserDO } from "@/model/DO/SysUserDO";
 
 onMounted(() => {
+  let userByToken = HomeCall.getUserByToken().then((res: Result<SysUserDO>) => {
+    // console.log("register  " + JSON.stringify(res));
+    return res.data;
+  });
+  console.log(userByToken);
   initWebSocket();
+  useWsStore().action.bindSession();
 });
 
 function systemExit() {

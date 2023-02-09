@@ -15,6 +15,7 @@ import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.LoginInfoVO;
 import com.xuegao.wechatservermonolith.sysuser.check.SysUserCheckService;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
+import com.xuegao.wechatservermonolith.util.TokenUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,14 +63,16 @@ public class SysUserService {
         //     }
         // });
 
-        SysUser usernameAndNickName = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
-        if (ObjectUtils.isEmpty(usernameAndNickName)) {
+        SysUser dbSysUser = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
+        if (ObjectUtils.isEmpty(dbSysUser)) {
             throw new ServiceException("登录用户不存在");
         }
         String token = UUID.randomUUID().toString();
         LoginInfoVO loginInfoVO = new LoginInfoVO();
         loginInfoVO.setToken(token);
-        loginInfoVO.setSysUser(usernameAndNickName);
+        loginInfoVO.setSysUser(dbSysUser);
+
+        TokenUtil.saveUserIdAndToken(dbSysUser.getId().toString(), token);
 
         Context context = ContextUtil.get();
 
@@ -81,8 +84,8 @@ public class SysUserService {
                             ContextUtil.set(context);
                             String string2 = JsonUtil.toJsonString(ContextUtil.get());
                             log.info("[xuegao-im-chat-v2][SysUserService][login][context2={}]", string2);
-                            usernameAndNickName.setLastLoginTime(LocalDateTimeUtil.now());
-                            sysUserMpManage.mpUpdate(usernameAndNickName);
+                            dbSysUser.setLastLoginTime(LocalDateTimeUtil.now());
+                            sysUserMpManage.mpUpdate(dbSysUser);
                         },
                         xuegaoSpringTaskExecutor)
                 .exceptionally(throwable -> {

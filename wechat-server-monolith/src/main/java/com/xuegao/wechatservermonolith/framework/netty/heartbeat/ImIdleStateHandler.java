@@ -1,7 +1,7 @@
 package com.xuegao.wechatservermonolith.framework.netty.heartbeat;
 
 import com.xuegao.util.JsonUtil;
-import com.xuegao.wechatservermonolith.util.SessionUtil;
+import com.xuegao.wechatservermonolith.util.WsSessionUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
@@ -28,7 +28,7 @@ public class ImIdleStateHandler extends IdleStateHandler {
     protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) {
         Channel channel = ctx.channel();
         log.info("{}秒内未读到数据，{}关闭连接, {}", READER_IDLE_TIME, channel.remoteAddress(), JsonUtil.toJsonString(evt));
-        SessionUtil.unbindSession(channel);
+        WsSessionUtil.unbindSession(channel);
         channel.close();
     }
 

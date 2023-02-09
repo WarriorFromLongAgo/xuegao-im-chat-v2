@@ -8,12 +8,6 @@ function getLoginInfo(state: ILoginInfo) {
   };
 }
 
-function getToken(state: ILoginInfo) {
-  return () => {
-    return state.token;
-  };
-}
-
 function getLoginSysUser(state: ILoginInfo) {
   return () => {
     return state.sysUser;
@@ -36,12 +30,6 @@ function incrementNetworkStateCount(state: ILoginInfo) {
   };
 }
 
-function updateToken(state: ILoginInfo) {
-  return (token: string) => {
-    state.token = token;
-  };
-}
-
 function updateLoginUser(state: ILoginInfo) {
   return (sysUser: ISysUser) => {
     const oldSysUser = state.sysUser;
@@ -58,13 +46,11 @@ function updateLoginUser(state: ILoginInfo) {
  */
 export function createAction(state: ILoginInfo) {
   return {
-    updateToken: updateToken(state),
     updateNetworkState: updateNetworkState(state),
     incrementNetworkStateCount: incrementNetworkStateCount(state),
     updateLoginUser: updateLoginUser(state),
 
     getLoginInfo: getLoginInfo(state),
     getLoginSysUser: getLoginSysUser(state),
-    getToken: getToken(state),
   };
 }

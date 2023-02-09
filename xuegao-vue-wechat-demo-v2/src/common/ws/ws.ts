@@ -2,16 +2,13 @@ import { wsUrl } from "@/common/config/config";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import CommonMsgBO from "@/model/BO/CommonMsgBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
-import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 
 function initWebSocket() {
   const ws: WebSocket = new WebSocket(wsUrl);
-
   // 第一次客户端，链接服务端，就会调用这里
   ws.onopen = function wsOnOpen(ev: Event) {
     console.log("wsOnMsg 收到服务端的开启返回 = ", ev);
     sendFirst();
-    bindSession();
   };
 
   // 每次收到服务端的返回，都会调用这里
@@ -40,14 +37,6 @@ function sendFirst() {
     content: "链接 websocket",
   };
   useWsStore().action.sendMsg(JSON.stringify(closeWs));
-}
-
-function bindSession() {
-  const session: CommonMsgBO = {
-    messageType: MsgSendTypeEnum.bingSession,
-    content: JSON.stringify(useLoginStore().action.getLoginSysUser()),
-  };
-  useWsStore().action.sendMsg(JSON.stringify(session));
 }
 
 export default initWebSocket;
