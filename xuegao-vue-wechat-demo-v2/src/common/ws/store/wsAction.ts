@@ -33,10 +33,10 @@ function sendMsg(state: WsBO) {
     if (webSocket !== null && webSocket?.CLOSED === webSocket?.readyState) {
       return;
     }
-    console.log("sendMsg 客户端发送消息 = ", message);
     if (webSocket === null) {
-      throw Error("dada");
+      throw Error("webSocket 链接为空，发送失败");
     }
+    console.log("sendMsg 客户端发送消息 = ", message);
     webSocket.send(message);
   };
 }

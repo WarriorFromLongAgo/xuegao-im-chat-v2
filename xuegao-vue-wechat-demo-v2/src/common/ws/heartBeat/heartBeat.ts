@@ -11,7 +11,7 @@ function hearBeat() {
   // 30秒一次
   const interval = setInterval(() => {
     useWsStore().action.sendMsg(JSON.stringify(heart));
-  }, 1000 * 10);
+  }, 1000 * 60);
 
   console.log("hearBeat interval ", interval);
   return interval;

@@ -147,15 +147,18 @@ async function systemLogin() {
     return;
   }
 
-  tempSysUser.nickname = tempSysUser.username;
-  let respData: ISysUserResp = await LoginCall.login(tempSysUser).then(
+  const loginSysUser: ISysUserReq = {
+    username: tempSysUser.username,
+  };
+
+  let respData: ISysUserResp = await LoginCall.login(loginSysUser).then(
     (res: Result<ISysUserResp>) => {
       // console.log("login 1 " + JSON.stringify(res));
       return res.data;
     }
   );
   if (isEmpty(respData)) {
-    return;
+    throw new Error("登陆人信息不存在");
   }
   // console.log(" respData ", respData);
   let respSysUser = respData.sysUser;
@@ -178,10 +181,10 @@ function goToHome() {
   let loginStore = useLoginStore();
   loginStore.action.updateToken("temp token---------------");
   let sysUser: ISysUser = {
-    id: "temp id",
-    username: "temp username",
-    nickname: "temp nickname",
-    uid: "temp uid",
+    id: "2",
+    username: "test",
+    nickname: "test nickname",
+    uid: "test",
   };
   loginStore.action.updateLoginUser(sysUser);
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
@@ -192,14 +195,10 @@ function goToHome() {
 }
 
 function setLocalStorage(username: string, token: string) {
-  let tempRememberMe: boolean = rememberMe.value;
-  if (tempRememberMe) {
-    // console.log("rememberMe true", tempRememberMe);
-    let localCacheUtil = new LocalCacheUtil();
-    localCacheUtil.set(username, token);
-  } else {
-    // console.log("rememberMe false", tempRememberMe);
-  }
+  // let tempRememberMe: boolean = rememberMe.value;
+  // console.log("rememberMe true", tempRememberMe);
+  let localCacheUtil = new LocalCacheUtil();
+  localCacheUtil.set(username, token);
 }
 </script>
 

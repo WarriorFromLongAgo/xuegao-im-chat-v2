@@ -22,8 +22,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { isBlank } from "@/common/ObjectUtil";
+import { isBlank, isEmpty } from "@/common/ObjectUtil";
 import { useWsStore } from "@/common/ws/store/wsStore";
+import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
+import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
+import CommonMsgBO from "@/model/BO/CommonMsgBO";
+import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 
 let alertWarnMsgFlag = ref(false);
 const sendText = ref<HTMLTextAreaElement>();
@@ -62,7 +66,16 @@ let sendMsg = function () {
   } else {
     alertWarnMsgFlag.value = false;
   }
-  useWsStore().action.sendMsg(textAreaText);
+
+  let chatType = useSelectChatStore().action.getChatType();
+  if (chatType === undefined) {
+    throw new Error("chatType is null");
+  }
+  const sendMsg: CommonMsgBO = {
+    messageType: chatType,
+    content: textAreaText,
+  };
+  useWsStore().action.sendMsg(JSON.stringify(sendMsg));
   value.innerHTML = "";
 };
 </script>

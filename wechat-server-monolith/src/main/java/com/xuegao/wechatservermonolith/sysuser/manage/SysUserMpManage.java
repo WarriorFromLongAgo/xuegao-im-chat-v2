@@ -10,6 +10,7 @@ import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.enums.UserStatusEnum;
 import com.xuegao.wechatservermonolith.sysuser.mapper.SysUserMapper;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -37,11 +38,11 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         sysUser.setUserStatus(UserStatusEnum.NORMAL.getCode());
 
         LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(GenericModel::getDelFlag, DelFlagEnum.DEL_FLAG_1);
+        queryWrapper.eq(GenericModel::getDelFlag, DelFlagEnum.DEL_FLAG_1.getCode());
         queryWrapper.eq(SysUser::getUserStatus, UserStatusEnum.NORMAL.getCode());
         queryWrapper.or(sysUserLambdaQueryWrapper -> {
-            sysUserLambdaQueryWrapper.eq(SysUser::getUsername, username);
-            sysUserLambdaQueryWrapper.eq(SysUser::getNickname, nickname);
+            sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(username), SysUser::getUsername, username);
+            sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(nickname), SysUser::getNickname, nickname);
         });
         List<SysUser> sysUserList = super.list(queryWrapper);
         if (ObjectUtils.isEmpty(sysUserList)) {

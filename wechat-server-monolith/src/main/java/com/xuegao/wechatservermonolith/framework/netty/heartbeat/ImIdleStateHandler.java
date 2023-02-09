@@ -1,7 +1,7 @@
 package com.xuegao.wechatservermonolith.framework.netty.heartbeat;
 
 import com.xuegao.util.JsonUtil;
-import com.xuegao.wechatservermonolith.framework.netty.util.SessionUtil;
+import com.xuegao.wechatservermonolith.util.SessionUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;

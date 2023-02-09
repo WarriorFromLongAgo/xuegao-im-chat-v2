@@ -46,7 +46,7 @@ public class SysUserService {
         sysUserCheckService.checkIsNull("入参不能为空", sysLoginDTO);
         sysUserCheckService
                 .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getUsername())
-                .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getNickname())
+        // .checkIsNull("用户名或者昵称不能为空", sysLoginDTO.getNickname())
         ;
 
         // List<?> list = Lists.newArrayList("1", "2");
@@ -64,7 +64,7 @@ public class SysUserService {
 
         SysUser usernameAndNickName = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
         if (ObjectUtils.isEmpty(usernameAndNickName)) {
-            return null;
+            throw new ServiceException("登录用户不存在");
         }
         String token = UUID.randomUUID().toString();
         LoginInfoVO loginInfoVO = new LoginInfoVO();

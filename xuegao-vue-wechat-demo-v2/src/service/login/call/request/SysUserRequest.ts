@@ -1,6 +1,6 @@
 interface ISysUserReq {
   username: string;
-  nickname: string;
+  nickname?: string;
 }
 
 export { ISysUserReq };

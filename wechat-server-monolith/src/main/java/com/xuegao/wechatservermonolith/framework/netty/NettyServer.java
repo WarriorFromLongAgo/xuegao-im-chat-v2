@@ -74,7 +74,7 @@ public class NettyServer {
                         // 对写大数据提供支持
                         pipeline.addLast(new ChunkedWriteHandler());
                         pipeline.addLast(new HttpObjectAggregator(1024 * 64));
-                        pipeline.addLast(loggingHandler);
+                        // pipeline.addLast(loggingHandler);
 
                         // 第一种 websocket 方法
                         pipeline.addLast(new WebSocketServerProtocolHandler("/ws"));
@@ -82,7 +82,7 @@ public class NettyServer {
                         // pipeline.addLast(new WSServerHandler());
 
                         // 使用了MessageTypeDecoder后，就只能使用这个了
-                        pipeline.addLast(new ImIdleStateHandler(90, 0, 0));
+                        pipeline.addLast(new ImIdleStateHandler(180, 0, 0));
                         // 如果没使用，那么可以随便控制
                         // pipeline.addLast(new IdleStateHandler(0, 0, 60));
                         // pipeline.addLast(new HeartBeatHandler());
@@ -91,11 +91,13 @@ public class NettyServer {
                         pipeline.addLast(new MessageTypeDecoder());
 
                         // 根据 msgType 解析出对应的 handler
-                        pipeline.addLast(new CommonMsgReqHandler());
                         pipeline.addLast(new HeartBeatPingHandler());
                         pipeline.addLast(new FriendMsgReqHandler());
                         pipeline.addLast(new GroupMsgReqHandler());
                         pipeline.addLast(new SysUserMsgReqHandler());
+
+                        // CommonMsgReqHandler 由于是所有人的父类，得放在下面
+                        pipeline.addLast(new CommonMsgReqHandler());
                         // 根据 msgType 解析出对应的 handler
 
                         pipeline.addLast(new ExceptionHandler());

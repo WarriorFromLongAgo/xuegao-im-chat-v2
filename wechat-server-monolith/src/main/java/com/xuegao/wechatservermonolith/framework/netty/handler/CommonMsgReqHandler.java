@@ -3,7 +3,7 @@ package com.xuegao.wechatservermonolith.framework.netty.handler;
 import com.xuegao.util.JsonUtil;
 import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
 import com.xuegao.wechatservermonolith.framework.netty.support.request.CommonMsgReq;
-import com.xuegao.wechatservermonolith.framework.netty.util.SessionUtil;
+import com.xuegao.wechatservermonolith.util.SessionUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
