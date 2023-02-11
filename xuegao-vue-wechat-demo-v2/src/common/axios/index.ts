@@ -77,12 +77,14 @@ instance.interceptors.request.use(
 
     const localCacheUtil = new LocalCacheUtil();
     const localToken = localCacheUtil.get("token");
+    const localUid = localCacheUtil.get("uid");
     console.log(" localToken ", localToken);
     // debugger;
     if (config.headers !== null) {
       const tempHeaders = config.headers;
       if (tempHeaders) {
         tempHeaders.token = localToken;
+        tempHeaders.uid = localUid;
       }
       console.log(" tempHeaders ", tempHeaders);
     }

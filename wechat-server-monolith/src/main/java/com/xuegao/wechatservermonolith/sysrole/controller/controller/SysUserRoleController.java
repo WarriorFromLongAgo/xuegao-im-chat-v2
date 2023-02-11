@@ -30,22 +30,22 @@ public class SysUserRoleController {
 
     @RequestMapping(value = "/sysUserRole/save", method = {RequestMethod.POST})
     public Result<SysUserRole> save(@RequestBody SysUserRole sysUserRole) {
-        return Result.success(sysUserRoleService.insertService(sysUserRole));
+        return Result.ok(sysUserRoleService.insertService(sysUserRole));
     }
 
     @RequestMapping(value = "/sysUserRole/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody SysUserRole sysUserRole) {
-        return Result.success(sysUserRoleService.updateService(sysUserRole));
+        return Result.ok(sysUserRoleService.updateService(sysUserRole));
     }
 
     @RequestMapping(value = "/sysUserRole/batchDisable", method = {RequestMethod.POST})
     public Result<Integer> batchDisable(@RequestBody GenericModelDTO<SysUserRole> dto) {
-        return Result.success(sysUserRoleService.batchDisableService(dto));
+        return Result.ok(sysUserRoleService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/sysUserRole/list", method = {RequestMethod.POST})
     public Result<List<SysUserRole>> list(@RequestBody GenericModelDTO<SysUserRole> dto) {
-        return Result.success(sysUserRoleService.listService(dto));
+        return Result.ok(sysUserRoleService.listService(dto));
     }
 
     @RequestMapping(value = "/sysUserRole/search", method = {RequestMethod.POST})

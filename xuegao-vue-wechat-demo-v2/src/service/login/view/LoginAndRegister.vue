@@ -166,10 +166,9 @@ async function systemLogin() {
   let loginStore = useLoginStore();
   let localCacheUtil = new LocalCacheUtil();
   localCacheUtil.set("token", respData.token);
+  localCacheUtil.set("uid", respData.sysUser.id);
   loginStore.action.updateLoginUser(respSysUser);
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
-
-  setLocalStorage(respData.token);
   redirectImHome();
 }
 

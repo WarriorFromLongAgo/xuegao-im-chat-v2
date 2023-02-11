@@ -61,7 +61,6 @@ let selectChatMessageStore = useSelectChatMessageStore();
 
 // 获取聊天列表的消息，最新的聊天消息在最上面
 let chatInfoList = computed(() => {
-  let tempChatInfoList = getChatInfoList();
   tempChatInfoList.sort(function (a, b) {
     return a.index - b.index;
   });

@@ -30,22 +30,22 @@ public class FriendUserController {
 
     @RequestMapping(value = "/friendUser/save", method = {RequestMethod.POST})
     public Result<FriendUser> save(@RequestBody FriendUser friendUser) {
-        return Result.success(friendUserService.insertService(friendUser));
+        return Result.ok(friendUserService.insertService(friendUser));
     }
 
     @RequestMapping(value = "/friendUser/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody FriendUser friendUser) {
-        return Result.success(friendUserService.updateService(friendUser));
+        return Result.ok(friendUserService.updateService(friendUser));
     }
 
     @RequestMapping(value = "/friendUser/batchDisable", method = {RequestMethod.POST})
     public Result<Integer> batchDisable(@RequestBody GenericModelDTO<FriendUser> dto) {
-        return Result.success(friendUserService.batchDisableService(dto));
+        return Result.ok(friendUserService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/friendUser/list", method = {RequestMethod.POST})
     public Result<List<FriendUser>> list(@RequestBody GenericModelDTO<FriendUser> dto) {
-        return Result.success(friendUserService.listService(dto));
+        return Result.ok(friendUserService.listService(dto));
     }
 
     @RequestMapping(value = "/friendUser/search", method = {RequestMethod.POST})

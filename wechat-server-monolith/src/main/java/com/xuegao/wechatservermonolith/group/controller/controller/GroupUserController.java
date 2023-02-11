@@ -30,22 +30,22 @@ public class GroupUserController {
 
     @RequestMapping(value = "/groupUser/save", method = {RequestMethod.POST})
     public Result<GroupUser> save(@RequestBody GroupUser groupUser) {
-        return Result.success(groupUserService.insertService(groupUser));
+        return Result.ok(groupUserService.insertService(groupUser));
     }
 
     @RequestMapping(value = "/groupUser/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody GroupUser groupUser) {
-        return Result.success(groupUserService.updateService(groupUser));
+        return Result.ok(groupUserService.updateService(groupUser));
     }
 
     @RequestMapping(value = "/groupUser/batchDisable", method = {RequestMethod.POST})
     public Result<Integer> batchDisable(@RequestBody GenericModelDTO<GroupUser> dto) {
-        return Result.success(groupUserService.batchDisableService(dto));
+        return Result.ok(groupUserService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/groupUser/list", method = {RequestMethod.POST})
     public Result<List<GroupUser>> list(@RequestBody GenericModelDTO<GroupUser> dto) {
-        return Result.success(groupUserService.listService(dto));
+        return Result.ok(groupUserService.listService(dto));
     }
 
     @RequestMapping(value = "/groupUser/search", method = {RequestMethod.POST})

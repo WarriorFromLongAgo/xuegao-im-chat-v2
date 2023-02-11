@@ -1,11 +1,11 @@
 package com.xuegao.wechatservermonolith.framework.config.mvc;
 
 import com.xuegao.core.exception.ServiceException;
-import com.xuegao.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,10 +32,10 @@ public class TokenInterceptor implements HandlerInterceptor {
                              HttpServletResponse response,
                              Object handler) throws Exception {
         System.out.println("preHandle方法在控制器的处理请求方法调用之后，解析视图之前执行");
-        log.info("[xuegao-im-chat-v2][TokenInterceptor][preHandle][request={}]", JsonUtil.toJsonString(request));
+        if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
+            return true;
+        }
         String token = request.getHeader("token");
-        String baseURL = request.getHeader("baseURL");
-        log.info("[xuegao-im-chat-v2][TokenInterceptor][preHandle][token={}]", token);
         if (StringUtils.isBlank(token)) {
             throw new ServiceException("请登录后尝试");
         }

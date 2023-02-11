@@ -25,20 +25,24 @@ import router from "@/router";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { LocalCacheUtil } from "@/common/LocalCache";
 import { useWsStore } from "@/common/ws/store/wsStore";
-import { onMounted } from "vue";
+import { onBeforeMount, onMounted } from "vue";
 import initWebSocket from "@/common/ws/ws";
+import { SysUserDO } from "@/model/DO/SysUserDO";
 import { HomeCall } from "@/service/home/call/call/HomeCall";
 import { Result } from "@/common/axios/response";
-import { SysUserDO } from "@/model/DO/SysUserDO";
 
-onMounted(() => {
-  let userByToken = HomeCall.getUserByToken().then((res: Result<SysUserDO>) => {
-    // console.log("register  " + JSON.stringify(res));
-    return res.data;
-  });
-  console.log(userByToken);
+onBeforeMount(() => {
   initWebSocket();
-  useWsStore().action.bindSession();
+});
+
+onMounted(async () => {
+  const userByToken: SysUserDO = await HomeCall.getUserByToken().then(
+    (res: Result<SysUserDO>) => {
+      // console.log("register  " + JSON.stringify(res));
+      return res.data;
+    }
+  );
+  useWsStore().action.bindSession(userByToken);
 });
 
 function systemExit() {

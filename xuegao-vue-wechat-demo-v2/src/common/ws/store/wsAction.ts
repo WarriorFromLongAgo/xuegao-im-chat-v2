@@ -4,6 +4,10 @@ import CommonMsgBO from "@/model/BO/CommonMsgBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { HomeCall } from "@/service/home/call/call/HomeCall";
+import { Result } from "@/common/axios/response";
+import { SysUserDO } from "@/model/DO/SysUserDO";
+import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 
 function initWebSocket(state: WsBO) {
   return (ws: WebSocket) => {
@@ -77,13 +81,12 @@ function stopHeartBeat(state: WsBO) {
 }
 
 function bindSession(state: WsBO) {
-  return () => {
+  return (userByToken: SysUserDO) => {
     const session: CommonMsgBO = {
       messageType: MsgSendTypeEnum.bingSession,
-      content: JSON.stringify(useLoginStore().action.getLoginSysUser()),
+      content: JSON.stringify(userByToken),
     };
-    console.log(" ============================== ");
-    // useWsStore().action.sendMsg(JSON.stringify(session));
+    useWsStore().action.sendMsg(JSON.stringify(session));
   };
 }
 

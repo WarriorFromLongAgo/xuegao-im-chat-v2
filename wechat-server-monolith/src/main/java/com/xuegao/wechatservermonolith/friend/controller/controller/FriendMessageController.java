@@ -31,22 +31,22 @@ public class FriendMessageController {
 
     @RequestMapping(value = "/friendMessage/save", method = {RequestMethod.POST})
     public Result<FriendMessage> save(@RequestBody FriendMessage friendMessage) {
-        return Result.success(friendMessageService.insertService(friendMessage));
+        return Result.ok(friendMessageService.insertService(friendMessage));
     }
 
     @RequestMapping(value = "/friendMessage/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody FriendMessage friendMessage) {
-        return Result.success(friendMessageService.updateService(friendMessage));
+        return Result.ok(friendMessageService.updateService(friendMessage));
     }
 
     @RequestMapping(value = "/friendMessage/batchDisable", method = {RequestMethod.POST})
     public Result<Integer> batchDisable(@RequestBody GenericModelDTO<FriendMessage> dto) {
-        return Result.success(friendMessageService.batchDisableService(dto));
+        return Result.ok(friendMessageService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/friendMessage/list", method = {RequestMethod.POST})
     public Result<List<FriendMessage>> list(@RequestBody GenericModelDTO<FriendMessage> dto) {
-        return Result.success(friendMessageService.listService(dto));
+        return Result.ok(friendMessageService.listService(dto));
     }
 
     @RequestMapping(value = "/friendMessage/search", method = {RequestMethod.POST})

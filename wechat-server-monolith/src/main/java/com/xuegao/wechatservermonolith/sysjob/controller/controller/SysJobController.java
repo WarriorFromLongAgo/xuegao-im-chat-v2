@@ -30,22 +30,22 @@ public class SysJobController {
 
     @RequestMapping(value = "/sysJob/save", method = {RequestMethod.POST})
     public Result<SysJob> save(@RequestBody SysJob sysJob) {
-        return Result.success(sysJobService.insertService(sysJob));
+        return Result.ok(sysJobService.insertService(sysJob));
     }
 
     @RequestMapping(value = "/sysJob/update", method = {RequestMethod.POST})
     public Result<Integer> update(@RequestBody SysJob sysJob) {
-        return Result.success(sysJobService.updateService(sysJob));
+        return Result.ok(sysJobService.updateService(sysJob));
     }
 
     @RequestMapping(value = "/sysJob/batchDisable", method = {RequestMethod.POST})
     public Result<Integer> batchDisable(@RequestBody GenericModelDTO<SysJob> dto) {
-        return Result.success(sysJobService.batchDisableService(dto));
+        return Result.ok(sysJobService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/sysJob/list", method = {RequestMethod.POST})
     public Result<List<SysJob>> list(@RequestBody GenericModelDTO<SysJob> dto) {
-        return Result.success(sysJobService.listService(dto));
+        return Result.ok(sysJobService.listService(dto));
     }
 
     @RequestMapping(value = "/sysJob/search", method = {RequestMethod.POST})

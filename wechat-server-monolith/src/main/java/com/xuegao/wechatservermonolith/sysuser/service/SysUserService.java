@@ -155,4 +155,13 @@ public class SysUserService {
         // sysUserMpManage.mpGetByIds(dto.getIds());
         return new Page<>();
     }
+
+    public SysUser getUserByToken(GenericModelDTO<String> dto) {
+        String vo = dto.getVo();
+        String userIdByToken = TokenUtil.getUserIdByToken(vo);
+        SysUser sysUser = sysUserMpManage.mpGetById(Long.valueOf(userIdByToken));
+        log.info("[wechat-server-monolith][SysUserService][getUserByToken][sysUser={}]", JsonUtil.toJsonString(sysUser));
+
+        return sysUser;
+    }
 }

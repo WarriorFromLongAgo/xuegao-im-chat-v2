@@ -9,6 +9,8 @@ netty:
 spring:
   application:
     name: 'wechat-server-monolith'
+  mvc:
+    dispatch-options-request: true
   datasource:
     username: root
     password: 123456
