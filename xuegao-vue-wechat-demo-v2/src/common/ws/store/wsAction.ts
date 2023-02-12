@@ -3,11 +3,8 @@ import hearBeat from "@/common/ws/heartBeat/heartBeat";
 import CommonMsgBO from "@/model/BO/CommonMsgBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 import { useWsStore } from "@/common/ws/store/wsStore";
-import { useLoginStore } from "@/service/login/store/LoginInfoStore";
-import { HomeCall } from "@/service/home/call/call/HomeCall";
-import { Result } from "@/common/axios/response";
 import { SysUserDO } from "@/model/DO/SysUserDO";
-import { ISysUser } from "@/service/login/call/response/SysUserResponse";
+import { SysUserBO } from "@/model/BO/SysUserBO";
 
 function initWebSocket(state: WsBO) {
   return (ws: WebSocket) => {
@@ -81,7 +78,7 @@ function stopHeartBeat(state: WsBO) {
 }
 
 function bindSession(state: WsBO) {
-  return (userByToken: SysUserDO) => {
+  return (userByToken: SysUserBO) => {
     const session: CommonMsgBO = {
       messageType: MsgSendTypeEnum.bingSession,
       content: JSON.stringify(userByToken),

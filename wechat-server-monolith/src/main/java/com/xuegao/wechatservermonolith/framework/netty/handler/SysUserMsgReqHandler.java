@@ -2,11 +2,10 @@ package com.xuegao.wechatservermonolith.framework.netty.handler;
 
 import com.xuegao.util.JsonUtil;
 import com.xuegao.util.SpringUtil;
-import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
+import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
 import com.xuegao.wechatservermonolith.framework.netty.support.request.SysUserMsgReq;
-import com.xuegao.wechatservermonolith.util.TokenUtil;
-import com.xuegao.wechatservermonolith.util.WsSessionUtil;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
+import com.xuegao.wechatservermonolith.util.WsSessionUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -27,9 +26,9 @@ public class SysUserMsgReqHandler extends SimpleChannelInboundHandler<SysUserMsg
     protected void channelRead0(ChannelHandlerContext ctx, SysUserMsgReq msg) {
         log.info("[wechat-server-monolith][SysUserMsgReqHandler][channelRead0][msg={}]", JsonUtil.toJsonString(msg));
         String content = msg.getContent();
-        SysUser inputSysUser = JsonUtil.toClass(content, SysUser.class);
+        SysUserBO inputSysUser = JsonUtil.toClass(content, SysUserBO.class);
         SysUserMpManage mpManage = SpringUtil.getBean(SysUserMpManage.class);
-        SysUser sysUser = mpManage.mpGetById(inputSysUser.getId());
+        SysUserBO sysUser = mpManage.getByIdService(inputSysUser.getId());
         // SysUser sysUser = sysUserMpManage.mpGetById(inputSysUser.getId());
         log.info("[wechat-server-monolith][SysUserMsgReqHandler][channelRead0][sysUser={}]", JsonUtil.toJsonString(sysUser));
         WsSessionUtil.bindSession(sysUser, ctx.channel());

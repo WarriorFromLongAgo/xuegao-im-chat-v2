@@ -88,7 +88,6 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import { LoginCall } from "@/service/login/call/call/LoginCall";
 import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { ISysUserReq } from "@/service/login/call/request/SysUserRequest";
 import { ref } from "vue";
@@ -97,11 +96,12 @@ import {
   ISysUser,
   ISysUserResp,
 } from "@/service/login/call/response/SysUserResponse";
-import { Result } from "@/common/axios/response";
 import { LocalCacheUtil } from "@/common/LocalCache";
 
 import localAvatar1 from "/public/static/images/avatar1.png";
 import localAvatar2 from "/public/static/images/avatar2.png";
+import { HeaderToken, HeaderUserInfo } from "@/common/AxiosConstant";
+import { loginHttp, registerHttp } from "@/service/login/call/call/LoginCall";
 
 let avatar = localAvatar1;
 let avatar2 = localAvatar2;
@@ -122,14 +122,8 @@ async function systemRegister() {
     alert("登录账号或者登录昵称不能为空");
     return;
   }
-  let respData: string = await LoginCall.register(tempSysUser).then(
-    (res: Result<string>) => {
-      // console.log("register  " + JSON.stringify(res));
-      return res.data;
-    }
-  );
-  // console.log(" respData ", respData);
-  if (isBlank(respData)) {
+  let registerHttpResp: string = await registerHttp(tempSysUser);
+  if (isBlank(registerHttpResp)) {
     return;
   }
   await systemLogin();
@@ -146,27 +140,29 @@ async function systemLogin() {
     alert("登录账号或者登录昵称不能为空");
     return;
   }
-
   const loginSysUser: ISysUserReq = {
     username: tempSysUser.username,
   };
-
-  let respData: ISysUserResp = await LoginCall.login(loginSysUser).then(
-    (res: Result<ISysUserResp>) => {
-      // console.log("login 1 " + JSON.stringify(res));
-      return res.data;
-    }
-  );
-  if (isEmpty(respData)) {
+  // console.log(" loginSysUser ", loginSysUser);
+  let loginHttpResp: ISysUserResp = await loginHttp(loginSysUser);
+  console.log(" loginHttp loginHttpResp ", JSON.stringify(loginHttpResp));
+  if (isEmpty(loginHttpResp)) {
     throw new Error("登陆人信息不存在");
   }
-  // console.log(" respData ", respData);
-  let respSysUser = respData.sysUser;
+  let respToken = loginHttpResp.token;
+  let respSysUser = loginHttpResp.sysUser;
+
+  let localCacheUtil = new LocalCacheUtil();
+  localCacheUtil.set(HeaderToken, respToken);
+
+  localCacheUtil.set(HeaderUserInfo.userId, respSysUser.id);
+  localCacheUtil.set(HeaderUserInfo.username, respSysUser.username);
+  localCacheUtil.set(HeaderUserInfo.userNumber, respSysUser.userNumber);
+  localCacheUtil.set(HeaderUserInfo.nickname, respSysUser.nickname);
+  localCacheUtil.set(HeaderUserInfo.phone, respSysUser.nickname);
+  localCacheUtil.set(HeaderUserInfo.ipAdder, respSysUser.nickname);
 
   let loginStore = useLoginStore();
-  let localCacheUtil = new LocalCacheUtil();
-  localCacheUtil.set("token", respData.token);
-  localCacheUtil.set("uid", respData.sysUser.id);
   loginStore.action.updateLoginUser(respSysUser);
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
   redirectImHome();
@@ -178,27 +174,23 @@ function redirectImHome() {
 
 function goToHome() {
   console.log(" goToHome=================== ");
-  let loginStore = useLoginStore();
-  loginStore.action.updateToken("temp token---------------");
   let sysUser: ISysUser = {
     id: "2",
     username: "test",
     nickname: "test nickname",
     uid: "test",
+    userNumber: "2",
   };
+  let loginStore = useLoginStore();
   loginStore.action.updateLoginUser(sysUser);
   // console.log("loginStore, ", loginStore.action.getLoginInfo);
-  rememberMe.value = true;
-  console.log("getLoginInfo ", loginStore.action.getLoginInfo());
-  setLocalStorage("temp token---------------");
-  redirectImHome();
-}
-
-function setLocalStorage(token: string) {
-  // let tempRememberMe: boolean = rememberMe.value;
-  // console.log("rememberMe true", tempRememberMe);
+  // rememberMe.value = true;
   let localCacheUtil = new LocalCacheUtil();
-  localCacheUtil.set("token", token);
+  localCacheUtil.set("token", "temp token");
+  localCacheUtil.set("uid", sysUser.id);
+  localCacheUtil.set("username", sysUser.username);
+  loginStore.action.updateLoginUser(sysUser);
+  redirectImHome();
 }
 </script>
 

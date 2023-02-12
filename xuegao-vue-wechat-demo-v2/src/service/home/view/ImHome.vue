@@ -27,29 +27,33 @@ import { LocalCacheUtil } from "@/common/LocalCache";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import { onBeforeMount, onMounted } from "vue";
 import initWebSocket from "@/common/ws/ws";
-import { SysUserDO } from "@/model/DO/SysUserDO";
-import { HomeCall } from "@/service/home/call/call/HomeCall";
-import { Result } from "@/common/axios/response";
+import { getUserByTokenHttp } from "@/service/home/call/call/HomeCallV2";
+import { HeaderToken, HeaderUserInfo } from "@/common/AxiosConstant";
+import { SysUserBO } from "@/model/BO/SysUserBO";
 
 onBeforeMount(() => {
   initWebSocket();
 });
 
 onMounted(async () => {
-  const userByToken: SysUserDO = await HomeCall.getUserByToken().then(
-    (res: Result<SysUserDO>) => {
-      // console.log("register  " + JSON.stringify(res));
-      return res.data;
-    }
+  let getUserByTokenHttpResp: SysUserBO = await getUserByTokenHttp();
+  console.log(
+    " getUserByTokenHttp getUserByTokenHttpResp ",
+    JSON.stringify(getUserByTokenHttpResp)
   );
-  useWsStore().action.bindSession(userByToken);
+  useWsStore().action.bindSession(getUserByTokenHttpResp);
 });
 
 function systemExit() {
-  let loginStore = useLoginStore();
-  let username = loginStore.action.getLoginSysUser().username;
   let localCacheUtil = new LocalCacheUtil();
-  localCacheUtil.remove(username);
+  localCacheUtil.remove(HeaderToken);
+
+  localCacheUtil.remove(HeaderUserInfo.userId);
+  localCacheUtil.remove(HeaderUserInfo.username);
+  localCacheUtil.remove(HeaderUserInfo.userNumber);
+  localCacheUtil.remove(HeaderUserInfo.nickname);
+  localCacheUtil.remove(HeaderUserInfo.phone);
+  localCacheUtil.remove(HeaderUserInfo.ipAdder);
   useWsStore().action.closeWs();
   router.replace({
     path: "/",

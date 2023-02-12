@@ -21,18 +21,19 @@ public class WebConfig implements WebMvcConfigurer {
         //         .addInterceptor(new CrossInterceptor())
         //         .addPathPatterns("/**");
         registry
+                .addInterceptor(new ContextInterceptor())
+                .excludePathPatterns("/sysUser/login")
+                .excludePathPatterns("/sysUser/register")
+                // .excludePathPatterns("/sysUser/getUserByToken")
+                .addPathPatterns("/**");
+        registry
                 .addInterceptor(new TokenInterceptor())
                 .excludePathPatterns("/sysUser/login")
                 .excludePathPatterns("/sysUser/register")
                 // .excludePathPatterns("/sysUser/getUserByToken")
                 // .excludePathPatterns("/sysUser/list")
                 .addPathPatterns("/**");
-        registry
-                .addInterceptor(new DiyHeaderInterceptor())
-                .excludePathPatterns("/sysUser/login")
-                .excludePathPatterns("/sysUser/register")
-                .excludePathPatterns("/sysUser/getUserByToken")
-                .addPathPatterns("/**");
+
         // registry
         //         .addInterceptor(new TestFirstInterceptor())
         //         .excludePathPatterns("/sysUser/login")

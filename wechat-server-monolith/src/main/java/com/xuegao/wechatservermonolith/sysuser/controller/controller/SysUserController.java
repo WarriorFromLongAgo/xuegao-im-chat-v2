@@ -3,7 +3,7 @@ package com.xuegao.wechatservermonolith.sysuser.controller.controller;
 import com.xuegao.core.model.Result;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.mapper.model.PageResult;
-import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
+import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.LoginInfoVO;
 import com.xuegao.wechatservermonolith.sysuser.service.SysUserService;
@@ -30,32 +30,32 @@ public class SysUserController {
     }
 
     @RequestMapping(value = "/sysUser/register", method = {RequestMethod.POST})
-    public Result<Integer> registerService(@RequestBody SysUser sysUser) {
+    public Result<Integer> registerService(@RequestBody SysUserBO sysUser) {
         return Result.ok(sysUserService.registerService(sysUser));
     }
 
     @RequestMapping(value = "/sysUser/update", method = {RequestMethod.POST})
-    public Result<Integer> update(@RequestBody SysUser sysUser) {
+    public Result<Integer> update(@RequestBody SysUserBO sysUser) {
         return Result.ok(sysUserService.updateService(sysUser));
     }
 
     @RequestMapping(value = "/sysUser/batchDisable", method = {RequestMethod.POST})
-    public Result<Integer> batchDisable(@RequestBody GenericModelDTO<SysUser> dto) {
+    public Result<Integer> batchDisable(@RequestBody GenericModelDTO<SysUserBO> dto) {
         return Result.ok(sysUserService.batchDisableService(dto));
     }
 
     @RequestMapping(value = "/sysUser/list", method = {RequestMethod.POST})
-    public Result<List<SysUser>> list(@RequestBody GenericModelDTO<SysUser> dto) {
+    public Result<List<SysUserBO>> list(@RequestBody GenericModelDTO<SysUserBO> dto) {
         return Result.ok(sysUserService.listService(dto));
     }
 
     @RequestMapping(value = "/sysUser/search", method = {RequestMethod.POST})
-    public PageResult<SysUser> search(@RequestBody GenericModelDTO<SysUser> dto) {
+    public PageResult<SysUserBO> search(@RequestBody GenericModelDTO<SysUserBO> dto) {
         return PageResult.ok(sysUserService.searchService(dto));
     }
 
     @RequestMapping(value = "/sysUser/getUserByToken", method = {RequestMethod.POST})
-    public Result<SysUser> getUserByToken(@RequestBody GenericModelDTO<String> dto) {
+    public Result<SysUserBO> getUserByToken(@RequestBody GenericModelDTO<String> dto) {
         return Result.ok(sysUserService.getUserByToken(dto));
     }
 }

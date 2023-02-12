@@ -1,6 +1,6 @@
 package com.xuegao.wechatservermonolith.common.model.sysuser.vo;
 
-import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
+import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,6 +38,6 @@ public class LoginInfoVO implements Serializable {
     /**
      * 本次登录的用户
      */
-    private SysUser sysUser;
+    private SysUserBO sysUser;
 
 }

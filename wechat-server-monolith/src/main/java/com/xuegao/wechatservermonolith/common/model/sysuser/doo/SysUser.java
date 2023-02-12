@@ -17,11 +17,13 @@ import java.time.LocalDateTime;
  *
  * @author xuegao
  * @since 2022-11-12
+ * @deprecated 禁止将此对象直接返回出去
  */
 @Accessors(chain = true)
 @Getter
 @Setter
 @TableName("xue_gao_user")
+@Deprecated
 public class SysUser extends GenericModel<Long> implements Serializable {
     private static final long serialVersionUID = 1L;
 

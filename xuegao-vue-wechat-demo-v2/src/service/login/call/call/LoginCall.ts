@@ -1,30 +1,28 @@
-import { Request } from "@/common/axios/request";
 import { ISysUserReq } from "@/service/login/call/request/SysUserRequest";
 import { ISysUserResp } from "@/service/login/call/response/SysUserResponse";
-import { Result, RespCodeEnum } from "@/common/axios/response";
+import http from "@/common/axios2";
+import { Result } from "@/common/axios2/Result";
 
-export class LoginCall {
-  static async register(sysUser: ISysUserReq): Promise<Result<string>> {
-    const newVar: Result<string> = await Request.post(
-      "/sysUser/register",
-      sysUser
-    );
-    if (RespCodeEnum.code_200 !== newVar.code) {
-      alert(newVar.message);
-      // throw new Error(newVar.message);
-      return newVar;
-    }
-    return newVar;
-  }
+const registerHttp = async (sysUser: ISysUserReq): Promise<string> => {
+  const result: Result<string> = await http.post<ISysUserReq, string>(
+    "/sysUser/register",
+    sysUser
+  );
+  // console.log("registerHttp result ", JSON.stringify(result));
+  const { data: userId } = result;
+  // console.log("loginHttp data ", JSON.stringify(sysUserResp));
+  return userId;
+};
 
-  static async login(sysUser: ISysUserReq): Promise<Result<ISysUserResp>> {
-    const newVar: Result<ISysUserResp> = await Request.post(
-      "/sysUser/login",
-      sysUser
-    );
-    if (RespCodeEnum.code_200 !== newVar.code) {
-      throw new Error(newVar.message);
-    }
-    return newVar;
-  }
-}
+const loginHttp = async (sysUser: ISysUserReq): Promise<ISysUserResp> => {
+  const result: Result<ISysUserResp> = await http.post<
+    ISysUserReq,
+    ISysUserResp
+  >("/sysUser/login", sysUser);
+  // console.log("loginHttp result ", JSON.stringify(result));
+  const { data: sysUserResp } = result;
+  // console.log("loginHttp data ", JSON.stringify(sysUserResp));
+  return sysUserResp;
+};
+
+export { registerHttp, loginHttp };

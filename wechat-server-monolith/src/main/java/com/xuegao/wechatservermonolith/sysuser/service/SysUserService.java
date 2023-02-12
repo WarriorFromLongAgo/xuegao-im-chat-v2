@@ -10,6 +10,7 @@ import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.util.JsonUtil;
 import com.xuegao.util.UuidUtil;
 import com.xuegao.util.time.LocalDateTimeUtil;
+import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.dto.SysLoginDTO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.vo.LoginInfoVO;
@@ -17,6 +18,7 @@ import com.xuegao.wechatservermonolith.sysuser.check.SysUserCheckService;
 import com.xuegao.wechatservermonolith.sysuser.manage.SysUserMpManage;
 import com.xuegao.wechatservermonolith.util.TokenUtil;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class SysUserService {
         //     }
         // });
 
-        SysUser dbSysUser = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
+        SysUserBO dbSysUser = sysUserMpManage.getByUsernameOrNickName(sysLoginDTO.getUsername(), sysLoginDTO.getNickname());
         if (ObjectUtils.isEmpty(dbSysUser)) {
             throw new ServiceException("登录用户不存在");
         }
@@ -79,13 +81,15 @@ public class SysUserService {
         CompletableFuture
                 .runAsync(() -> {
                             log.info("[xuegao-im-chat-v2][SysUserService][login][={}]", Thread.currentThread().getName());
-                            String string1 = JsonUtil.toJsonString(ContextUtil.get());
-                            log.info("[xuegao-im-chat-v2][SysUserService][login][context1={}]", string1);
+                            String contextStr = JsonUtil.toJsonString(ContextUtil.get());
+                            log.info("[xuegao-im-chat-v2][SysUserService][login][context1={}]", contextStr);
                             ContextUtil.set(context);
-                            String string2 = JsonUtil.toJsonString(ContextUtil.get());
-                            log.info("[xuegao-im-chat-v2][SysUserService][login][context2={}]", string2);
+                            String contextStr2 = JsonUtil.toJsonString(ContextUtil.get());
+                            log.info("[xuegao-im-chat-v2][SysUserService][login][context2={}]", contextStr2);
+                            SysUserBO update = new SysUserBO();
+                            update.setId(dbSysUser.getId());
                             dbSysUser.setLastLoginTime(LocalDateTimeUtil.now());
-                            sysUserMpManage.mpUpdate(dbSysUser);
+                            sysUserMpManage.updateByIdService(dbSysUser);
                         },
                         xuegaoSpringTaskExecutor)
                 .exceptionally(throwable -> {
@@ -96,14 +100,14 @@ public class SysUserService {
         return loginInfoVO;
     }
 
-    public Integer registerService(SysUser sysUser) {
-        sysUserCheckService.checkIsNull("入参不能为空", sysUser);
+    public Integer registerService(SysUserBO inputSysUser) {
+        sysUserCheckService.checkIsNull("入参不能为空", inputSysUser);
         sysUserCheckService
-                .checkIsNull("用户名不能为空", sysUser.getUsername())
-                .checkIsNull("昵称不能为空", sysUser.getNickname())
+                .checkIsNull("用户名不能为空", inputSysUser.getUsername())
+                .checkIsNull("昵称不能为空", inputSysUser.getNickname())
         ;
 
-        SysUser usernameOrNickName = sysUserMpManage.getByUsernameOrNickName(sysUser.getUsername(), sysUser.getNickname());
+        SysUserBO usernameOrNickName = sysUserMpManage.getByUsernameOrNickName(inputSysUser.getUsername(), inputSysUser.getNickname());
         try {
             sysUserCheckService.checkIsNotNull("用户名或者昵称已存在", usernameOrNickName);
         } catch (Exception e) {
@@ -111,27 +115,28 @@ public class SysUserService {
             throw new ServiceException("用户名或者昵称已存在");
         }
         log.info("[xuegao-im-chat-v2][SysUserService][registerService][1111111111111111111111111111]");
+
+        SysUser insert = new SysUser();
+        insert.setUsername(inputSysUser.getUsername());
         // 网站不需要填密码
-        sysUser.setPassword("123456");
-
-        sysUser.setNickname(sysUser.getUsername());
-        sysUser.setUid(UuidUtil.uuid());
-
-        sysUserMpManage.mpInsert(sysUser);
-        log.info("[xuegao-im-chat-v2][SysUserService][registerService][sysUser={}]", JsonUtil.toJsonString(sysUser));
+        insert.setPassword("123456");
+        insert.setNickname(inputSysUser.getUsername());
+        insert.setUid(UuidUtil.uuid());
+        sysUserMpManage.mpInsert(insert);
+        log.info("[xuegao-im-chat-v2][SysUserService][registerService][inputSysUser={}]", JsonUtil.toJsonString(inputSysUser));
         return 1;
     }
 
-    public int updateService(SysUser sysUser) {
-        return sysUserMpManage.mpUpdate(sysUser);
+    public int updateService(SysUserBO sysUser) {
+        return sysUserMpManage.updateService(sysUser);
     }
 
-    public int batchDisableService(GenericModelDTO<SysUser> dto) {
+    public int batchDisableService(GenericModelDTO<SysUserBO> dto) {
         // sysUserMpManage.mpDisable(dto.getIds());
         return 1;
     }
 
-    public List<SysUser> listService(GenericModelDTO<SysUser> dto) {
+    public List<SysUserBO> listService(GenericModelDTO<SysUserBO> dto) {
         // sysUserMpManage.mpGetByIds(dto.getIds());
         log.info("[xuegao-im-chat-v2][SysUserService][listService][]");
         CompletableFuture.runAsync(new Runnable() {
@@ -151,17 +156,19 @@ public class SysUserService {
         return Lists.newArrayList();
     }
 
-    public Page<SysUser> searchService(GenericModelDTO<SysUser> dto) {
+    public Page<SysUserBO> searchService(GenericModelDTO<SysUserBO> dto) {
         // sysUserMpManage.mpGetByIds(dto.getIds());
         return new Page<>();
     }
 
-    public SysUser getUserByToken(GenericModelDTO<String> dto) {
+    public SysUserBO getUserByToken(GenericModelDTO<String> dto) {
         String vo = dto.getVo();
-        String userIdByToken = TokenUtil.getUserIdByToken(vo);
-        SysUser sysUser = sysUserMpManage.mpGetById(Long.valueOf(userIdByToken));
+        String userId = TokenUtil.getUserIdByToken(vo);
+        if (StringUtils.isBlank(userId)) {
+            return null;
+        }
+        SysUserBO sysUser = sysUserMpManage.getByIdService(Long.valueOf(userId));
         log.info("[wechat-server-monolith][SysUserService][getUserByToken][sysUser={}]", JsonUtil.toJsonString(sysUser));
-
         return sysUser;
     }
 }

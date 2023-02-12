@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.xuegao.mapper.enums.DelFlagEnum;
 import com.xuegao.mapper.model.GenericModel;
 import com.xuegao.mapper.mpservice.AbstractMpServiceV2;
+import com.xuegao.util.time.LocalDateTimeUtil;
 import com.xuegao.wechatservermonolith.common.Constant;
+import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
+import com.xuegao.wechatservermonolith.common.model.sysuser.convert.SysUserConvert;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 import com.xuegao.wechatservermonolith.common.model.sysuser.enums.UserStatusEnum;
 import com.xuegao.wechatservermonolith.sysuser.mapper.SysUserMapper;
@@ -31,7 +34,7 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
      * @author xuegao
      * @date 2022/11/12 23:30
      */
-    public SysUser getByUsernameOrNickName(String username, String nickname) {
+    public SysUserBO getByUsernameOrNickName(String username, String nickname) {
         SysUser sysUser = new SysUser();
         sysUser.setUsername(username);
         sysUser.setNickname(nickname);
@@ -50,9 +53,33 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         }
         if (sysUserList.size() > Constant.INT_1) {
             log.error("SysUserMpManage.getByUsernameAndPassword() username:{} nickname:{} sysUserList.size():{}", username, nickname, sysUserList.size());
-            return sysUserList.get(0);
+            return SysUserConvert.toSysUserBO(sysUserList.get(0));
         }
-        return sysUserList.get(0);
+        return SysUserConvert.toSysUserBO(sysUserList.get(0));
+    }
+
+    public SysUserBO getByIdService(SysUserBO sysUserBO) {
+        return getByIdService(sysUserBO.getId());
+    }
+
+    public SysUserBO getByIdService(Long id) {
+        SysUser sysUser = super.mpGetById(id);
+        return SysUserConvert.toSysUserBO(sysUser);
+    }
+
+    public Integer updateByIdService(SysUserBO sysUserBO) {
+        SysUser update = new SysUser();
+        update.setId(sysUserBO.getId());
+        update.setLastLoginTime(LocalDateTimeUtil.now());
+        return super.mpUpdate(update);
+    }
+
+    public Integer updateService(SysUserBO sysUserBO) {
+        SysUser update = new SysUser();
+        update.setId(sysUserBO.getId());
+        update.setLastLoginTime(LocalDateTimeUtil.now());
+
+        return super.mpUpdate(update);
     }
 
     @Override

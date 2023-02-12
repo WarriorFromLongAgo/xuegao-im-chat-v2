@@ -1,9 +1,11 @@
 package com.xuegao.wechatservermonolith.framework.config.mvc;
 
 import com.xuegao.core.exception.ServiceException;
+import com.xuegao.core.model.FmkUserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class TokenInterceptor implements HandlerInterceptor {
+public class TokenInterceptor implements HandlerInterceptor, Ordered {
     private static final Logger log = LoggerFactory.getLogger(TokenInterceptor.class);
 
     /**
@@ -31,12 +33,14 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        System.out.println("preHandle方法在控制器的处理请求方法调用之后，解析视图之前执行");
         if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
             return true;
         }
-        String token = request.getHeader("token");
+        System.out.println(Thread.currentThread().getName() + " == preHandle === " + getClass().getName() + " == " + request.getRequestURI() + " === " + request.getMethod());
+
+        String token = request.getHeader(FmkUserInfo.KEY_TOKEN);
         if (StringUtils.isBlank(token)) {
+            log.info("[wechat-server-monolith][TokenInterceptor][preHandle][token={}]", token);
             throw new ServiceException("请登录后尝试");
         }
         // 注意 这里必须是true否则请求将就此终止。
@@ -60,7 +64,10 @@ public class TokenInterceptor implements HandlerInterceptor {
                                 Object handler,
                                 Exception ex)
             throws Exception {
-        System.out.println("afterCompletion方法在控制器的处理请求方法执行完成后执行，即视图渲染结束之后执行");
+        if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
+            return;
+        }
+        System.out.println(Thread.currentThread().getName() + " == afterCompletion === " + getClass().getName() + " == " + request.getRequestURI() + " === " + request.getMethod());
     }
 
     @Override
@@ -68,8 +75,17 @@ public class TokenInterceptor implements HandlerInterceptor {
                            HttpServletResponse response,
                            Object handler,
                            ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle方法在控制器的处理请求方法调用之后，解析视图之前执行");
+        if (RequestMethod.OPTIONS.name().equals(request.getMethod())) {
+            return;
+        }
+        System.out.println(Thread.currentThread().getName() + " == postHandle === " + getClass().getName() + " == " + request.getRequestURI() + " === " + request.getMethod());
     }
 
-
+    @Override
+    public int getOrder() {
+        // 通过配置order()的值，值越小，优先级越高。不配默认是0
+        int i = Integer.MIN_VALUE + 1;
+        System.out.println(getClass().getName() + " == " + i);
+        return i;
+    }
 }
