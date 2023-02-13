@@ -22,7 +22,6 @@ import java.util.List;
  * @since 2022-11-12
  */
 @RestController
-@RequestMapping("/sysuser/group-message")
 public class GroupMessageController {
 
     @Autowired

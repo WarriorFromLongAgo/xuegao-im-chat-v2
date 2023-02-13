@@ -3,7 +3,6 @@ import axios, {
   AxiosError,
   AxiosRequestConfig,
   AxiosResponse,
-  AxiosHeaders,
 } from "axios";
 import { apiUrl } from "@/common/config/config";
 import {
@@ -15,7 +14,7 @@ import {
 import { LocalCacheUtil } from "@/common/LocalCache";
 import { checkStatus } from "@/common/axios2/checkStatus";
 import { Result } from "@/common/axios2/Result";
-import { InternalAxiosRequestConfig } from "axios/index";
+import { InternalAxiosRequestConfig } from "axios";
 
 const config = {
   // 默认地址请求地址，可在 .env.*** 文件中修改
@@ -42,67 +41,17 @@ class RequestHttp {
     const phone = localCacheUtil.get(HeaderUserInfo.phone);
     const ipAdder = localCacheUtil.get(HeaderUserInfo.ipAdder);
 
-    // this.axiosInstance.interceptors.request.use(
-    //   function (config: InternalAxiosRequestConfig) {
-    //     // Do something before request is sent
-    //     return config;
-    //   },
-    //   function (error) {
-    //     // Do something with request error
-    //     return Promise.reject(error);
-    //   }
-    // );
-
     this.axiosInstance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        console.log(" config 1 ", JSON.stringify(config));
-        const tempHeaders = config.headers;
-
-        // 1
-        // config?.headers ? [`dkajkjda`] = "dadasda";
-
-        if (tempHeaders) {
-          console.log(" config 2 ", JSON.stringify(tempHeaders));
-
-          // 2
-          tempHeaders.token2 = localToken;
-
-          // 3
-          tempHeaders["token"] = localToken;
-          tempHeaders["userId"] = userId;
-          tempHeaders["username"] = username;
-          tempHeaders["userNumber"] = userNumber;
-          tempHeaders["nickname"] = nickname;
-          tempHeaders["phone"] = phone;
-          tempHeaders["ipAdder"] = ipAdder;
-          console.log(" config 3 ", JSON.stringify(tempHeaders));
-          config.headers = tempHeaders;
-          console.log(" config 4 ", JSON.stringify(config));
-
-          // 4
-          const newVar = tempHeaders["Accept"];
-          console.log(" config 5 ", JSON.stringify(newVar));
-
-          // console.log(" config 6 ");
-          // if (tempHeaders.post) {
-          //   console.log(" config 6 1 ");
-          // } else {
-          //   tempHeaders.post = new AxiosHeaders();
-          // }
-
-          console.log(" config 7 ");
-          if (tempHeaders.common) {
-            console.log(" config 7 1 ");
-            config.headers.common?.set("userId2", userId);
-          } else {
-            tempHeaders.common = new AxiosHeaders();
-          }
-          console.log(" config 8 ", JSON.stringify(tempHeaders));
-          // 5
-          // config.headers.set("userId2", userId);
-          console.log(" config 9 ", JSON.stringify(tempHeaders));
-        }
-        console.log(" config 100 ", JSON.stringify(config));
+        // console.log(" config 1 ", JSON.stringify(config));
+        config.headers.token = localToken;
+        config.headers.userId = userId;
+        config.headers.username = username;
+        config.headers.nickname = nickname;
+        config.headers.userNumber = userNumber;
+        config.headers.phone = phone;
+        config.headers.ipAdder = ipAdder;
+        // console.log(" config 100 ", JSON.stringify(config));
         return config;
       },
       (error: AxiosError) => {

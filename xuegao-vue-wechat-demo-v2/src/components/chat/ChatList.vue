@@ -54,6 +54,7 @@ import {
 } from "@/model/temp/FriendMessageListData";
 import { SelectChatMessageBO } from "@/service/chat/store/SelectChatMessageBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
+import { listChatInfoHttp } from "@/service/home/call/call/ChatListCallV2";
 
 let selectChatStore = useSelectChatStore();
 let selectChatMessageStore = useSelectChatMessageStore();
@@ -61,12 +62,12 @@ let selectChatMessageStore = useSelectChatMessageStore();
 
 // 获取聊天列表的消息，最新的聊天消息在最上面
 let chatInfoList = computed(() => {
-  let tempChatInfoList = getChatInfoList();
-  tempChatInfoList.sort(function (a, b) {
-    return a.index - b.index;
-  });
+  let tempChatInfoList = listChatInfoHttp();
+  // tempChatInfoList.sort(function (a, b) {
+  //   return a.index - b.index;
+  // });
   // 根据时间进行排序，最新的时间在最上面
-  // console.log("tempChatInfoV2List ", tempChatInfoList);
+  console.log("tempChatInfoV2List ", tempChatInfoList);
   // console.log("getSelectChat ", selectChatStore.action.getSelectChat);
   return tempChatInfoList;
 });

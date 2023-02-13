@@ -20,6 +20,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Service
 public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser, Long> implements InitializingBean {
@@ -43,9 +44,19 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(GenericModel::getDelFlag, DelFlagEnum.DEL_FLAG_1.getCode());
         queryWrapper.eq(SysUser::getUserStatus, UserStatusEnum.NORMAL.getCode());
-        queryWrapper.or(sysUserLambdaQueryWrapper -> {
-            sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(username), SysUser::getUsername, username);
-            sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(nickname), SysUser::getNickname, nickname);
+        queryWrapper.and(new Consumer<LambdaQueryWrapper<SysUser>>() {
+            @Override
+            public void accept(LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper) {
+                sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(username), SysUser::getUsername, username);
+                if (StringUtils.isNotBlank(nickname)) {
+                    sysUserLambdaQueryWrapper.or(new Consumer<LambdaQueryWrapper<SysUser>>() {
+                        @Override
+                        public void accept(LambdaQueryWrapper<SysUser> sysUserLambdaQueryWrapper) {
+                            sysUserLambdaQueryWrapper.eq(StringUtils.isNotBlank(nickname), SysUser::getNickname, nickname);
+                        }
+                    });
+                }
+            }
         });
         List<SysUser> sysUserList = super.list(queryWrapper);
         if (ObjectUtils.isEmpty(sysUserList)) {
@@ -71,7 +82,7 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         SysUser update = new SysUser();
         update.setId(sysUserBO.getId());
         update.setLastLoginTime(LocalDateTimeUtil.now());
-        return super.mpUpdate(update);
+        return super.mpUpdateFilterNull(update);
     }
 
     public Integer updateService(SysUserBO sysUserBO) {

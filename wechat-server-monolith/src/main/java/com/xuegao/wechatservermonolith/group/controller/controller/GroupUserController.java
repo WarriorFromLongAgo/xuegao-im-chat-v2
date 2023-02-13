@@ -22,7 +22,6 @@ import java.util.List;
  * @since 2022-11-12
  */
 @RestController
-@RequestMapping("/sysuser/group-user")
 public class GroupUserController {
 
     @Autowired

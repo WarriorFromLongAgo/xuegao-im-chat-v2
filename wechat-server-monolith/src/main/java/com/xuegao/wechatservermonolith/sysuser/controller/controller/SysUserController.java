@@ -55,7 +55,7 @@ public class SysUserController {
     }
 
     @RequestMapping(value = "/sysUser/getUserByToken", method = {RequestMethod.POST})
-    public Result<SysUserBO> getUserByToken(@RequestBody GenericModelDTO<String> dto) {
-        return Result.ok(sysUserService.getUserByToken(dto));
+    public Result<SysUserBO> getUserByToken() {
+        return Result.ok(sysUserService.getUserByToken());
     }
 }

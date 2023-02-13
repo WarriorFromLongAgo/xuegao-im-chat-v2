@@ -30,7 +30,7 @@ function getWebSocket(state: WsBO): () => WebSocket {
 function sendMsg(state: WsBO) {
   return (message: string) => {
     const webSocket = state.webSocket;
-    console.log("sendMsg ", webSocket);
+    // console.log("sendMsg ", webSocket);
     // 如果链接已经断开了，就不要再发送了
     if (webSocket !== null && webSocket?.CLOSED === webSocket?.readyState) {
       return;

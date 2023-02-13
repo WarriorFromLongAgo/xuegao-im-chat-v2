@@ -8,6 +8,8 @@ import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.wechatservermonolith.common.model.friend.bo.ChatInfoBO;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendUser;
 import com.xuegao.wechatservermonolith.friend.manage.FriendUserMpManage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,7 @@ import java.util.List;
  */
 @Service
 public class FriendUserService {
+    private static final Logger log = LoggerFactory.getLogger(FriendUserService.class);
 
     @Autowired
     private FriendUserMpManage friendUserMpManage;
@@ -54,6 +57,7 @@ public class FriendUserService {
     public List<ChatInfoBO> listChatInfo() {
         Context context = ContextUtil.get();
         String userId = context.getUserId();
+        log.info("[wechat-server-monolith][FriendUserService][listChatInfo][userId={}]", userId);
 
         // FriendUserMpManage.mpGetByIds(dto.getIds());
         return Lists.newArrayList();

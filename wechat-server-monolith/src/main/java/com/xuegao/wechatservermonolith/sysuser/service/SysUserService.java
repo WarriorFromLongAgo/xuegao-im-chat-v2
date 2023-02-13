@@ -93,7 +93,7 @@ public class SysUserService {
                         },
                         xuegaoSpringTaskExecutor)
                 .exceptionally(throwable -> {
-                    log.info("[xuegao-im-chat-v2][SysUserService][login apply][exceptionally]", throwable);
+                    log.error("[xuegao-im-chat-v2][SysUserService][login apply][exceptionally]", throwable);
                     return null;
                 });
 
@@ -161,9 +161,10 @@ public class SysUserService {
         return new Page<>();
     }
 
-    public SysUserBO getUserByToken(GenericModelDTO<String> dto) {
-        String vo = dto.getVo();
-        String userId = TokenUtil.getUserIdByToken(vo);
+    public SysUserBO getUserByToken() {
+        Context context = ContextUtil.get();
+        String token = context.getToken();
+        String userId = TokenUtil.getUserIdByToken(token);
         if (StringUtils.isBlank(userId)) {
             return null;
         }

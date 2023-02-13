@@ -12,6 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        log.info("[wechat-server-monolith][WebConfig][addInterceptors][]");
+
         // registry
         //         .addInterceptor(new FmkLogInterceptor())
         //         .excludePathPatterns("/sysUser/login")

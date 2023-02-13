@@ -2,7 +2,7 @@ import http from "@/common/axios2/index";
 import { Result } from "@/common/axios2/Result";
 import { ChatInfo } from "@/model/BO/ChatInfo";
 
-const listChatInfoHttp = async () => {
+const listChatInfoHttp = async (): Promise<Array<ChatInfo>> => {
   const result: Result<Array<ChatInfo>> = await http.post<
     null,
     Array<ChatInfo>

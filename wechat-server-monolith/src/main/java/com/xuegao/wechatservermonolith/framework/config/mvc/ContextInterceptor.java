@@ -50,12 +50,13 @@ public class ContextInterceptor implements HandlerInterceptor, Ordered {
         String ip = request.getHeader(FmkUserInfo.KEY_IP);
 
         String token = request.getHeader(FmkUserInfo.KEY_TOKEN);
+
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(token)) {
             log.info("[wechat-server-monolith][ContextInterceptor][preHandle][userId={}]", userId);
             throw new ServiceException("请登录后尝试");
         }
         Context context = ContextUtil.get();
-        log.info("[wechat-server-monolith][ContextInterceptor][preHandle][context={}]", JsonUtil.toJsonString(context));
+        log.info("[wechat-server-monolith][ContextInterceptor][preHandle][context1={}]", JsonUtil.toJsonString(context));
         FmkUserInfo fmkUserInfo = new FmkUserInfo();
         fmkUserInfo.setUserId(userId);
         fmkUserInfo.setUserNumber(userNumber);
@@ -63,7 +64,12 @@ public class ContextInterceptor implements HandlerInterceptor, Ordered {
         fmkUserInfo.setNickname(nickname);
         fmkUserInfo.setPhone(phone);
         fmkUserInfo.setIpAdder(ip);
+        context.setFmkUserInfo(fmkUserInfo);
 
+        context.setToken(token);
+
+        ContextUtil.set(context);
+        log.info("[wechat-server-monolith][ContextInterceptor][preHandle][context2={}]", JsonUtil.toJsonString(context));
         TokenUtil.saveUserIdAndToken(userId, token);
         // 注意 这里必须是true否则请求将就此终止。
         return true;
