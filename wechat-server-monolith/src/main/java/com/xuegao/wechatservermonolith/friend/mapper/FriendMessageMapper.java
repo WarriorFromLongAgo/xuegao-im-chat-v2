@@ -3,6 +3,9 @@ package com.xuegao.wechatservermonolith.friend.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendMessage;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FriendMessageMapper extends BaseMapper<FriendMessage> {
 
+    List<FriendMessage> listChatInfo(@Param("userId") Long userId);
 }

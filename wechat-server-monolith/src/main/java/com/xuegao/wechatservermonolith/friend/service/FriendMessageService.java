@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendMessage;
 import com.xuegao.wechatservermonolith.friend.manage.FriendMessageMpManage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @Service
 public class FriendMessageService {
+    private static final Logger log = LoggerFactory.getLogger(FriendMessageService.class);
 
     @Autowired
     private FriendMessageMpManage friendMessageMpManage;
@@ -47,4 +50,6 @@ public class FriendMessageService {
         // friendMessageMpManage.mpGetByIds(dto.getIds());
         return new Page<>();
     }
+
+
 }

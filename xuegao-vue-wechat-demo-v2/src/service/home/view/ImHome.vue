@@ -37,10 +37,10 @@ onBeforeMount(() => {
 
 onMounted(async () => {
   let getUserByTokenHttpResp: SysUserBO = await getUserByTokenHttp();
-  console.log(
-    " getUserByTokenHttp getUserByTokenHttpResp ",
-    JSON.stringify(getUserByTokenHttpResp)
-  );
+  // console.log(
+  //   " getUserByTokenHttp getUserByTokenHttpResp ",
+  //   JSON.stringify(getUserByTokenHttpResp)
+  // );
   useWsStore().action.bindSession(getUserByTokenHttpResp);
 });
 

@@ -11,5 +11,4 @@ import org.springframework.stereotype.Service;
 public class FriendUserMpManage extends AbstractMpServiceV2<FriendUserMapper, FriendUser, Long> {
     private static final Logger log = LoggerFactory.getLogger(FriendUserMpManage.class);
 
-
 }

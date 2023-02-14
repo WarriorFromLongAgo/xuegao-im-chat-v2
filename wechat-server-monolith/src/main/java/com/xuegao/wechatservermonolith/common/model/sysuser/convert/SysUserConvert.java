@@ -3,6 +3,9 @@ package com.xuegao.wechatservermonolith.common.model.sysuser.convert;
 import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
 import com.xuegao.wechatservermonolith.common.model.sysuser.doo.SysUser;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SysUserConvert {
 
     public static SysUserBO toSysUserBO(SysUser sysUser) {
@@ -18,6 +21,10 @@ public class SysUserConvert {
         sysUserBO.setUpdatedBy(sysUser.getUpdatedBy());
         sysUserBO.setUpdatedTime(sysUser.getUpdatedTime());
         return sysUserBO;
+    }
+
+    public static List<SysUserBO> toSysUserBO(List<SysUser> sysUserList) {
+        return sysUserList.stream().map(SysUserConvert::toSysUserBO).collect(Collectors.toList());
     }
 
 }

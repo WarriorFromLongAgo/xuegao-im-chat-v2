@@ -2,10 +2,7 @@ package com.xuegao.wechatservermonolith.friend.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
-import com.xuegao.core.model.Context;
-import com.xuegao.core.model.ContextUtil;
 import com.xuegao.mapper.model.GenericModelDTO;
-import com.xuegao.wechatservermonolith.common.model.friend.bo.ChatInfoBO;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendUser;
 import com.xuegao.wechatservermonolith.friend.manage.FriendUserMpManage;
 import org.slf4j.Logger;
@@ -54,12 +51,4 @@ public class FriendUserService {
         return new Page<>();
     }
 
-    public List<ChatInfoBO> listChatInfo() {
-        Context context = ContextUtil.get();
-        String userId = context.getUserId();
-        log.info("[wechat-server-monolith][FriendUserService][listChatInfo][userId={}]", userId);
-
-        // FriendUserMpManage.mpGetByIds(dto.getIds());
-        return Lists.newArrayList();
-    }
 }

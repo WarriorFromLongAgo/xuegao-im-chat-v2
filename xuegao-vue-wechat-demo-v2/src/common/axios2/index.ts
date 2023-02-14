@@ -27,7 +27,7 @@ class RequestHttp {
   axiosInstance: AxiosInstance;
 
   public constructor(config: AxiosRequestConfig) {
-    console.log(" constructor ", config);
+    // console.log(" constructor ", JSON.stringify(config));
     // 实例化axios
     this.axiosInstance = axios.create(config);
 

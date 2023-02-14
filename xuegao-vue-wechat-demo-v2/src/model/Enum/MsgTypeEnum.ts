@@ -7,25 +7,25 @@
 export enum MsgTypeEnum {
   // region 系统层面的消息或者会话
   /**
-   * 1 = 文字消息
+   * text = 文字消息
    */
-  Text = 1,
+  Text = "text",
   /**
-   * 2 = 图片消息
+   * image = 图片消息
    */
-  Image = 2,
+  Image = "image",
   /**
-   * 3 = 音频消息
+   * audio = 音频消息
    */
-  Audio = 3,
+  Audio = "audio",
   /**
-   * 4 = 视频消息
+   * video = 视频消息
    */
-  Video = 4,
+  Video = "video",
   /**
-   * 5 = 文件消息
+   * file = 文件消息
    */
-  File = 5,
+  File = "file",
 
   // endregion
 }

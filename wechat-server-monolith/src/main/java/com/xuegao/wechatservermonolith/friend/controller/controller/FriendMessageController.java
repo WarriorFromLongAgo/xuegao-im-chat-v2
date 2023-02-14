@@ -52,5 +52,4 @@ public class FriendMessageController {
     public PageResult<FriendMessage> search(@RequestBody GenericModelDTO<FriendMessage> dto) {
         return PageResult.ok(friendMessageService.searchService(dto));
     }
-
 }

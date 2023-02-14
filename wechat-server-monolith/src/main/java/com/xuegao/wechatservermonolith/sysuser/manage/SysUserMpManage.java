@@ -78,6 +78,11 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
         return SysUserConvert.toSysUserBO(sysUser);
     }
 
+    public List<SysUserBO> getByIdService(Long... idArr) {
+        List<SysUser> sysUserList = super.mpGetByIds(idArr);
+        return SysUserConvert.toSysUserBO(sysUserList);
+    }
+
     public Integer updateByIdService(SysUserBO sysUserBO) {
         SysUser update = new SysUser();
         update.setId(sysUserBO.getId());
