@@ -3,6 +3,7 @@ package com.xuegao.wechatservermonolith.chat.service;
 import com.google.common.collect.Lists;
 import com.xuegao.core.model.Context;
 import com.xuegao.core.model.ContextUtil;
+import com.xuegao.wechatservermonolith.common.enums.MsgSendTypeEnum;
 import com.xuegao.wechatservermonolith.common.model.friend.bo.ChatInfoBO;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendMessage;
 import com.xuegao.wechatservermonolith.common.model.sysuser.bo.SysUserBO;
@@ -19,8 +20,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class ChatService {
-    private static final Logger log = LoggerFactory.getLogger(ChatService.class);
+public class ChatInfoService {
+    private static final Logger log = LoggerFactory.getLogger(ChatInfoService.class);
 
     @Autowired
     private FriendMessageMpManage friendMessageMpManage;
@@ -52,11 +53,24 @@ public class ChatService {
         Map<Long, SysUserBO> userIdMap = sysUserBOList.stream().collect(Collectors.toMap(SysUserBO::getId, c -> c, (key1, key2) -> key1));
 
         List<ChatInfoBO> chatInfoBOList = new ArrayList<>(friendMessageList.size());
+        int index = 0;
         for (FriendMessage tempMsg : friendMessageList) {
-            ChatInfoBO
+            ChatInfoBO tempChatInfoBO = new ChatInfoBO();
+            tempChatInfoBO.setIndex(index);
+            tempChatInfoBO.setLastMsgTime(tempMsg.getCreatedTime());
+            tempChatInfoBO.setChatType(MsgSendTypeEnum.ONE_TO_ONE.getCode());
 
+            Long tempFriendId = tempMsg.getFriendId();
+            if (!ObjectUtils.isEmpty(userIdMap.get(tempFriendId))) {
+                tempChatInfoBO.setFriendInfo(userIdMap.get(tempFriendId));
+            }
+            tempChatInfoBO.setLastFriendMessage(tempMsg);
+
+
+            chatInfoBOList.add(tempChatInfoBO);
+            index++;
         }
 
-        return;
+        return null;
     }
 }

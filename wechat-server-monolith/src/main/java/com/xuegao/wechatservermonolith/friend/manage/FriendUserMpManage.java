@@ -7,8 +7,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FriendUserMpManage extends AbstractMpServiceV2<FriendUserMapper, FriendUser, Long> {
     private static final Logger log = LoggerFactory.getLogger(FriendUserMpManage.class);
+
+    public List<FriendUser> listByUserIdAndFriendId(Long userId, List<Long> friendIdList) {
+
+
+        return null;
+    }
 
 }

@@ -7,6 +7,8 @@ VALUES (null, 2, 3, 'system', now(), 'system', now(), null),
        (null, 2, 4, 'system', now(), 'system', now(), null);
 insert into friend_user(id, user_id, friend_id, created_by, created_time, updated_by, updated_time, trace_id)
 VALUES (null, 3, 4, 'system', now(), 'system', now(), null);
+insert into friend_user(id, user_id, friend_id, created_by, created_time, updated_by, updated_time, trace_id)
+VALUES (null, 3, 1, 'system', now(), 'system', now(), null);
 
 select fu.*, fm.*
 from friend_user as fu
@@ -38,3 +40,9 @@ into friend_message(id, user_id, friend_id, message_type, content, ack_type, dat
                     updated_by)
 VALUES (null, 3, 1, 'text', '您好，我是id=3，我有一个问题想请问你。', 10, 10, 'system', 'system'),
        (null, 1, 3, 'text', '您好，我是gm99999，有什么可以帮助你的', 10, 10, 'system', 'system');
+
+select fu.*
+from friend_user as fu
+where fu.user_id = 3
+  and fu.friend_id in (1, 2, 3, 4)
+  and fu.del_flag = 1

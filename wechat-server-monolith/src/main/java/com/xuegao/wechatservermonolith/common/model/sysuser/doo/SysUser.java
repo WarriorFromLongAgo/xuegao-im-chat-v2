@@ -3,6 +3,7 @@ package com.xuegao.wechatservermonolith.common.model.sysuser.doo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.xuegao.mapper.model.GenericModel;
+import com.xuegao.wechatservermonolith.common.model.sysuser.enums.UserStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -89,6 +90,8 @@ public class SysUser extends GenericModel<Long> implements Serializable {
 
     /**
      * 用户状态,10:正常,20:3个月未登录进行删除锁定,30自主销号
+     *
+     * {@link UserStatusEnum}
      */
     @TableField("user_status")
     private Integer userStatus;
