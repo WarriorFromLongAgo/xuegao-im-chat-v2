@@ -16,7 +16,7 @@ public class ChatInfoController {
     @Autowired
     private ChatInfoService chatInfoService;
 
-    @RequestMapping(value = "/chat/listChatInfo", method = {RequestMethod.POST})
+    @RequestMapping(value = "/chatInfo/listChatInfo", method = {RequestMethod.POST})
     public Result<List<ChatInfoBO>> listChatInfo() {
         return Result.ok(chatInfoService.listChatInfo());
     }

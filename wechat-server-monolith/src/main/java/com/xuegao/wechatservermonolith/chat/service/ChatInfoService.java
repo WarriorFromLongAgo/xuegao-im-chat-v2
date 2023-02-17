@@ -66,11 +66,10 @@ public class ChatInfoService {
             }
             tempChatInfoBO.setLastFriendMessage(tempMsg);
 
-
             chatInfoBOList.add(tempChatInfoBO);
             index++;
         }
 
-        return null;
+        return chatInfoBOList;
     }
 }

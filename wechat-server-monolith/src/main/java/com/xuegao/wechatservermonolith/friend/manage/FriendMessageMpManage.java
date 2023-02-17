@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +25,8 @@ public class FriendMessageMpManage extends AbstractMpServiceV2<FriendMessageMapp
         if (log.isDebugEnabled()) {
             log.info("[wechat-server-monolith][FriendMessageMpManage][listChatInfo][friendMessageList={}]", JsonUtil.toJsonString(friendMessageList));
         }
-        return super.dealReturnList(friendMessageList);
+        friendMessageList = super.dealReturnList(friendMessageList);
+        friendMessageList.sort(Comparator.comparing(FriendMessage::getCreatedTime).reversed());
+        return friendMessageList;
     }
 }

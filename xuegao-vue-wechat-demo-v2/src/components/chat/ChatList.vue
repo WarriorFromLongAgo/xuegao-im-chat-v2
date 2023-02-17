@@ -1,7 +1,10 @@
 <template>
   <div class="msgList user-select-none">
     <ul>
-      <template v-for="item in chatInfoList" :key="item.friendInfo.id">
+      <template
+        v-for="item in chatInfoListComputedV1"
+        :key="item.friendInfo.id"
+      >
         <li class="selectChat" @click="selectChat(item)">
           <div class="list-left">
             <img
@@ -43,7 +46,7 @@
 <script lang="ts" setup>
 import { isEmpty } from "@/common/ObjectUtil";
 import { replaceToFaceByMsg } from "@/model/Emoji";
-import { computed } from "vue";
+import { computed, onBeforeMount, reactive } from "vue";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
@@ -58,19 +61,49 @@ import { listChatInfoHttp } from "@/service/home/call/call/ChatListCallV2";
 
 let selectChatStore = useSelectChatStore();
 let selectChatMessageStore = useSelectChatMessageStore();
-// console.log("  chat list 进来了");
+// 获取聊天列表的消息，最新的聊天消息在最上面
+// let chatInfoList: Array<ChatInfo> = reactive([]);
+//
+// onBeforeMount(async () => {
+//   console.log(" chatList onBeforeMount ");
+//   chatInfoList = await listChatInfoHttp();
+//   console.log(" chatList onBeforeMount ", JSON.stringify(chatInfoList));
+// });
+
+let chatInfoListComputedV1 = computed(() => {
+  let tempChatInfoList = getChatInfoList();
+  // 根据时间进行排序，最新的时间在最上面
+  console.log("chatInfoListComputedV1 ", tempChatInfoList);
+  // console.log(
+  //   "getSelectChat ",
+  //   JSON.stringify(selectChatStore.action.getSelectChat())
+  // );
+  return tempChatInfoList;
+});
 
 // 获取聊天列表的消息，最新的聊天消息在最上面
-let chatInfoList = computed(() => {
-  let tempChatInfoList = getChatInfoList();
-  // let tempChatInfoList = listChatInfoHttp();
+let chatInfoListComputedV2 = computed(() => {
+  // let tempChatInfoList = getChatInfoList();
+  let resultChatInfoList: Array<ChatInfo> = [];
+  let tempChatInfoListPromise: Promise<Array<ChatInfo>> = listChatInfoHttp();
+  // eslint-disable-next-line vue/no-async-in-computed-properties
+  tempChatInfoListPromise
+    .then((res) => {
+      resultChatInfoList = res;
+    })
+    .catch((err) => {
+      console.log("tempChatInfoListPromise ", err);
+    });
   // tempChatInfoList.sort(function (a, b) {
   //   return a.index - b.index;
   // });
   // 根据时间进行排序，最新的时间在最上面
-  console.log("tempChatInfoV2List ", tempChatInfoList);
-  // console.log("getSelectChat ", selectChatStore.action.getSelectChat);
-  return tempChatInfoList;
+  console.log("resultChatInfoList ", resultChatInfoList);
+  // console.log(
+  //   "getSelectChat ",
+  //   JSON.stringify(selectChatStore.action.getSelectChat())
+  // );
+  return resultChatInfoList;
 });
 
 // 每次选择chat聊天框的时候，都需要更新，当前选择的东西

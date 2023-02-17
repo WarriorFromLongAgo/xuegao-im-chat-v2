@@ -1,5 +1,6 @@
 package com.xuegao.wechatservermonolith.common.model.friend.bo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendMessage;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendUser;
 import com.xuegao.wechatservermonolith.common.model.group.doo.GroupInfo;
@@ -21,6 +22,7 @@ public class ChatInfoBO implements Serializable {
 
     private Integer newMsgNum;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime lastMsgTime;
 
     private Integer chatType;

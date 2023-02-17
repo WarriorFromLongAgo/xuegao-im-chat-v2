@@ -49,10 +49,10 @@ let enterKeyDownListener = function onkeydown(e: KeyboardEvent) {
 };
 
 let sendMsg = function () {
-  let value: HTMLTextAreaElement | undefined = sendText.value;
-  if (value === undefined) {
-    value = window.document.createElement("textarea");
-  }
+  let value: HTMLTextAreaElement = sendText.value as HTMLTextAreaElement;
+  // if (value === undefined) {
+  //   value = window.document.createElement("textarea");
+  // }
   // console.log(" sendMsg value = ", value);
   let textAreaText = value.innerHTML;
   // console.log(" innerHTML textAreaText = ", textAreaText);
