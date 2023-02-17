@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { isEmpty } from "@/common/ObjectUtil";
 import { replaceToFaceByMsg } from "@/model/Emoji";
-import { computed, onBeforeMount, reactive } from "vue";
+import { computed } from "vue";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";

@@ -56,7 +56,7 @@ select fu.*
 from friend_user as fu
 where fu.user_id = 3
   and fu.friend_id in (1, 2, 3, 4)
-  and fu.del_flag = 1
+  and fu.del_flag = 1;
 
 
 
