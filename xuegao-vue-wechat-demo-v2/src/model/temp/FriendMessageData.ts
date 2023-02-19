@@ -3,6 +3,7 @@ import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
 import { getDate } from "@/common/time";
 import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
 import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
+import { friendInfoDataOne } from "@/model/temp/FriendInfoData";
 
 const nowTimeOne = getDate();
 const nowTimeTwo = getDate();
@@ -21,6 +22,7 @@ const friendMessageDataOne: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 
 date.setTime(nowTimeTwo.setSeconds(nowTimeTwo.getSeconds() - 2));
@@ -35,6 +37,7 @@ const friendMessageDataTwo: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 
 date.setTime(nowTimeThree.setSeconds(nowTimeThree.getSeconds() - 2));
@@ -49,6 +52,7 @@ const friendMessageDataThree: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 
 export { friendMessageDataOne, friendMessageDataTwo, friendMessageDataThree };

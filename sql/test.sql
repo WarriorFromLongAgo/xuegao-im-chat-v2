@@ -79,3 +79,24 @@ where fm.del_flag = 1
   and fm.user_id = 3
 group by fm.user_id, fm.friend_id
 
+
+
+SELECT id,
+       user_id,
+       friend_id,
+       message_type,
+       content,
+       ack_type,
+       data_status,
+       del_flag,
+       created_by,
+       created_time,
+       updated_by,
+       updated_time,
+       trace_id
+FROM friend_message
+WHERE (del_flag = 1 AND data_status = 10 AND ((friend_id = 4 AND user_id = 3) OR (friend_id = 3 AND user_id = 4)))
+
+
+
+

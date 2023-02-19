@@ -6,7 +6,7 @@ interface ISysUserResp {
 interface ISysUser {
   id: string;
   username: string;
-  userNumber: string;
+  // userNumber: string;
   nickname: string;
   uid: string;
 }

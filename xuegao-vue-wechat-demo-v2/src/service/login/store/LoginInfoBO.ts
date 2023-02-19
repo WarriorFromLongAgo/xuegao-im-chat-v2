@@ -17,7 +17,6 @@ const loginInfoBO: ILoginInfo = {
   sysUser: {
     id: "",
     username: "",
-    userNumber: "",
     nickname: "",
     uid: "",
   },

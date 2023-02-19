@@ -3,6 +3,7 @@ package com.xuegao.wechatservermonolith.friend.controller.controller;
 import com.xuegao.core.model.Result;
 import com.xuegao.mapper.model.GenericModelDTO;
 import com.xuegao.mapper.model.PageResult;
+import com.xuegao.wechatservermonolith.common.model.friend.bo.FriendMessageBO;
 import com.xuegao.wechatservermonolith.common.model.friend.doo.FriendMessage;
 import com.xuegao.wechatservermonolith.friend.service.FriendMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class FriendMessageController {
     }
 
     @RequestMapping(value = "/friendMessage/list", method = {RequestMethod.POST})
-    public Result<List<FriendMessage>> list(@RequestBody GenericModelDTO<FriendMessage> dto) {
+    public Result<List<FriendMessageBO>> list(@RequestBody GenericModelDTO<FriendMessage> dto) {
         return Result.ok(friendMessageService.listService(dto));
     }
 

@@ -13,6 +13,7 @@ public class SysUserConvert {
         sysUserBO.setUsername(sysUser.getUsername());
         sysUserBO.setUid(sysUser.getUid());
         sysUserBO.setNickname(sysUser.getNickname());
+        sysUserBO.setUserNumber(sysUser.getUid());
         sysUserBO.setAvatar(sysUser.getAvatar());
 
         sysUserBO.setId(sysUser.getId());

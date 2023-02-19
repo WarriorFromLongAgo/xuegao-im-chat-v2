@@ -42,6 +42,10 @@ public class SysUserBO extends GenericModel<Long> implements Serializable {
      * {@link UserStatusEnum}
      */
     private Integer userStatus;
+    /**
+     * 展示出来的昵称
+     */
+    private String userNumber;
 
     public static SysUserBO buildSysUserBO(Integer userStatus, SysUserBO inputSysUser) {
         SysUserBO sysUserBO = new SysUserBO();

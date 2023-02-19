@@ -52,7 +52,7 @@ public class ContextInterceptor implements HandlerInterceptor, Ordered {
         String token = request.getHeader(FmkUserInfo.KEY_TOKEN);
 
         if (StringUtils.isBlank(userId) || StringUtils.isBlank(token)) {
-            log.info("[wechat-server-monolith][ContextInterceptor][preHandle][userId={}]", userId);
+            log.info("[wechat-server-monolith][ContextInterceptor][preHandle][userId={}][token={}]", userId, token);
             throw new ServiceException("请登录后尝试");
         }
         Context context = ContextUtil.get();

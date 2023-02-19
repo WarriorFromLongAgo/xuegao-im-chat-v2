@@ -2,6 +2,7 @@ package com.xuegao.wechatservermonolith.common.model.friend.doo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xuegao.mapper.model.GenericModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,12 +28,14 @@ public class FriendMessage extends GenericModel<Long> implements Serializable {
     /**
      * 发送人id
      */
+    @JsonProperty("userId")
     @TableField("user_id")
     private Long userId;
 
     /**
      * 接收人id
      */
+    @JsonProperty("friendId")
     @TableField("friend_id")
     private Long friendId;
 

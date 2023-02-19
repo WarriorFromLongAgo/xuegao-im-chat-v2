@@ -32,7 +32,7 @@ interface ChatInfo {
   // 新消息条数
   newMsgNum: number;
   // 最后的消息时间
-  lastMsgTime: Date;
+  lastMsgTime: string;
   // 1000 私聊，1001 群聊
   chatType: MsgSendTypeEnum;
   // 私聊的时候，对方的详细信息
@@ -52,7 +52,7 @@ interface ChatInfo {
 const chatInfoOne: ChatInfo = {
   index: 1,
   newMsgNum: 0,
-  lastMsgTime: nowDate,
+  lastMsgTime: nowDate.toTimeString(),
   chatType: MsgSendTypeEnum.oneToOne,
   friendInfo: friendInfoDataOne,
   lastFriendMessage: friendMessageDataOne,
@@ -62,7 +62,7 @@ const chatInfoOne: ChatInfo = {
 const chatInfoTwo: ChatInfo = {
   index: 2,
   newMsgNum: 98,
-  lastMsgTime: nowDate,
+  lastMsgTime: nowDate.toTimeString(),
   chatType: MsgSendTypeEnum.oneToOne,
   friendInfo: friendInfoDataTwo,
   lastFriendMessage: friendMessageDataTwo,
@@ -72,7 +72,7 @@ const chatInfoTwo: ChatInfo = {
 const chatInfoThree: ChatInfo = {
   index: 3,
   newMsgNum: 100,
-  lastMsgTime: nowDate,
+  lastMsgTime: nowDate.toTimeString(),
   chatType: MsgSendTypeEnum.oneToOne,
   friendInfo: friendInfoDataThree,
   lastFriendMessage: friendMessageDataThree,
@@ -87,4 +87,4 @@ function getChatInfoList(): Array<ChatInfo> {
   return chatInfoV2List;
 }
 
-export { ChatInfo, getChatInfoList };
+export { ChatInfo, getChatInfoList, chatInfoOne };

@@ -22,7 +22,6 @@
 <script lang="ts" setup>
 import LeftMenu from "@/components/LeftMenu.vue";
 import router from "@/router";
-import { useLoginStore } from "@/service/login/store/LoginInfoStore";
 import { LocalCacheUtil } from "@/common/LocalCache";
 import { useWsStore } from "@/common/ws/store/wsStore";
 import { onBeforeMount, onMounted } from "vue";
@@ -30,6 +29,8 @@ import initWebSocket from "@/common/ws/ws";
 import { getUserByTokenHttp } from "@/service/home/call/call/HomeCallV2";
 import { HeaderToken, HeaderUserInfo } from "@/common/AxiosConstant";
 import { SysUserBO } from "@/model/BO/SysUserBO";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { ISysUser } from "@/service/login/call/response/SysUserResponse";
 
 onBeforeMount(() => {
   initWebSocket();
@@ -41,6 +42,13 @@ onMounted(async () => {
   //   " getUserByTokenHttp getUserByTokenHttpResp ",
   //   JSON.stringify(getUserByTokenHttpResp)
   // );
+  let tempLogin: ISysUser = {
+    id: getUserByTokenHttpResp.id,
+    nickname: getUserByTokenHttpResp.nickname,
+    uid: getUserByTokenHttpResp.uid,
+    username: getUserByTokenHttpResp.username,
+  };
+  useLoginStore().action.updateLoginUser(tempLogin);
   useWsStore().action.bindSession(getUserByTokenHttpResp);
 });
 

@@ -37,7 +37,7 @@
         as fm
         where fm.del_flag = 1
         and fm.data_status = 10
-        and fm.user_id = 3
+        and fm.user_id = #{userId}
         group by fm.user_id, fm.friend_id
     </select>
 </mapper>

@@ -1,10 +1,7 @@
 <template>
   <div class="msgList user-select-none">
-    <ul>
-      <template
-        v-for="item in chatInfoListComputedV1"
-        :key="item.friendInfo.id"
-      >
+    <ul v-if="refreshFlag">
+      <template v-for="item in refChatInfoList" :key="item.index">
         <li class="selectChat" @click="selectChat(item)">
           <div class="list-left">
             <img
@@ -12,21 +9,22 @@
               width="40"
               height="40"
               :alt="
-                item.friendUser.friendNote === ''
-                  ? item.friendInfo.nickname
-                  : item.friendUser.friendNote
+                item.friendUser?.friendNote === ''
+                  ? item.friendInfo?.nickname
+                  : item.friendUser?.friendNote
               "
-              :src="item.friendInfo.avatar"
+              :src="item.friendInfo?.avatar"
             />
           </div>
           <div class="list-right">
             <!--            聊天的人的备注  -->
             <p class="name">
               {{
-                item.friendUser.friendNote === null ||
-                item.friendUser.friendNote === ""
-                  ? item.friendInfo.nickname
-                  : item.friendUser.friendNote
+                item.friendUser === null ||
+                item.friendUser?.friendNote === null ||
+                item.friendUser?.friendNote === ""
+                  ? item.friendInfo?.nickname
+                  : item.friendUser?.friendNote
               }}
             </p>
             <!--            朋友之间聊天的最后一条消息 的发送时间-->
@@ -44,9 +42,9 @@
 </template>
 
 <script lang="ts" setup>
-import { isEmpty } from "@/common/ObjectUtil";
+import { isBlank } from "@/common/ObjectUtil";
 import { replaceToFaceByMsg } from "@/model/Emoji";
-import { computed } from "vue";
+import { computed, onBeforeMount, reactive, ref } from "vue";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import { ChatInfo, getChatInfoList } from "@/model/BO/ChatInfo";
 import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
@@ -58,17 +56,51 @@ import {
 import { SelectChatMessageBO } from "@/service/chat/store/SelectChatMessageBO";
 import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
 import { listChatInfoHttp } from "@/service/home/call/call/ChatListCallV2";
+import { useChatInfoListStore } from "@/service/chat/store/ChatInfoListStore";
+import { listSelectChatMsgListHttp } from "@/service/chat/call/SelectChatMsgList";
 
-let selectChatStore = useSelectChatStore();
-let selectChatMessageStore = useSelectChatMessageStore();
+let refreshFlag = ref<boolean>(true);
+
+console.log(" chatList onBeforeCreate ");
+let refChatInfoList = reactive<Array<ChatInfo>>([]);
+// refChatInfoList.push(chatInfoOne);
+// let chatInfoListPromise = listChatInfoHttp();
+
+// chatInfoListPromise.then(
+//   function (value) {
+//     console.log(" onBeforeCreate chatInfoList ", JSON.stringify(value));
+//     useChatInfoListStore().action.updateChatInfoList(value);
+//     console.log(" onBeforeCreate refChatInfoList 1 ", refChatInfoList);
+//     refChatInfoList = value;
+//     console.log(" onBeforeCreate refChatInfoList 2 ", refChatInfoList);
+//   },
+//   function (error) {
+//     // 把这个函数作为promise对象状态变为失败后调用的回调函数
+//     // 失败时的逻辑
+//     console.log(" error ");
+//   }
+// );
+
 // 获取聊天列表的消息，最新的聊天消息在最上面
 // let chatInfoList: Array<ChatInfo> = reactive([]);
 //
-// onBeforeMount(async () => {
-//   console.log(" chatList onBeforeMount ");
-//   chatInfoList = await listChatInfoHttp();
-//   console.log(" chatList onBeforeMount ", JSON.stringify(chatInfoList));
-// });
+onBeforeMount(async () => {
+  console.log(" chatList onBeforeMount ");
+  let chatInfoList = await listChatInfoHttp();
+  console.log(" chatList onBeforeMount ", JSON.stringify(chatInfoList));
+  useChatInfoListStore().action.updateChatInfoList(chatInfoList);
+  console.log(" refChatInfoList 1 ", refChatInfoList);
+  // refChatInfoList = chatInfoList;
+  chatInfoList.forEach((value) => {
+    refChatInfoList.push(value);
+  });
+  console.log(" refChatInfoList 2 ", refChatInfoList);
+
+  // refreshFlag.value = false;
+  // console.log(" refreshFlag 1 ");
+  // refreshFlag.value = true;
+  // console.log(" refreshFlag 2 ");
+});
 
 let chatInfoListComputedV1 = computed(() => {
   let tempChatInfoList = getChatInfoList();
@@ -106,33 +138,47 @@ let chatInfoListComputedV2 = computed(() => {
   return resultChatInfoList;
 });
 
+let chatInfoListStateV1 = computed(() => {
+  let tempChatInfoList = useChatInfoListStore().action.chatInfoList();
+  console.log(" chatInfoListStateV1 ", JSON.stringify(tempChatInfoList));
+  return tempChatInfoList;
+});
+
 // 每次选择chat聊天框的时候，都需要更新，当前选择的东西
-let selectChat = function (chatInfo: ChatInfo) {
+let selectChat = async function (chatInfo: ChatInfo) {
   // console.log(" selectChat input chatInfo = ", JSON.stringify(chatInfo));
-  selectChatStore.action.updateSelectChat(chatInfo);
+  useSelectChatStore().action.updateSelectChat(chatInfo);
 
   let chatType = chatInfo.chatType;
   if (MsgSendTypeEnum.oneToOne === chatType) {
     let friendUserId = chatInfo.friendInfo?.id;
+
+    let msgListHttp = await listSelectChatMsgListHttp(friendUserId as string);
+    console.log("selectChat msgListHttp ", msgListHttp);
     let selectChatMessageBO: SelectChatMessageBO = {
       chatType: MsgSendTypeEnum.oneToOne,
+      friendMessageList: msgListHttp,
     };
-    if (friendUserId === "1") {
-      selectChatMessageBO.friendMessageList = friendMessageList1To1List;
-      selectChatMessageStore.action.updateSelectChatMessage(
-        selectChatMessageBO
-      );
-    } else if (friendUserId === "2") {
-      selectChatMessageBO.friendMessageList = friendMessageList1To2List;
-      selectChatMessageStore.action.updateSelectChatMessage(
-        selectChatMessageBO
-      );
-    } else if (friendUserId === "3") {
-      selectChatMessageBO.friendMessageList = friendMessageList1To3List;
-      selectChatMessageStore.action.updateSelectChatMessage(
-        selectChatMessageBO
-      );
-    }
+    useSelectChatMessageStore().action.updateSelectChatMessage(
+      selectChatMessageBO
+    );
+
+    // if (friendUserId === "1") {
+    //   selectChatMessageBO.friendMessageList = friendMessageList1To1List;
+    //   useSelectChatMessageStore().action.updateSelectChatMessage(
+    //     selectChatMessageBO
+    //   );
+    // } else if (friendUserId === "2") {
+    //   selectChatMessageBO.friendMessageList = friendMessageList1To2List;
+    //   useSelectChatMessageStore().action.updateSelectChatMessage(
+    //     selectChatMessageBO
+    //   );
+    // } else if (friendUserId === "3") {
+    //   selectChatMessageBO.friendMessageList = friendMessageList1To3List;
+    //   useSelectChatMessageStore().action.updateSelectChatMessage(
+    //     selectChatMessageBO
+    //   );
+    // }
     // console.log(
     //   "chatList ",
     //   JSON.stringify(selectChatMessageStore.action.getState())
@@ -141,16 +187,23 @@ let selectChat = function (chatInfo: ChatInfo) {
 };
 
 // 将时间进行转换成 mm:ss
-let getTimes = function (lastMsgTime: Date) {
-  // console.log(" lastMsgTime ", lastMsgTime);
-  if (isEmpty(lastMsgTime)) {
+let getTimes = function (lastMsgTimeStr: string) {
+  // console.log(" lastMsgTimeStr input ", lastMsgTimeStr);
+  if (isBlank(lastMsgTimeStr)) {
     return "";
   }
-  if (lastMsgTime.getMinutes() < 10) {
-    return lastMsgTime.getHours() + ":0" + lastMsgTime.getMinutes();
-  } else {
-    return lastMsgTime.getHours() + ":" + lastMsgTime.getMinutes();
+  let lastMsgTime = new Date(Date.parse(lastMsgTimeStr));
+  let resultStr = "";
+  try {
+    if (lastMsgTime.getMinutes() < 10) {
+      resultStr = lastMsgTime.getHours() + ":0" + lastMsgTime.getMinutes();
+    } else {
+      resultStr = lastMsgTime.getHours() + ":" + lastMsgTime.getMinutes();
+    }
+  } catch (e) {
+    console.log(" getTimes resultStr error ", lastMsgTime, e);
   }
+  return resultStr;
 };
 </script>
 

@@ -20,7 +20,9 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Service
 public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser, Long> implements InitializingBean {
@@ -81,6 +83,12 @@ public class SysUserMpManage extends AbstractMpServiceV2<SysUserMapper, SysUser,
     public List<SysUserBO> getByIdService(Long... idArr) {
         List<SysUser> sysUserList = super.mpGetByIds(idArr);
         return SysUserConvert.toSysUserBO(sysUserList);
+    }
+
+    public Map<Long, SysUserBO> getByIdServiceToMap(Long... idArr) {
+        List<SysUser> sysUserList = super.mpGetByIds(idArr);
+        SysUserConvert.toSysUserBO(sysUserList);
+        return sysUserList.stream().map(SysUserConvert::toSysUserBO).collect(Collectors.toMap(SysUserBO::getId, c -> c, (key1, key2) -> key1));
     }
 
     public Integer updateByIdService(SysUserBO sysUserBO) {

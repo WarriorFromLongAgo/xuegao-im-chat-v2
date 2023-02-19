@@ -1,4 +1,5 @@
 import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
+import { SysUserBO } from "@/model/BO/SysUserBO";
 
 export { FriendMessageBO };
 
@@ -7,4 +8,6 @@ interface FriendMessageBO extends FriendMessageDO {
   showTime: boolean;
   // 是否是自己发送的消息
   mySelfFlag: boolean;
+  // 用户信息
+  sysUserBO: SysUserBO;
 }

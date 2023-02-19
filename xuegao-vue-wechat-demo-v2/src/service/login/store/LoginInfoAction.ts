@@ -38,6 +38,7 @@ function updateLoginUser(state: ILoginInfo) {
     oldSysUser.uid = sysUser.uid;
     oldSysUser.nickname = sysUser.nickname;
     state.sysUser = oldSysUser;
+    console.log(" sysUser ", sysUser);
   };
 }
 

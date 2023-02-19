@@ -3,6 +3,7 @@ import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
 import { getDate } from "@/common/time";
 import { FriendMessageBO } from "@/model/BO/FriendMessageBO";
 import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
+import { friendInfoDataOne } from "@/model/temp/FriendInfoData";
 
 const nowTimeOne = getDate();
 const nowTimeTwo = getDate();
@@ -23,6 +24,7 @@ const friendMessageList1To1_One: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To1_Two: FriendMessageBO = {
   id: "2",
@@ -35,6 +37,7 @@ const friendMessageList1To1_Two: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To1_Three: FriendMessageBO = {
   id: "3",
@@ -47,6 +50,7 @@ const friendMessageList1To1_Three: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 friendMessageList1To1List.push(
   friendMessageList1To1_One,
@@ -68,6 +72,7 @@ const friendMessageList1To2_One: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To2_Two: FriendMessageBO = {
   id: "2",
@@ -80,6 +85,7 @@ const friendMessageList1To2_Two: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To2_Three: FriendMessageBO = {
   id: "3",
@@ -92,6 +98,7 @@ const friendMessageList1To2_Three: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 friendMessageList1To2List.push(
   friendMessageList1To2_One,
@@ -113,6 +120,7 @@ const friendMessageList1To3_One: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To3_Two: FriendMessageBO = {
   id: "2",
@@ -125,6 +133,7 @@ const friendMessageList1To3_Two: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 const friendMessageList1To3_Three: FriendMessageBO = {
   id: "3",
@@ -137,6 +146,7 @@ const friendMessageList1To3_Three: FriendMessageBO = {
   createdTime: date,
   mySelfFlag: false,
   showTime: false,
+  sysUserBO: friendInfoDataOne,
 };
 friendMessageList1To3List.push(
   friendMessageList1To3_One,

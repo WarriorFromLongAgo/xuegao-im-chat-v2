@@ -22,12 +22,16 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { isBlank, isEmpty } from "@/common/ObjectUtil";
+import { isBlank } from "@/common/ObjectUtil";
 import { useWsStore } from "@/common/ws/store/wsStore";
-import { useSelectChatMessageStore } from "@/service/chat/store/SelectChatMessageStore";
 import { useSelectChatStore } from "@/service/chat/store/SelectChatStore";
 import CommonMsgBO from "@/model/BO/CommonMsgBO";
-import { MsgSendTypeEnum } from "@/model/Enum/MsgSendTypeEnum";
+import { useLoginStore } from "@/service/login/store/LoginInfoStore";
+import { FriendMessageDO } from "@/model/DO/FriendMessageDO";
+import { MsgTypeEnum } from "@/model/Enum/MsgTypeEnum";
+import { AckTypeEnum } from "@/model/Enum/AckTypeEnum";
+import { MsgDataStatusEnum } from "@/model/Enum/MsgDataStatusEnum";
+import { idCenterNextIdHttp } from "@/service/home/call/call/IdCneterCall";
 
 let alertWarnMsgFlag = ref(false);
 const sendText = ref<HTMLTextAreaElement>();
@@ -48,7 +52,7 @@ let enterKeyDownListener = function onkeydown(e: KeyboardEvent) {
   sendMsg();
 };
 
-let sendMsg = function () {
+let sendMsg = async function () {
   let value: HTMLTextAreaElement = sendText.value as HTMLTextAreaElement;
   // if (value === undefined) {
   //   value = window.document.createElement("textarea");
@@ -67,13 +71,31 @@ let sendMsg = function () {
     alertWarnMsgFlag.value = false;
   }
 
-  let chatType = useSelectChatStore().action.getChatType();
-  if (chatType === undefined) {
+  let selectChat = useSelectChatStore().action.getSelectChat();
+  if (selectChat.chatType === undefined) {
     throw new Error("chatType is null");
   }
-  const sendMsg: CommonMsgBO = {
-    messageType: chatType,
+  // let friendUser = selectChat.friendUser;
+  let friendInfo = selectChat.friendInfo;
+  // console.log(" selectChat friendUser ", friendUser);
+  // console.log(" selectChat friendInfo ", friendInfo);
+  let loginInfo = useLoginStore().action.getLoginInfo();
+
+  let nextId = await idCenterNextIdHttp();
+
+  const sendFriendMsg: FriendMessageDO = {
+    id: nextId,
+    userId: loginInfo.sysUser.id,
+    friendId: friendInfo?.id as string,
+    messageType: MsgTypeEnum.Text,
     content: textAreaText,
+    ackType: AckTypeEnum.ACK_NO,
+    dataStatus: MsgDataStatusEnum.MSG_NORMAL,
+  };
+
+  const sendMsg: CommonMsgBO = {
+    messageType: selectChat.chatType,
+    content: JSON.stringify(sendFriendMsg),
   };
   useWsStore().action.sendMsg(JSON.stringify(sendMsg));
   value.innerHTML = "";
