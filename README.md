@@ -49,3 +49,6 @@ your computer file path
 if you have any question, please ask in issue, I will reply as soon as possible
 gmail: hubeixuegao@gmail.com
 ```
+
+# show gif
+![image](https://github.com/WarriorFromLongAgo/xuegao-im-chat-v2/tree/main/img)
