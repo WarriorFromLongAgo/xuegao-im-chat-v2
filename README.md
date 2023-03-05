@@ -51,5 +51,6 @@ gmail: hubeixuegao@gmail.com
 ```
 
 # show gif
+![image](https://github.com/WarriorFromLongAgo/xuegao-im-chat-v2/blob/main/img/%E5%BE%AE%E4%BF%A1im%202022%E5%B9%B4%E7%9A%84%E7%9B%AE%E6%A0%87.gif)
 
 <img src="https://github.com/WarriorFromLongAgo/xuegao-im-chat-v2/blob/main/img/%E5%BE%AE%E4%BF%A1im%202022%E5%B9%B4%E7%9A%84%E7%9B%AE%E6%A0%87.gif" width="100%" />
